@@ -1,0 +1,49 @@
+name: Release Package
+on:
+    release:
+        types: [published]
+
+jobs:
+    test:
+        uses: ./.github/workflows/test.yaml
+    build:
+        name: Build & Release Package
+        runs-on: ubuntu-latest
+        permissions:
+            packages: write
+        steps:
+              - name: Checkout
+                uses: actions/checkout@v3
+
+              - name: Setup Node.js
+                uses: actions/setup-node@v3
+                with:
+                    node-version: latest
+
+              - name: Install Dependencies
+                run: npm install
+
+              - name: Build
+                run: npm run build
+
+
+              - uses: JS-DevTools/npm-publish@v1
+                name: "Publish to NPM Registry"
+                with:
+                    token: ${{ secrets.NPM_ACCESS_TOKEN }}
+                    registry: https://registry.npmjs.org/
+                    check-version: true
+              - uses: jossef/action-set-json-field@v2
+                name: "Change Package Name for GitHub"
+                with:
+                    file: package.json
+                    field: name
+                    value: "@${{ github.repository_owner }}/${{ github.event.repository.name }}"
+              - uses: JS-DevTools/npm-publish@v1
+                name: "Publish to GitHub Packages Registry"
+                with:
+                    token: ${{ secrets.GITHUB_TOKEN }}
+                    registry: https://npm.pkg.github.com
+                    check-version: true
+
+

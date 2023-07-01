@@ -1,0 +1,58 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+
+		// Module Resolution
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"allowArbitraryExtensions": false,
+
+		// Paths
+		"rootDir": "src",
+		"outDir": "dist",
+
+		"forceConsistentCasingInFileNames": true,
+
+		// Output Options
+		"alwaysStrict": true,
+		"removeComments": true,
+		"importsNotUsedAsValues": "remove",
+
+		"declarationMap": true,
+		"sourceMap": true,
+		"sourceRoot": "https://raw.githubusercontent.com/BellCubeDev/fomod-js/main/",
+
+		// Type Checking: Maximum Carnage
+		"strict": true,
+		"noImplicitAny": true,
+		"noImplicitOverride": true,
+		"noImplicitThis": true,
+		"noUncheckedIndexedAccess": true,
+		"useUnknownInCatchVariables": true,
+
+		"pretty": true,
+		"noErrorTruncation": true,
+
+		"types": [
+			"node",
+			"jest"
+		],
+
+		"declaration": true,
+
+
+	},
+
+	"watchOptions": {
+		"synchronousWatchDirectory": true,
+		"watchDirectory": "useFsEvents",
+		"watchFile": "useFsEvents",
+		"fallbackPolling": "dynamicpriority",
+	},
+
+	"include": [
+		"src/**/*"
+	]
+}
