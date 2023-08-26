@@ -144,13 +144,15 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
             }
         }
 
-        if (this.moduleImage !== null) {
-            const moduleImageElement = getOrCreateElementByTagName(element, 'moduleImage');
+        const moduleImageElement = getOrCreateElementByTagName(element, 'moduleImage');
+        if (this.moduleImage === null) moduleImageElement.remove();
+        else {
             for (const [key, value] of Object.entries(this.moduleImageMetadata)) moduleImageElement.setAttribute(key, value);
             moduleImageElement.setAttribute('path', this.moduleImage);
         }
 
-        if (this.moduleDependencies) element.appendChild(this.moduleDependencies.asElement(document));
+        if (this.moduleDependencies.dependencies.size > 0) element.appendChild(this.moduleDependencies.asElement(document));
+        else this.moduleDependencies.getElementForDocument(document).remove();
 
         const requiredInstallContainer = getOrCreateElementByTagName(element, 'requiredInstallFiles');
         const conditionalInstallContainerRoot = getOrCreateElementByTagName(element, 'conditionalFileInstalls');
@@ -161,18 +163,18 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
             else conditionalInstallContainer.appendChild(installOrPattern.asElement(document));
         }
 
-        if (requiredInstallContainer.children.length > 0) element.appendChild(requiredInstallContainer);
-        else requiredInstallContainer.remove();
+        if (requiredInstallContainer.children.length === 0) requiredInstallContainer.remove();
+        else element.appendChild(requiredInstallContainer);
 
-        if (this.steps.size > 0) {
-            const stepContainer = getOrCreateElementByTagName(element, 'installSteps');
+        const stepContainer = getOrCreateElementByTagName(element, 'installSteps');
+        if (stepContainer.children.length === 0) stepContainer.remove();
+        else {
             for (const step of this.steps) stepContainer.appendChild(step.asElement(document));
-
             element.appendChild(stepContainer);
         }
 
-        if (conditionalInstallContainer.children.length > 0) element.appendChild(conditionalInstallContainerRoot);
-        else conditionalInstallContainerRoot.remove();
+        if (conditionalInstallContainer.children.length === 0) conditionalInstallContainerRoot.remove();
+        else element.appendChild(conditionalInstallContainerRoot);
 
         return element;
     }
@@ -182,7 +184,7 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
         if (existing && existing instanceof this) return existing;
 
         const moduleName = element.querySelector('moduleName')?.textContent ?? '';
-        const moduleImage = element.querySelector('moduleImage')?.getAttribute('path') ?? '';
+        const moduleImage = element.querySelector('moduleImage')?.getAttribute('path');
 
         const fomod = new Fomod<false>(moduleName, moduleImage);
         fomod.assignElement(element);
@@ -195,17 +197,17 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
         const moduleDependencies = element.querySelector('moduleDependencies');
         if (moduleDependencies) fomod.moduleDependencies = Dependencies.parse(moduleDependencies);
 
-        for (const install of element.querySelectorAll('requiredInstallFiles > install')) {
+        for (const install of element.querySelectorAll(':scope > requiredInstallFiles > install')) {
             const parsed = Install.parse(install);
             if (parsed) fomod.installs.add(parsed);
         }
 
-        for (const install of element.querySelectorAll('conditionalFileInstalls > install')) {
+        for (const install of element.querySelectorAll(':scope > conditionalFileInstalls > install')) {
             const parsed = Install.parse(install);
             if (parsed) fomod.installs.add(parsed);
         }
 
-        for (const step of element.querySelectorAll('installSteps > step')) {
+        for (const step of element.querySelectorAll(':scope > installSteps > step')) {
             const parsed = Step.parse(step);
             if (parsed) fomod.steps.add(parsed);
         }
