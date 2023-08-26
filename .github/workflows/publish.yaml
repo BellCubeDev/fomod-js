@@ -7,6 +7,7 @@ jobs:
     test:
         uses: ./.github/workflows/test.yaml
     build:
+        needs: test
         name: Build & Release Package
         runs-on: ubuntu-latest
         permissions:
