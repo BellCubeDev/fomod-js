@@ -97,7 +97,7 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
             reason: InvalidityReason.FomodModuleNameMetadataInvalidPosition,
         };
 
-        if (!isNaN(parseInt(this.moduleNameMetadata.colour ?? '2', 16))) return {
+        if (isNaN(parseInt(this.moduleNameMetadata.colour ?? '2', 16))) return {
             tree,
             offendingValue: this.moduleNameMetadata.colour!,
             reason: InvalidityReason.FomodModuleNameMetadataColorHexNotHexNumber,
@@ -115,7 +115,16 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
             reason: InvalidityReason.FomodModuleImageMetadataShowImageNotBool,
         };
 
-        // TODO: Require more invalidity reports!
+        for (const step of this.steps) {
+            const reason = step.reasonForInvalidity(...tree);
+            if (reason) return reason;
+        }
+
+        for (const installOrPattern of this.installs) {
+            const reason = installOrPattern.reasonForInvalidity(...tree);
+            if (reason) return reason;
+        }
+
         return null;
     }
 
@@ -207,7 +216,7 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
             if (parsed) fomod.installs.add(parsed);
         }
 
-        for (const step of element.querySelectorAll(':scope > installSteps > step')) {
+        for (const step of element.querySelectorAll(':scope > installSteps > installStep')) {
             const parsed = Step.parse(step);
             if (parsed) fomod.steps.add(parsed);
         }

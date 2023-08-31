@@ -1,6 +1,6 @@
 import { Fomod } from '../../src';
 
-import parseTag from '../parseTag';
+import { parseTag } from '../testUtils';
 
 
 
@@ -166,6 +166,7 @@ test('Fomod Has Correct Image', () => {
 });
 
 test('Fomod Is Valid', () => {
-    expect(fomod.isValid()).toBe(true);
+    const reason = fomod.reasonForInvalidity();
+    expect(reason).toBe(null);
 });
 

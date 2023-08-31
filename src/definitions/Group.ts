@@ -79,7 +79,7 @@ export class Group<TStrict extends boolean = true> extends XmlRepresentation<TSt
         if (existing && existing instanceof this) return existing;
 
         const name = element.getAttribute('name');
-        const behaviorType = element.getAttribute('behaviorType');
+        const behaviorType = element.getAttribute('type');
 
         const group = new Group<false>(name ?? '', behaviorType ?? '');
         group.assignElement(element);

@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { FileDependency, FlagDependency, GameVersionDependency, ModManagerVersionDependency, ScriptExtenderVersionDependency, VersionDependency } from "../../src";
-import parseTag from "../parseTag";
+import { FileDependency, FlagDependency, GameVersionDependency, InvalidityReason, ModManagerVersionDependency, ScriptExtenderVersionDependency, VersionDependency } from "../../src";
+import { parseTag, testValidity } from "../testUtils";
 
 describe('Flag Dependencies', () => {
     const flagName = 'Some Flag 01';
@@ -38,7 +38,7 @@ describe('File Dependencies', () => {
         const element = parseTag`<fileDependency file="appleBanana123" state="Some Odd State" />`;
         const obj = FileDependency.parse(element);
 
-        test('File Dependency Is Invalid', () => expect(obj.isValid()).toBe(false));
+        test('File Dependency Is Invalid', () => testValidity(obj, InvalidityReason.DependencyFileInvalidState));
         test('File Name Is Correct', () => expect(obj.filePath).toBe('appleBanana123'));
         test('Invalid State Is Preserved', () => expect(obj.desiredState).toBe('Some Odd State'));
     });
@@ -47,7 +47,7 @@ describe('File Dependencies', () => {
         const element = parseTag`<fileDependency file="appleBanana456" state="Active" />`;
         const obj = FileDependency.parse(element);
 
-        test('File Dependency Is Valid', () => expect(obj.isValid()).toBe(true));
+        test('File Dependency Is Valid', () => testValidity(obj));
         test('File Name Is Correct', () => expect(obj.filePath).toBe('appleBanana456'));
         test('State Is Correct', () => expect(obj.desiredState).toBe('Active'));
     });
@@ -56,7 +56,7 @@ describe('File Dependencies', () => {
         const element = parseTag`<fileDependency file="appleBanana789" state="Inactive" />`;
         const obj = FileDependency.parse(element);
 
-        test('File Dependency Is Valid', () => expect(obj.isValid()).toBe(true));
+        test('File Dependency Is Valid', () => testValidity(obj));
         test('File Name Is Correct', () => expect(obj.filePath).toBe('appleBanana789'));
         test('State Is Correct', () => expect(obj.desiredState).toBe('Inactive'));
     });
@@ -65,7 +65,7 @@ describe('File Dependencies', () => {
         const element = parseTag`<fileDependency file="appleBanana0-=" state="Missing" />`;
         const obj = FileDependency.parse(element);
 
-        test('File Dependency Is Valid', () => expect(obj.isValid()).toBe(true));
+        test('File Dependency Is Valid', () => testValidity(obj));
         test('File Name Is Correct', () => expect(obj.filePath).toBe('appleBanana0-='));
         test('State Is Correct', () => expect(obj.desiredState).toBe('Missing'));
     });

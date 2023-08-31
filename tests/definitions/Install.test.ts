@@ -1,4 +1,4 @@
-import parseTag from '../parseTag';
+import {parseTag} from '../testUtils';
 
 import { Install } from '../../src';
 
