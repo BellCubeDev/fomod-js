@@ -167,7 +167,13 @@ export class FlagSetter extends XmlRepresentation {
     static override readonly tagName = 'flag';
     readonly tagName = 'flag';
 
-    private readonly flagInstance: FlagInstance<false, true>;
+    readonly flagInstance: FlagInstance<false, true>;
+
+    get flagName() { return this.flagInstance.name; }
+    set flagName(name: string) { this.flagInstance.name = name; }
+
+    get flagValue() { return this.flagInstance.usedValue; }
+    set flagValue(value: string) { this.flagInstance.usedValue = value; }
 
     constructor(flagInstance: FlagInstance<false, true>) {
         super();
