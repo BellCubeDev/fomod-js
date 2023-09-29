@@ -15,7 +15,8 @@ jobs:
             packages: write
 
         env:
-            TAG: ${{ github.event.release.prerelease == true && 'pre-release' }} ${{ github.event.release.prerelease == false || startsWith(github.event.release.tag_name, '0.') && 'latest' }}
+          LATEST_TAG: ${{ github.event.release.prerelease == true && '--tag pre-release' || '--tag latest' }}
+          SECONDARY_TAG: ${{ github.event.release.prerelease == true && startsWith(github.event.release.tag_name, '0.') && '--tag latest' }}
         steps:
               - name: Checkout
                 uses: actions/checkout@v3
@@ -31,14 +32,31 @@ jobs:
               - name: Build
                 run: npm run build
 
+              - id: package_json
+                name: Read package.json
+                run: |
+                  content=`cat ${{ github.workspace }}/package.json`
+                  content="${content//'%'/'%25'}"
+                  content="${content//$'\n'/'%0A'}"
+                  content="${content//$'\r'/'%0D'}"
+                  echo "::set-output name=packageJson::$content"
 
-              - uses: JS-DevTools/npm-publish@v1
-                name: "Publish to NPM Registry"
-                with:
-                    token: ${{ secrets.NPM_ACCESS_TOKEN }}
-                    registry: https://registry.npmjs.org/
-                    check-version: true
-                    tag: ${{ env.TAG }}
+              - name: Login to NPM
+                run: |
+                  npm set //registry.npmjs.org/:_authToken=${{ secrets.NPM_ACCESS_TOKEN }}
+                  npm set //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}
+
+              - name: Publish to NPM Registry
+                run: |
+                  npm publish --access public ${{ env.LATEST_TAG }} --registry https://registry.npmjs.org/
+                  if [ -n "${{ env.SECONDARY_TAG }}" ]; then
+                    npm dist-tag add ${{fromJson(steps.package_json.outputs.packageJson).name}}@${{ github.event.release.tag_name }} ${{ env.SECONDARY_TAG }} --registry https://registry.npmjs.org/
+                  fi
+
+                env:
+                    NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+
+
 
               - uses: jossef/action-set-json-field@v2
                 name: "Change Package Name for GitHub"
@@ -47,12 +65,13 @@ jobs:
                     field: name
                     value: "@${{ github.repository_owner }}/${{ github.event.repository.name }}"
 
-              - uses: JS-DevTools/npm-publish@v1
-                name: "Publish to GitHub Packages Registry"
-                with:
-                    token: ${{ secrets.GITHUB_TOKEN }}
-                    registry: https://npm.pkg.github.com
-                    check-version: true
-                    tag: ${{ env.TAG }}
+              - name: Publish to GitHub Packages Registry
+                run: |
+                  npm publish --access public ${{ env.LATEST_TAG }} --registry https://npm.pkg.github.com
+                  if [ -n "${{ env.SECONDARY_TAG }}" ]; then
+                    npm dist-tag add @${{ github.repository_owner }}/${{ github.event.repository.name }}@${{ github.event.release.tag_name }} ${{ env.SECONDARY_TAG }} --registry https://npm.pkg.github.com
+                  fi
+                env:
+                    NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
