@@ -169,11 +169,11 @@ export class FlagSetter extends XmlRepresentation {
 
     readonly flagInstance: FlagInstance<false, true>;
 
-    get flagName() { return this.flagInstance.name; }
-    set flagName(name: string) { this.flagInstance.name = name; }
+    get name() { return this.flagInstance.name; }
+    set name(name: string) { this.flagInstance.name = name; }
 
-    get flagValue() { return this.flagInstance.usedValue; }
-    set flagValue(value: string) { this.flagInstance.usedValue = value; }
+    get value() { return this.flagInstance.usedValue; }
+    set value(value: string) { this.flagInstance.usedValue = value; }
 
     constructor(flagInstance: FlagInstance<false, true>) {
         super();
