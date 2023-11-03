@@ -22,17 +22,14 @@ export class Group<TStrict extends boolean = true> extends XmlRepresentation<TSt
     static override readonly tagName = 'group';
     readonly tagName = 'group';
 
-    name: string;
-    behaviorType: TStrict extends true ? GroupBehaviorType : string;
-    sortingOrder: TStrict extends true ? SortingOrder : string;
-    options: Set<Option<TStrict>> = new Set();
 
-    constructor(name: string = '', behaviorType: TStrict extends true ? GroupBehaviorType : string = GroupBehaviorType.SelectExactlyOne, sortingOrder: TStrict extends true ? SortingOrder : string = SortingOrder.Ascending) {
+    constructor(
+        public name: string = '',
+        public behaviorType: TStrict extends true ? GroupBehaviorType : string = GroupBehaviorType.SelectExactlyOne,
+        public sortingOrder: TStrict extends true ? SortingOrder : string = SortingOrder.Ascending,
+        public options: Set<Option<TStrict>> = new Set(),
+    ) {
         super();
-
-        this.name = name;
-        this.behaviorType = behaviorType;
-        this.sortingOrder = sortingOrder;
     }
 
     asElement(document: Document): Element {

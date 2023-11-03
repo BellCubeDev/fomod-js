@@ -24,21 +24,14 @@ export class Option<TStrict extends boolean = true> extends XmlRepresentation<TS
     static override readonly tagName = 'plugin';
     readonly tagName = 'plugin';
 
-    name: string;
-    description: string;
-    image: string|null;
-
-    flagsToSet = new Set<FlagSetter>;
-
-    typeDescriptor: TypeDescriptor<TStrict>;
-
-    constructor(name: string = '', description: string = '', image: string|null = null, typeDescriptor?: TypeDescriptor<TStrict>) {
+    constructor(
+        public name: string = '',
+        public description: string = '',
+        public image: string|null = null,
+        public typeDescriptor: TypeDescriptor<TStrict> = new TypeDescriptor(),
+        public flagsToSet: Set<FlagSetter> = new Set()
+    ) {
         super();
-
-        this.name = name;
-        this.description = description;
-        this.image = image;
-        this.typeDescriptor = typeDescriptor ?? new TypeDescriptor();
     }
 
     asElement(document: Document): Element {
@@ -167,18 +160,15 @@ export class FlagSetter extends XmlRepresentation {
     static override readonly tagName = 'flag';
     readonly tagName = 'flag';
 
-    readonly flagInstance: FlagInstance<false, true>;
 
-    get flagName() { return this.flagInstance.name; }
-    set flagName(name: string) { this.flagInstance.name = name; }
+    get name() { return this.flagInstance.name; }
+    set name(name: string) { this.flagInstance.name = name; }
 
-    get flagValue() { return this.flagInstance.usedValue; }
-    set flagValue(value: string) { this.flagInstance.usedValue = value; }
+    get value() { return this.flagInstance.usedValue; }
+    set value(value: string) { this.flagInstance.usedValue = value; }
 
-    constructor(flagInstance: FlagInstance<false, true>) {
+    constructor(public readonly flagInstance: FlagInstance<false, true>) {
         super();
-
-        this.flagInstance = flagInstance;
     }
 
     asElement(document: Document): Element {
@@ -263,14 +253,12 @@ export class TypeDescriptor<TStrict extends boolean = true> extends XmlRepresent
     static override readonly tagName = 'typeDescriptor';
     readonly tagName = 'typeDescriptor';
 
-    /** The type name descriptor */
-    defaultTypeNameDescriptor: TypeNameDescriptor<'type'|'defaultType', TStrict, false>;
-    patterns: TypeDescriptorPattern<TStrict>[];
-
-    constructor(defaultType?: TypeNameDescriptor<'type'|'defaultType', TStrict, false>, patterns: TypeDescriptorPattern<TStrict>[] = []) {
+    constructor(
+        /** The type name descriptor */
+        public defaultTypeNameDescriptor: TypeNameDescriptor<'type'|'defaultType', TStrict, false> = new TypeNameDescriptor('defaultType', OptionType.Optional, false),
+        public patterns: TypeDescriptorPattern<TStrict>[] = [],
+    ) {
         super();
-        this.defaultTypeNameDescriptor = defaultType ?? new TypeNameDescriptor('defaultType', OptionType.Optional, false);
-        this.patterns = patterns;
     }
 
     asElement(document: Document): Element {
@@ -338,13 +326,11 @@ export class TypeDescriptorPattern<TStrict extends boolean = true> extends XmlRe
     static override readonly tagName = 'pattern';
     readonly tagName = 'pattern';
 
-    typeNameDescriptor: TypeNameDescriptor<'type', TStrict, true>;
-    dependencies: Dependencies<'dependencies', TStrict>;
-
-    constructor(targetType?: TypeNameDescriptor<'type', TStrict, true>, dependencies?: Dependencies<'dependencies', TStrict>) {
+    constructor(
+        public typeNameDescriptor: TypeNameDescriptor<'type', TStrict, true> = new TypeNameDescriptor('type', OptionType.Optional, true),
+        public dependencies: Dependencies<'dependencies', TStrict> = new Dependencies('dependencies'),
+    ) {
         super();
-        this.typeNameDescriptor = targetType ?? new TypeNameDescriptor('type', OptionType.Optional, true);
-        this.dependencies = dependencies ?? new Dependencies('dependencies');
     }
 
     asElement(document: Document): Element {
@@ -395,16 +381,19 @@ export class TypeDescriptorPattern<TStrict extends boolean = true> extends XmlRe
 
 export class TypeNameDescriptor<TTagName extends 'type'|'defaultType', TStrict extends boolean = true, TTagNameIsReadOnly extends boolean = true> extends XmlRepresentation<TStrict> {
     static override readonly tagName = ['type', 'defaultType'];
-    tagName: TTagNameIsReadOnly extends true ? TTagName : 'type'|'defaultType';
-    tagNameIsReadonly: TTagNameIsReadOnly;
 
-    targetType: TStrict extends true ? OptionType : string;
+    get tagName() { return this._tagName; }
+    set tagName(tagName: TTagNameIsReadOnly extends true ? TTagName : 'type'|'defaultType') {
+        if (!this.tagNameIsReadonly) this._tagName = tagName;
+        else throw new Error(`Attempted to set read-only property 'tagName' on a TypeNameDescriptor instance`);
+    }
 
-    constructor(tagName: TTagName, targetType: TStrict extends true ? OptionType : string = OptionType.Optional, tagNameIsReadonly: TTagNameIsReadOnly) {
+    constructor(
+        private _tagName: TTagNameIsReadOnly extends true ? TTagName : 'type'|'defaultType',
+        public targetType: TStrict extends true ? OptionType : string = OptionType.Optional,
+        public tagNameIsReadonly: TTagNameIsReadOnly
+    ) {
         super();
-        this.tagName = tagName;
-        this.tagNameIsReadonly = tagNameIsReadonly;
-        this.targetType = targetType;
     }
 
     asElement(document: Document): Element {

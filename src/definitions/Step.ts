@@ -17,15 +17,13 @@ export class Step<TStrict extends boolean = true> extends XmlRepresentation<TStr
     static override readonly tagName = 'installStep';
     readonly tagName = 'installStep';
 
-    name: string;
-    sortingOrder: TStrict extends true ? SortingOrder : string;
-    groups: Set<Group<TStrict>> = new Set();
 
-    constructor(name: string = '', sortingOrder: TStrict extends true ? SortingOrder : string = SortingOrder.Ascending) {
+    constructor(
+        public name: string = '',
+        public sortingOrder: TStrict extends true ? SortingOrder : string = SortingOrder.Ascending,
+        public groups: Set<Group<TStrict>> = new Set(),
+    ) {
         super();
-
-        this.name = name;
-        this.sortingOrder = sortingOrder;
     }
 
     asElement(document: Document): Element {

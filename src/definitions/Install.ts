@@ -51,36 +51,6 @@ export class Install<TStrict extends boolean = true> extends XmlRepresentation<T
     static override readonly tagName = ['file', 'folder'];
     tagName: 'file'|'folder' = 'file'; // Very interchangeable;
 
-    /** File path relative to the archive root to install this file from.
-     *
-     * Whether a folder is being installed or not will be determined by if the path ends with a slash. It **WILL** cause errors later down the line if the source and destination paths are not the same type.
-     */
-    fileSource: string;
-
-    /** File path relative to the archive root to install this file from. If no destination is provided, the file will be installed to the same path as the source.
-     *
-     * Whether a folder is being installed or not will be determined by if the path ends with a slash. It **WILL** cause errors later down the line if the source and destination paths are not the same type.
-     */
-    fileDestination: string | null;
-
-    /** Whether to always install the file, even if the user has not selected it.
-     *
-     * @deprecated Has inconsistent behavior between mod managers. Instead, you might consider removing the `dependencies` object instead. Included for completeness.
-     */
-    alwaysInstall: TStrict extends true ? `${boolean}` : string = 'false';
-
-    /** Whether to always install the file if it is considered "usable"
-     *
-     * @deprecated Has inconsistent behavior between mod managers. Instead, you might consider duplicating the `dependencies` object to specify when a file should be installed. Included for completeness.
-     */
-    installIfUsable: TStrict extends true ? `${boolean}` : string = 'false';
-
-    /** The priority of this file install. Higher priority files will be installed first. Must be an integer.
-     *
-     * Defaults to `0`. If the value is `0`, the value will not be written to the element.
-     */
-    priority: TStrict extends true ? `${bigint}` : string;
-
 
     /** A list of documents this install is a part of */
     documents: Set<Document> = new Set();
@@ -112,12 +82,40 @@ export class Install<TStrict extends boolean = true> extends XmlRepresentation<T
         return null;
     }
 
-    constructor(fileSource: string = '', fileDestination: string | null = null, priority: TStrict extends true ? `${bigint}` : string, document?: Document) {
-        super();
+    constructor(
+        /** File path relative to the archive root to install this file from.
+         *
+         * Whether a folder is being installed or not will be determined by if the path ends with a slash. It **WILL** cause errors later down the line if the source and destination paths are not the same type.
+         */
+        public fileSource: string = '',
 
-        this.fileSource = fileSource;
-        this.fileDestination = fileDestination;
-        this.priority = priority;
+        /** File path relative to the archive root to install this file from. If no destination is provided, the file will be installed to the same path as the source.
+         *
+         * Whether a folder is being installed or not will be determined by if the path ends with a slash. It **WILL** cause errors later down the line if the source and destination paths are not the same type.
+         */
+        public fileDestination: string | null = null,
+
+        /** The priority of this file install. Higher priority files will be installed first. Must be an integer.
+         *
+         * Defaults to `0`. If the value is `0`, the value will not be written to the element.
+        */
+       public priority: TStrict extends true ? `${bigint}` | '' : string = '',
+
+        document?: Document,
+
+        /** Whether to always install the file if it is considered "usable"
+         *
+         * @deprecated Has inconsistent behavior between mod managers. Instead, you might consider duplicating the `dependencies` object to specify when a file should be installed. Included for completeness.
+         */
+        public installIfUsable: TStrict extends true ? `${boolean}` : string = 'false',
+
+        /** Whether to always install the file, even if the user has not selected it.
+         *
+         * @deprecated Has inconsistent behavior between mod managers. Instead, you might consider removing the `dependencies` object instead. Included for completeness.
+         */
+        public alwaysInstall: TStrict extends true ? `${boolean}` : string = 'false',
+    ) {
+        super();
 
         if (document) this.attachDocument(document);
     }
@@ -281,9 +279,9 @@ export class InstallPatternFilesWrapper<TStrict extends boolean = true> extends 
     static override tagName = 'files';
     readonly tagName = 'files';
 
-    installs: Set<Install<TStrict>> = new Set();
-
-    constructor() {
+    constructor(
+        public installs: Set<Install<TStrict>> = new Set(),
+    ) {
         super();
     }
 
@@ -367,10 +365,10 @@ export class InstallPattern<TStrict extends boolean = true> extends XmlRepresent
     static override tagName = 'pattern';
     readonly tagName = 'pattern';
 
-    dependencies: Dependencies<'dependencies', TStrict>|null = null;
-    filesWrapper: InstallPatternFilesWrapper = new InstallPatternFilesWrapper();
-
-    constructor() {
+    constructor(
+        public dependencies: Dependencies<'dependencies', TStrict>|null = null,
+        public filesWrapper: InstallPatternFilesWrapper = new InstallPatternFilesWrapper(),
+    ) {
         super();
     }
 

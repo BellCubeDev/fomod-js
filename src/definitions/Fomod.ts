@@ -8,7 +8,7 @@ import { ElementObjectMap, Verifiable, XmlRepresentation } from "./_core";
 export interface ModuleImageMetadata<TStrict extends boolean = true> {
     showFade?: TStrict extends true ? `${boolean}` : string;
     showImage?: TStrict extends true ? `${boolean}` : string;
-    height?: TStrict extends true ? `${bigint}` : string;
+    height?: TStrict extends true ? `${bigint}`|'' : string;
 }
 
 export interface ModuleNameMetadata<TStrict extends boolean = true> {
@@ -35,43 +35,43 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
     static override readonly tagName = 'config';
     readonly tagName = 'config';
 
-    /** The name of the FOMOD. Must be specified in the installer however can be an empty string. */
-    moduleName: string;
 
-    /** Unused metadata for `moduleName`. Included for completeness.
-     *
-     * @deprecated
-     */
-    moduleNameMetadata: (TStrict extends true ? Record<never, string> : Record<string, string>) & ModuleNameMetadata<TStrict> = {};
 
-    /** Default image for the FOMOD. Not required and will be removed if an empty string is specified. */
-    moduleImage: string|null;
 
-    /** Unused metadata for `moduleImage`. Included for completeness.
-     *
-     * @deprecated
-     */
-    moduleImageMetadata: (TStrict extends true ? Record<never, string> : Record<Exclude<string, 'path'>, string>) & ModuleImageMetadata<TStrict> = {};
+    constructor(
+        /** The name of the FOMOD. Must be specified in the installer however can be an empty string.
+         *
+         * Note that Info.xml also has its own name.
+        */
+        public moduleName: string = '',
+        public moduleImage: string|null = null,
+        /** Dependencies required for this FOMOD to be shown to the user.
+         *
+         * Mod managers will show the user an error message if attempting to install a FOMOD that does not meet the requirements specified here.
+         */
+        public moduleDependencies: Dependencies<'moduleDependencies', TStrict> = new Dependencies<'moduleDependencies', TStrict>('moduleDependencies'),
+        /** Top-level file installs for the FOMOD
+         *
+         * Covers both the `requiredInstallFiles` and `conditionalFileInstalls` tags.
+         */
+        public installs: Set<Install<TStrict> | InstallPattern<TStrict>> = new Set(),
 
-    /** Dependencies required for this FOMOD to be shown to the user.
-     *
-     * Mod managers will show the user an error message if attempting to install a FOMOD that does not meet the requirements specified here.
-     */
-    moduleDependencies: Dependencies<'moduleDependencies', TStrict>;
+        public steps: Set<Step<TStrict>> = new Set(),
 
-    steps = new Set<Step<TStrict>>();
+        /** Unused metadata for `moduleName`. Included for completeness.
+         *
+         * @deprecated
+         */
+        public moduleNameMetadata: (TStrict extends true ? Record<never, string> : Record<string, string>) & ModuleNameMetadata<TStrict> = {},
 
-    /** Top-level file installs for the FOMOD
-     *
-     * Covers both the `requiredInstallFiles` and `conditionalFileInstalls` tags.
-     */
-    installs = new Set<Install<TStrict> | InstallPattern<TStrict>>();
+        /** Unused metadata for `moduleImage`. Included for completeness.
+         *
+         * @deprecated
+         */
+        public moduleImageMetadata: (TStrict extends true ? Record<never, string> : Record<Exclude<string, 'path'>, string>) & ModuleImageMetadata<TStrict> = {},
 
-    constructor(moduleName: string = '', moduleImage: string|null = null, moduleDependencies?: Dependencies<'moduleDependencies', TStrict>) {
+    ) {
         super();
-        this.moduleName = moduleName;
-        this.moduleImage = moduleImage;
-        this.moduleDependencies = moduleDependencies ?? new Dependencies<'moduleDependencies', TStrict>('moduleDependencies');
     }
 
     isValid(): this is Fomod<true> {
@@ -229,4 +229,3 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
         this.installs.forEach(install => install.decommission?.(currentDocument!));
     }
 }
-

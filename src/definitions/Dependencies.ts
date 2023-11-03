@@ -37,18 +37,13 @@ export abstract class Dependency<TStrict extends boolean = boolean> extends XmlR
 
 export class Dependencies<TTagName extends 'moduleDependencies'|'dependencies', TStrict extends boolean = true> extends Dependency {
     static override readonly tagName = ['moduleDependencies', 'dependencies'];
-    readonly tagName: TTagName;
 
-    operator: TStrict extends true ? 'And' | 'Or' : string;
-    dependencies: Set<Dependency<TStrict>>;
-
-    constructor(tagName: TTagName, operator?: TStrict extends true ? 'And' | 'Or' : string, dependencies?: Set<Dependency<TStrict>>) {
+    constructor(
+        public readonly tagName: TTagName,
+        public operator: TStrict extends true ? 'And' | 'Or' : string = 'And',
+        public dependencies: Set<Dependency<TStrict>> = new Set()
+    ) {
         super();
-
-        this.tagName = tagName;
-
-        this.operator = operator ?? 'And';
-        this.dependencies = dependencies ?? new Set();
     }
 
     isValid(): this is Dependencies<TTagName, true> {
@@ -105,13 +100,8 @@ export class FileDependency<TStrict extends boolean = true> extends Dependency<T
     static override readonly tagName = 'fileDependency';
     readonly tagName = 'fileDependency';
 
-    filePath: string;
-    desiredState: TStrict extends true ? 'Active'|'Inactive'|'Missing' : string;
-
-    constructor(filePath?: string, desiredState?: TStrict extends true ? 'Active'|'Inactive'|'Missing' : string) {
+    constructor(public filePath: string = '', public desiredState: TStrict extends true ? 'Active'|'Inactive'|'Missing' : string = 'Active') {
         super();
-        this.filePath = filePath ?? '';
-        this.desiredState = desiredState ?? 'Active';
     }
 
     isValid(): this is FileDependency<true> {
@@ -225,15 +215,14 @@ export class FlagDependency extends Dependency {
  * Version dependencies work as a minimum value dependency. [SemVer](https://semver.org/) is used for comparisons.
  */
 export abstract class VersionDependency extends Dependency {
-    /** The version to use in the comparison
-     *
-     * Version dependencies work as a minimum value dependency. [SemVer](https://semver.org/) is used for comparisons.
-    */
-    desiredVersion: string;
-
-    constructor(desiredVersion?: string) {
+    constructor(
+        /** The version to use in the comparison
+         *
+         * Version dependencies work as a minimum value dependency. [SemVer](https://semver.org/) is used for comparisons.
+        */
+        public desiredVersion: string = '',
+    ) {
         super();
-        this.desiredVersion = desiredVersion ?? '';
     }
 
     isValid() { return true; }

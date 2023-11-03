@@ -12,12 +12,7 @@ interface FlagInstances {
 export const FlagInstancesByDocument = new WeakMap<Document, FlagInstances>();
 
 export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption extends true ? false : boolean)> {
-    private _name: TIsOption extends true ? Option : string;
 
-    /** The name of the flag this instance refers to
-     *
-     * Automatically updates the flag instance map when changed.
-    */
     get name() { return this._name; }
     set name(value: TIsOption extends true ? Option : string) {
         if (this.name === value) {
@@ -43,31 +38,37 @@ export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption e
         this._name = value;
     }
 
-
-    /** The value being checked/set by this instance
-     *
-     * When the flag represents a traditional key-value, this will be a string. When the flag represents an option's select state, this will be a boolean.
-    */
-    usedValue: TIsOption extends true ? boolean : string;
-
-    /** Whether this instance is reading or writing the flag value
-     *
-     * When the flag represents an option's select state, this mist be `false` (since you cannot set the value of an option's select state)
-    */
-    write: TWrite;
-
     /** A list of documents this flag is a part of */
     documents: Set<Document> = new Set();
 
-    constructor(name: TIsOption extends true ? never : string, usedValue: string, write: TWrite, document?: Document)
-    constructor(name: TIsOption extends true ? Option : never, usedValue: boolean, write: TWrite, document?: Document)
-    constructor(name: TIsOption extends true ? Option : string, usedValue: TIsOption extends true? boolean : string, write: TWrite, document?: Document) {
-        if (typeof name === 'string' && typeof usedValue !== 'string') throw new Error(`FlagInstance's 'usedValue' property must be a string when name is a string`);
-        else if (name instanceof Option && typeof usedValue !== 'boolean') throw new Error(`FlagInstance's 'usedValue' property must be a boolean when name is an Option`);
+    constructor(_name: TIsOption extends true ? never : string, usedValue: string, write: TWrite, document?: Document)
+    constructor(_name: TIsOption extends true ? Option : never, usedValue: boolean, write: TWrite, document?: Document)
+    constructor(
+        /** The name of the flag this instance refers to
+         *
+         * Automatically updates the flag instance map when changed.
+        */
+        private _name: TIsOption extends true ? Option : string,
 
-        this._name = name;
+
+        /** The value being checked/set by this instance
+         *
+         * When the flag represents a traditional key-value, this will be a string. When the flag represents an option's select state, this will be a boolean.
+         */
+        public usedValue: TIsOption extends true? boolean : string,
+
+        /** Whether this instance is reading or writing the flag value
+         *
+         * When the flag represents an option's select state, this mist be `false` (since you cannot set the value of an option's select state)
+         */
+        public write: TWrite,
+
+        document?: Document
+    ) {
+        if (typeof name === 'string' && typeof usedValue !== 'string') throw new Error(`FlagInstance's 'usedValue' property must be a string when name is a string`);
+        else if (_name instanceof Option && typeof usedValue !== 'boolean') throw new Error(`FlagInstance's 'usedValue' property must be a boolean when name is an Option`);
+
         this.usedValue = usedValue as TIsOption extends true ? boolean : string;
-        this.write = write;
 
         if (document) this.attachDocument(document);
     }

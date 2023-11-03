@@ -31,11 +31,10 @@ export class FomodInfo extends XmlRepresentation<boolean> {
     static override readonly tagName = 'fomod';
     readonly tagName = 'fomod';
 
-    data: FomodInfoData;
-
-    constructor(data: FomodInfoData = {}) {
+    constructor(
+        public data: FomodInfoData = {}
+    ) {
         super();
-        this.data = data;
     }
 
     isValid() { return true; }
