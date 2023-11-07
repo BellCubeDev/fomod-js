@@ -2,7 +2,7 @@ import { getOrCreateElementByTagName } from "../DomUtils";
 import { Dependencies } from "./Dependencies";
 import { Install, InstallPattern } from "./Install";
 import { InvalidityReason, InvalidityReport } from "./InvalidityReporting";
-import { Step } from "./Step";
+import { SortingOrder, Step } from "./Step";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "./_core";
 
 export interface ModuleImageMetadata<TStrict extends boolean = true> {
@@ -55,6 +55,8 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
          * Covers both the `requiredInstallFiles` and `conditionalFileInstalls` tags.
          */
         public installs: Set<Install<TStrict> | InstallPattern<TStrict>> = new Set(),
+
+        public sortingOrder: TStrict extends true ? SortingOrder : string = SortingOrder.Ascending,
 
         public steps: Set<Step<TStrict>> = new Set(),
 
@@ -178,6 +180,7 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
         const stepContainer = getOrCreateElementByTagName(element, 'installSteps');
         if (stepContainer.children.length === 0) stepContainer.remove();
         else {
+            stepContainer.setAttribute('order', this.sortingOrder);
             for (const step of this.steps) stepContainer.appendChild(step.asElement(document));
             element.appendChild(stepContainer);
         }
