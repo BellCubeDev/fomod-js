@@ -156,17 +156,25 @@ const testModule = parseTag`
 `;
 
 const fomod = Fomod.parse(testModule);
+const cleanElement = fomod.asElement(parseTag`<p>`.ownerDocument);
+const cleanStringified = cleanElement.outerHTML;
 
-test('Fomod Has Correct Name', () => {
-    expect(fomod.moduleName).toBe('The BANANA Mod');
+describe('Fomod/ModuleConfig', () => {
+
+    test('Fomod Has Correct Name', () => {
+        expect(fomod.moduleName).toBe('The BANANA Mod');
+    });
+
+    test('Fomod Has Correct Image', () => {
+        expect(fomod.moduleImage).toBe('fomod\\images\\banana.jpg');
+    });
+
+    test('Fomod Is Valid', () => {
+        const reason = fomod.reasonForInvalidity();
+        expect(reason).toBe(null);
+    });
+
+    test('Fomod Has Install Steps', () => {
+        expect(Array.from(cleanElement.children).findIndex(e => e.tagName === 'installSteps')).toBeGreaterThan(-1);
+    });
 });
-
-test('Fomod Has Correct Image', () => {
-    expect(fomod.moduleImage).toBe('fomod\\images\\banana.jpg');
-});
-
-test('Fomod Is Valid', () => {
-    const reason = fomod.reasonForInvalidity();
-    expect(reason).toBe(null);
-});
-

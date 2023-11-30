@@ -38,8 +38,6 @@ step.groups.add(group);
 
 fomod.steps.add(step);
 
-// Logging:    InvalidStateError: Invalid attribute localName value
-
 test('Fomod Is Valid', () => testValidity(fomod));
 
 

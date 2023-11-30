@@ -177,11 +177,13 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
         if (requiredInstallContainer.children.length === 0) requiredInstallContainer.remove();
         else element.appendChild(requiredInstallContainer);
 
+        
         const stepContainer = getOrCreateElementByTagName(element, 'installSteps');
+        for (const step of this.steps) stepContainer.appendChild(step.asElement(document));
+
         if (stepContainer.children.length === 0) stepContainer.remove();
         else {
             stepContainer.setAttribute('order', this.sortingOrder);
-            for (const step of this.steps) stepContainer.appendChild(step.asElement(document));
             element.appendChild(stepContainer);
         }
 
