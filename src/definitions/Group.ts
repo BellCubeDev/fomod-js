@@ -87,7 +87,7 @@ export class Group<TStrict extends boolean = true> extends XmlRepresentation<TSt
         const sortingOrder = optionsContainer.getAttribute('order');
         if (sortingOrder !== null) group.sortingOrder = sortingOrder;
 
-        for (const optionElement of optionsContainer.querySelectorAll('option')) {
+        for (const optionElement of optionsContainer.querySelectorAll('plugin')) {
             const option = Option.parse(optionElement);
             if (option !== null) group.options.add(option);
         }

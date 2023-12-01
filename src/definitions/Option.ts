@@ -29,7 +29,8 @@ export class Option<TStrict extends boolean = true> extends XmlRepresentation<TS
         public description: string = '',
         public image: string|null = null,
         public typeDescriptor: TypeDescriptor<TStrict> = new TypeDescriptor(),
-        public flagsToSet: Set<FlagSetter> = new Set()
+        public flagsToSet: Set<FlagSetter> = new Set(),
+        public installsToSet: InstallPattern = new InstallPattern(),
     ) {
         super();
     }
@@ -113,7 +114,7 @@ export class Option<TStrict extends boolean = true> extends XmlRepresentation<TS
         if (name === null) return null;
 
         const description = element.getElementsByTagName('description')[0]?.textContent ?? '';
-        const image = element.getElementsByTagName('image')[0]?.textContent ?? null;
+        const image = element.getElementsByTagName('image')[0]?.getAttribute('path') ?? null;
 
         const flagsToSet = new Set<FlagSetter>();
         const conditionFlags = element.getElementsByTagName('conditionFlags')[0];
@@ -143,6 +144,7 @@ export class Option<TStrict extends boolean = true> extends XmlRepresentation<TS
 
         const option = new Option<false>(name, description, image, typeDescriptor);
         option.flagsToSet = flagsToSet;
+        option.installsToSet = installsToSet;
 
         const dependencyOnThis = new FlagDependency(option, true);
         installsToSet.dependencies?.dependencies.add(dependencyOnThis);
@@ -448,7 +450,7 @@ export class TypeNameDescriptor<TTagName extends 'type'|'defaultType', TStrict e
 
     // Overwrite to handle the interchangeable `file` and `folder` tags
     override assignElement(element: Element) {
-        ensureXmlDoctype(document);
+        ensureXmlDoctype(element.ownerDocument);
 
         // @ts-ignore: The logic is fine but TypeScript can't figure it out
         if (!this.tagNameIsReadonly && (element.tagName === 'type' || element.tagName === 'defaultType')) this.tagName = element.tagName;

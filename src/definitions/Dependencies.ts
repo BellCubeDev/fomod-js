@@ -158,14 +158,13 @@ export class FlagDependency extends Dependency {
     get desiredValue() { return this.flagInstance.usedValue; }
     set desiredValue(value: string|boolean) { this.flagInstance.usedValue = value; }
 
-    constructor()
-    constructor(flagName: string, desiredValue: string)
+    constructor(flagName?: string, desiredValue?: string)
     constructor(flagName: Option<boolean>, desiredValue: boolean)
     constructor(flagName: string|Option<boolean> = '', desiredValue: string|boolean = '') {
         super();
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        this.flagInstance = new FlagInstance(flagName as any ?? '', desiredValue as any, false);
+        this.flagInstance = new FlagInstance(flagName as any, desiredValue as any, false);
     }
 
     isValid() { return true; }

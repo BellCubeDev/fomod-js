@@ -65,7 +65,7 @@ export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption e
 
         document?: Document
     ) {
-        if (typeof name === 'string' && typeof usedValue !== 'string') throw new Error(`FlagInstance's 'usedValue' property must be a string when name is a string`);
+        if (typeof _name === 'string' && typeof usedValue !== 'string') throw new Error(`FlagInstance's 'usedValue' property must be a string when name is a string`);
         else if (_name instanceof Option && typeof usedValue !== 'boolean') throw new Error(`FlagInstance's 'usedValue' property must be a boolean when name is an Option`);
 
         this.usedValue = usedValue as TIsOption extends true ? boolean : string;
