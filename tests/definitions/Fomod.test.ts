@@ -1,6 +1,7 @@
 import { Fomod } from '../../src';
 
 import { parseTag } from '../testUtils';
+import { Install } from '../../src/definitions/Install';
 
 
 
@@ -25,7 +26,9 @@ const testModule = parseTag`
     </moduleDependencies>
 
     <requiredInstallFiles>
-
+        <folder source="some-folder-1" destination="some-other-folder-1" />
+        <folder source="some-folder-2" destination="some-other-folder-2" />
+        <file source="some-file-1" destination="some-other-file-1" />
     </requiredInstallFiles>
 
     <installSteps>
@@ -176,5 +179,34 @@ describe('Fomod/ModuleConfig', () => {
 
     test('Fomod Has Install Steps', () => {
         expect(Array.from(cleanElement.children).findIndex(e => e.tagName === 'installSteps')).toBeGreaterThan(-1);
+    });
+
+    describe('requiredInstallFiles', () => {
+        test('Fomod Has Required Install Files', () => {
+            expect(Array.from(cleanElement.children).findIndex(e => e.tagName === 'requiredInstallFiles')).toBeGreaterThan(-1);
+        });
+
+        test('We Have Files Set In The Fomod', () => {
+            expect(fomod.installs.size).toBe(3);
+        });
+
+        test('We Have The Right Sources', () => {
+            const installsArr = Array.from(fomod.installs);
+
+            const f0 = installsArr[0];
+            expect(f0).toBeInstanceOf(Install);
+            if (   !(f0 instanceof Install)   ) return;
+            expect(f0.fileSource).toBe('some-folder-1/');
+
+            const f1 = installsArr[1];
+            expect(f1).toBeInstanceOf(Install);
+            if (   !(f1 instanceof Install)   ) return;
+            expect(f1.fileSource).toBe('some-folder-2/');
+
+            const f2 = installsArr[2];
+            expect(f2).toBeInstanceOf(Install);
+            if (   !(f2 instanceof Install)   ) return;
+            expect(f2.fileSource).toBe('some-file-1');
+        });
     });
 });

@@ -177,7 +177,7 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
         if (requiredInstallContainer.children.length === 0) requiredInstallContainer.remove();
         else element.appendChild(requiredInstallContainer);
 
-        
+
         const stepContainer = getOrCreateElementByTagName(element, 'installSteps');
         for (const step of this.steps) stepContainer.appendChild(step.asElement(document));
 
@@ -208,17 +208,17 @@ export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TSt
 
         fomod.moduleImageMetadata.path = '';
 
-        fomod.sortingOrder = element.querySelector('installSteps')?.getAttribute('order') ?? SortingOrder.Ascending;
-
         const moduleDependencies = element.querySelector('moduleDependencies');
         if (moduleDependencies) fomod.moduleDependencies = Dependencies.parse(moduleDependencies);
 
-        for (const install of element.querySelectorAll(':scope > requiredInstallFiles > install')) {
+        for (const install of element.querySelectorAll(':scope > requiredInstallFiles > :is(file, folder)')) {
             const parsed = Install.parse(install);
             if (parsed) fomod.installs.add(parsed);
         }
 
-        for (const install of element.querySelectorAll(':scope > conditionalFileInstalls > install')) {
+        fomod.sortingOrder = element.querySelector('installSteps')?.getAttribute('order') ?? SortingOrder.Ascending;
+
+        for (const install of element.querySelectorAll(':scope > conditionalFileInstalls > pattern')) {
             const parsed = Install.parse(install);
             if (parsed) fomod.installs.add(parsed);
         }
