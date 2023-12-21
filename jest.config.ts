@@ -6,6 +6,7 @@ const config: JestConfigWithTsJest = {
     displayName: 'fomod',
     verbose: true,
     injectGlobals: true,
+    setupFilesAfterEnv: ["jest-extended/all"]
 };
 
 export default config;

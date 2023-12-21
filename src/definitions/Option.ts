@@ -143,6 +143,7 @@ export class Option<TStrict extends boolean = true> extends XmlRepresentation<TS
         }
 
         const option = new Option<false>(name, description, image, typeDescriptor);
+        option.assignElement(element);
         option.flagsToSet = flagsToSet;
         option.installsToSet = installsToSet;
 

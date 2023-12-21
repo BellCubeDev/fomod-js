@@ -42,7 +42,7 @@ export abstract class XmlRepresentation<TStrict extends boolean = true> extends 
     assignElement(element: Element) {
         const document = element.ownerDocument;
 
-        ensureXmlDoctype(document);
+        ensureXmlDoctype(element.ownerDocument);
 
         if (element.tagName !== this.tagName && element.tagName !== this.tagName.toUpperCase()) throw new Error(`Cannot assign an element with tag name "${element.tagName}" to a class with tag name "${this.tagName}".`);
 

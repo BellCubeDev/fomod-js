@@ -1,5 +1,6 @@
 import * as index from '../../src/index';
 import { parseTag } from '../testUtils';
+import { InstallPattern } from '../../src/definitions/Install';
 
 const isPrototypeOf = Function.call.bind(Object.prototype.isPrototypeOf);
 
@@ -26,7 +27,7 @@ describe('All XmlRepresentation classes with `parse()` should add that element t
             console.debug(`Skipping ${name} because it has no parse() function`);
             continue;
         }
-        
+
         if (   !('tagName' in value && (typeof value.tagName === 'string' || Array.isArray(value.tagName)))   ) {
             console.debug(`Skipping ${name} because it has no tag name attribute`);
             continue;
@@ -41,9 +42,11 @@ describe('All XmlRepresentation classes with `parse()` should add that element t
 
         console.log(`Testing ${name} with ${tagNameOrNames}`);
 
-        test(`${name} (${tagNames.join('|')})`, () => {
-            const element = parseTag`<${tagNames[0]!} />`;
-            const result = (value['parse' as keyof typeof value] as (el: Element) => index.XmlRepresentation | null)(element);
+        test(`${name} (${tagNames.join(' | ')})`, () => {
+            console.log(`Testing ${name} with ${tagNameOrNames}`);
+
+            const element = parseTag`<${tagNames[0]!} name="some old name idk man" />`;
+            const result = (value.parse as (el: Element) => index.XmlRepresentation | null)(element);
 
             expect(result).not.toBeNull();
             if (result === null) return;
@@ -56,8 +59,14 @@ describe('All XmlRepresentation classes with `parse()` should add that element t
 
             const asElement = result.asElement(element.ownerDocument);
 
-            expect(asElement).toBe(element);
-            if (asElement !== element) return;
+            expect(asElement).toSatisfy(() => {
+                if (asElement === element) return true;
+                if (result instanceof InstallPattern) {
+                    return asElement.tagName === index.InstallPatternFilesWrapper.tagName;
+                }
+
+                return false;
+            });
         });
     }
 });

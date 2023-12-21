@@ -1,7 +1,7 @@
 import { ensureXmlDoctype } from "../DomUtils";
 import { Dependencies } from "./Dependencies";
 import { InvalidityReason, InvalidityReport } from "./InvalidityReporting";
-import { Verifiable, XmlRepresentation } from "./_core";
+import { ElementObjectMap, Verifiable, XmlRepresentation } from "./_core";
 
 
 
@@ -156,6 +156,7 @@ export class Install<TStrict extends boolean = true> extends XmlRepresentation<T
         }
 
         const install = new Install<boolean>( source, destination, element.getAttribute('priority') ?? '0' );
+        install.assignElement(element);
 
         install.alwaysInstall = element.getAttribute('alwaysInstall') ?? 'false';
         install.installIfUsable = element.getAttribute('installIfUsable') ?? 'false';
@@ -185,7 +186,7 @@ export class Install<TStrict extends boolean = true> extends XmlRepresentation<T
 
     // Overwrite to handle the interchangeable `file` and `folder` tags
     override assignElement(element: Element) {
-        ensureXmlDoctype(document);
+        ensureXmlDoctype(element.ownerDocument);
 
         if (element.tagName === 'file' || element.tagName === 'folder') this.tagName = element.tagName;
         super.assignElement(element);
@@ -301,6 +302,22 @@ export class InstallPatternFilesWrapper<TStrict extends boolean = true> extends 
         return true;
     }
 
+    static override parse(element: Element): InstallPatternFilesWrapper<boolean> {
+        const existing = ElementObjectMap.get(element);
+        if (existing && existing instanceof this) return existing;
+
+        const installs = new Set<Install<boolean>>();
+
+        for (const child of element.children) {
+            const install = Install.parse(child);
+            installs.add(install);
+        }
+
+        const obj = new InstallPatternFilesWrapper(installs);
+        obj.assignElement(element);
+        return obj;
+    }
+
     reasonForInvalidity(...tree: Omit<Verifiable<false>, 'isValid' | 'reasonForInvalidity'>[]): InvalidityReport | null {
         tree.push(this);
 
@@ -389,6 +406,21 @@ export class InstallPattern<TStrict extends boolean = true> extends XmlRepresent
         return this.filesWrapper.isValid() && (this.dependencies ? this.dependencies.isValid() : true);
     }
 
+    static override parse(element: Element): InstallPattern<boolean> {
+        const existing = ElementObjectMap.get(element);
+        if (existing && existing instanceof this) return existing;
+
+        const dependenciesElement = element.querySelector('dependencies');
+        const dependencies = dependenciesElement ? Dependencies.parse<'dependencies'>(dependenciesElement) : undefined;
+
+        const filesElement = element.querySelector('files');
+        const filesWrapper = filesElement ? InstallPatternFilesWrapper.parse(filesElement) : undefined;
+
+        const obj = new InstallPattern(dependencies, filesWrapper);
+        obj.assignElement(element);
+        return obj;
+    }
+
     reasonForInvalidity(...tree: Omit<Verifiable<false>, 'isValid' | 'reasonForInvalidity'>[]): InvalidityReport | null {
         tree.push(this);
 
@@ -399,6 +431,7 @@ export class InstallPattern<TStrict extends boolean = true> extends XmlRepresent
 
         if (this.dependencies && !this.dependencies.isValid()) {
             const reason = this.dependencies.reasonForInvalidity(...tree);
+
             if (reason) return reason;
         }
 
