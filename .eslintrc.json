@@ -70,6 +70,6 @@
       "func-style": "off",
       "@typescript-eslint/no-this-alias": "off",
       "github/array-foreach": "off",
-      "no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off"
   }
 }

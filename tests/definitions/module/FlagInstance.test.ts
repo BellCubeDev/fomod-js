@@ -1,4 +1,4 @@
-import { FlagInstance, FlagInstancesByDocument } from "../../src";
+import { FlagInstance, FlagInstancesByDocument } from "../../../src";
 
 describe('Basic Flag Instance', () => {
     const obj = new FlagInstance('apple', 'banana', true);

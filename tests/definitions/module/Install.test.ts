@@ -1,6 +1,6 @@
-import {parseTag, testValidity} from '../testUtils';
+import {parseTag, testValidity} from '../../testUtils';
 
-import { Install } from '../../src';
+import { Install } from '../../../src';
 
 describe('Typical File Install', () => {
     const obj = Install.parse(parseTag`<file source="apple.txt" destination="banana.txt" />`);

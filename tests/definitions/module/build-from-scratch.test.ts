@@ -1,5 +1,5 @@
-import { Dependencies, Fomod, GameVersionDependency, Group, GroupBehaviorType, Install, InstallPattern, Option, ScriptExtenderVersionDependency, SortingOrder as SortingOrder, Step, TagName } from "../src";
-import { parseTag, testValidity } from "./testUtils";
+import { Dependencies, Fomod, GameVersionDependency, Group, GroupBehaviorType, Install, InstallPattern, Option, ScriptExtenderVersionDependency, SortingOrder as SortingOrder, Step, TagName } from "../../../src";
+import { parseTag, testValidity } from "../../testUtils";
 
 const fomod = new Fomod('That Test Fomod', 'someImage.gif');
 

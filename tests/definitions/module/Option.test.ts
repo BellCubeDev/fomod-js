@@ -1,5 +1,5 @@
-import { Option, OptionType, TagName, TypeDescriptor, TypeNameDescriptor } from "../../src";
-import { parseTag, testValidity } from "../testUtils";
+import { Option, OptionType, TagName, TypeDescriptor, TypeNameDescriptor } from "../../../src";
+import { parseTag, testValidity } from "../../testUtils";
 
 describe('Basic Option', () => {
     const obj = new Option('apple', 'banana', 'someImage.png');

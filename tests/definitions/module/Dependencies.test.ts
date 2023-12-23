@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { FileDependency, FlagDependency, GameVersionDependency, InvalidityReason, ModManagerVersionDependency, ScriptExtenderVersionDependency, VersionDependency } from "../../src";
-import { parseTag, testValidity } from "../testUtils";
+import { FileDependency, FlagDependency, GameVersionDependency, InvalidityReason, ModManagerVersionDependency, ScriptExtenderVersionDependency, VersionDependency } from "../../../src";
+import { parseTag, testValidity } from "../../testUtils";
 
 describe('Flag Dependencies', () => {
     const flagName = 'Some Flag 01';
