@@ -35,7 +35,7 @@ export abstract class Dependency<TStrict extends boolean = boolean> extends XmlR
 
 
 
-export class Dependencies<TTagName extends 'moduleDependencies'|'dependencies', TStrict extends boolean = true> extends Dependency {
+export class Dependencies<TTagName extends 'moduleDependencies'|'dependencies', TStrict extends boolean> extends Dependency {
     static override readonly tagName = ['moduleDependencies', 'dependencies'];
 
     constructor(
@@ -96,7 +96,7 @@ export class Dependencies<TTagName extends 'moduleDependencies'|'dependencies', 
 
 
 
-export class FileDependency<TStrict extends boolean = true> extends Dependency<TStrict> {
+export class FileDependency<TStrict extends boolean> extends Dependency<TStrict> {
     static override readonly tagName = 'fileDependency';
     readonly tagName = 'fileDependency';
 

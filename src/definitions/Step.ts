@@ -13,7 +13,7 @@ export enum SortingOrder {
     Explicit = 'Explicit'
 }
 
-export class Step<TStrict extends boolean = true> extends XmlRepresentation<TStrict> {
+export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override readonly tagName = 'installStep';
     readonly tagName = 'installStep';
 

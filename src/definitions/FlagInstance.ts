@@ -2,7 +2,7 @@ import { Option } from './Option';
 
 interface FlagInstances {
     all: Set<FlagInstance<boolean, boolean>>;
-    byName: Map<string|Option, Set<FlagInstance<boolean, boolean>>>;
+    byName: Map<string|Option<boolean>, Set<FlagInstance<boolean, boolean>>>;
 }
 
 /** A [weak map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) of documents to flag instances within that document.
@@ -14,7 +14,7 @@ export const FlagInstancesByDocument = new WeakMap<Document, FlagInstances>();
 export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption extends true ? false : boolean)> {
 
     get name() { return this._name; }
-    set name(value: TIsOption extends true ? Option : string) {
+    set name(value: TIsOption extends true ? Option<boolean> : string) {
         if (this.name === value) {
             this._name = value;
             return;
@@ -42,13 +42,13 @@ export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption e
     documents: Set<Document> = new Set();
 
     constructor(_name: TIsOption extends true ? never : string, usedValue: string, write: TWrite, document?: Document)
-    constructor(_name: TIsOption extends true ? Option : never, usedValue: boolean, write: TWrite, document?: Document)
+    constructor(_name: TIsOption extends true ? Option<boolean> : never, usedValue: boolean, write: TWrite, document?: Document)
     constructor(
         /** The name of the flag this instance refers to
          *
          * Automatically updates the flag instance map when changed.
         */
-        private _name: TIsOption extends true ? Option : string,
+        private _name: TIsOption extends true ? Option<boolean> : string,
 
 
         /** The value being checked/set by this instance

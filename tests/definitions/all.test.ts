@@ -46,7 +46,7 @@ describe('All XmlRepresentation classes with `parse()` should add that element t
             console.log(`Testing ${name} with ${tagNameOrNames}`);
 
             const element = parseTag`<${tagNames[0]!} name="some old name idk man" />`;
-            const result = (value.parse as (el: Element) => index.XmlRepresentation | null)(element);
+            const result = (value.parse as (el: Element) => index.XmlRepresentation<boolean> | null)(element);
 
             expect(result).not.toBeNull();
             if (result === null) return;

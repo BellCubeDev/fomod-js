@@ -47,7 +47,7 @@ interface InstallInstances {
  */
 export const InstallInstancesByDocument = new WeakMap<Document, InstallInstances>();
 
-export class Install<TStrict extends boolean = true> extends XmlRepresentation<TStrict> {
+export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override readonly tagName = ['file', 'folder'];
     tagName: 'file'|'folder' = 'file'; // Very interchangeable;
 
@@ -276,7 +276,7 @@ export class Install<TStrict extends boolean = true> extends XmlRepresentation<T
 
 
 /** A helper class to represent the <files> element. Contains a list of files to be installed by a dependency or option. */
-export class InstallPatternFilesWrapper<TStrict extends boolean = true> extends XmlRepresentation<TStrict> {
+export class InstallPatternFilesWrapper<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override tagName = 'files';
     readonly tagName = 'files';
 
@@ -378,13 +378,13 @@ export class InstallPatternFilesWrapper<TStrict extends boolean = true> extends 
 
 
 /** A helper class to represent the <pattern> element. Contains a list of files to install and a list of dependencies that must first be fulfilled. */
-export class InstallPattern<TStrict extends boolean = true> extends XmlRepresentation<TStrict> {
+export class InstallPattern<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override tagName = 'pattern';
     readonly tagName = 'pattern';
 
     constructor(
         public dependencies: Dependencies<'dependencies', TStrict>|null = null,
-        public filesWrapper: InstallPatternFilesWrapper = new InstallPatternFilesWrapper(),
+        public filesWrapper: InstallPatternFilesWrapper<TStrict> = new InstallPatternFilesWrapper(),
     ) {
         super();
     }

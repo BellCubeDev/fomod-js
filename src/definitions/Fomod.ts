@@ -5,13 +5,13 @@ import { InvalidityReason, InvalidityReport } from "./InvalidityReporting";
 import { SortingOrder, Step } from "./Step";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "./_core";
 
-export interface ModuleImageMetadata<TStrict extends boolean = true> {
+export interface ModuleImageMetadata<TStrict extends boolean> {
     showFade?: TStrict extends true ? `${boolean}` : string;
     showImage?: TStrict extends true ? `${boolean}` : string;
     height?: TStrict extends true ? `${bigint}`|'' : string;
 }
 
-export interface ModuleNameMetadata<TStrict extends boolean = true> {
+export interface ModuleNameMetadata<TStrict extends boolean> {
     position?: TStrict extends true ? 'Left'|'Right'|'RightOfImage' : string;
 
     /** Must be an XML-valid hex string. XML-valid hex strings accept the standard `1234567890ABCDEF` range and the length must be even
@@ -31,7 +31,7 @@ function attrToObject(attributes: Iterable<Attr> | ArrayLike<Attr>): Record<stri
  *
  * @template TStrict Whether or not to use strict typing for this class. Any data parsed from user input should be considered untrusted and thus `false` should be used. Otherwise, `true` should be used.
  */
-export class Fomod<TStrict extends boolean = true> extends XmlRepresentation<TStrict> {
+export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override readonly tagName = 'config';
     readonly tagName = 'config';
 

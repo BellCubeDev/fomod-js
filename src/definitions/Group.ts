@@ -18,7 +18,7 @@ export enum GroupBehaviorType {
     SelectAll = 'SelectAll'
 }
 
-export class Group<TStrict extends boolean = true> extends XmlRepresentation<TStrict> {
+export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override readonly tagName = 'group';
     readonly tagName = 'group';
 

@@ -20,7 +20,7 @@ import { ElementObjectMap, Verifiable, XmlRepresentation } from "./_core";
  */
 
 /** A single option (or "plugin") for a Fomod. These are typically presented as checkboxes or radio buttons. */
-export class Option<TStrict extends boolean = true> extends XmlRepresentation<TStrict> {
+export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override readonly tagName = 'plugin';
     readonly tagName = 'plugin';
 
@@ -30,7 +30,7 @@ export class Option<TStrict extends boolean = true> extends XmlRepresentation<TS
         public image: string|null = null,
         public typeDescriptor: TypeDescriptor<TStrict> = new TypeDescriptor(),
         public flagsToSet: Set<FlagSetter> = new Set(),
-        public installsToSet: InstallPattern = new InstallPattern(),
+        public installsToSet: InstallPattern<TStrict> = new InstallPattern(),
     ) {
         super();
     }
@@ -159,7 +159,7 @@ export class Option<TStrict extends boolean = true> extends XmlRepresentation<TS
 }
 
 
-export class FlagSetter extends XmlRepresentation {
+export class FlagSetter extends XmlRepresentation<true> {
     static override readonly tagName = 'flag';
     readonly tagName = 'flag';
 
@@ -252,7 +252,7 @@ export enum OptionType {
  *
  * @see `OptionType`
  */
-export class TypeDescriptor<TStrict extends boolean = true> extends XmlRepresentation<TStrict> {
+export class TypeDescriptor<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override readonly tagName = 'typeDescriptor';
     readonly tagName = 'typeDescriptor';
 
@@ -325,7 +325,7 @@ export class TypeDescriptor<TStrict extends boolean = true> extends XmlRepresent
 }
 
 
-export class TypeDescriptorPattern<TStrict extends boolean = true> extends XmlRepresentation<TStrict> {
+export class TypeDescriptorPattern<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override readonly tagName = 'pattern';
     readonly tagName = 'pattern';
 
@@ -382,7 +382,7 @@ export class TypeDescriptorPattern<TStrict extends boolean = true> extends XmlRe
     }
 }
 
-export class TypeNameDescriptor<TTagName extends 'type'|'defaultType', TStrict extends boolean = true, TTagNameIsReadOnly extends boolean = true> extends XmlRepresentation<TStrict> {
+export class TypeNameDescriptor<TTagName extends 'type'|'defaultType', TStrict extends boolean, TTagNameIsReadOnly extends boolean = true> extends XmlRepresentation<TStrict> {
     static override readonly tagName = ['type', 'defaultType'];
 
     get tagName() { return this._tagName; }

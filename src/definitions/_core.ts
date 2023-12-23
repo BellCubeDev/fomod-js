@@ -5,7 +5,7 @@ import { InvalidityReason, InvalidityReport } from "./InvalidityReporting";
  *
  * This model is important because it allows for the parsing of unsafe documents while providing maximum type safety for generated documents.
  */
-export abstract class Verifiable<TStrict extends boolean = true> {
+export abstract class Verifiable<TStrict extends boolean> {
     /** Checks if this item is compliant with the schema. Can be used both for type narrowing and input validation. */
     abstract isValid(): this is Verifiable<true>;
 
@@ -23,7 +23,7 @@ export const ElementObjectMap = new WeakMap<Element, XmlRepresentation<boolean>>
 /** A representation of an XML element for use with various Fomod classes. helps to facilitate in-place editing of Fomod documents.
  *
  */
-export abstract class XmlRepresentation<TStrict extends boolean = true> extends Verifiable<TStrict> {
+export abstract class XmlRepresentation<TStrict extends boolean> extends Verifiable<TStrict> {
     static readonly tagName: string|string[];
     abstract readonly tagName: string;
 
