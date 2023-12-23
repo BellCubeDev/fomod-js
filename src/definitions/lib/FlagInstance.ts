@@ -1,4 +1,4 @@
-import { Option } from './Option';
+import { Option } from '../module/Option';
 
 interface FlagInstances {
     all: Set<FlagInstance<boolean, boolean>>;

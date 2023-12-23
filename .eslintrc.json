@@ -69,6 +69,7 @@
       "prefer-template": "off",
       "func-style": "off",
       "@typescript-eslint/no-this-alias": "off",
-      "github/array-foreach": "off"
+      "github/array-foreach": "off",
+      "no-explicit-any": "off"
   }
 }

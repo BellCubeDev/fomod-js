@@ -1,4 +1,4 @@
-import {parseTag} from '../testUtils';
+import {parseTag, testValidity} from '../testUtils';
 
 import { Install } from '../../src';
 
@@ -10,7 +10,7 @@ describe('Typical File Install', () => {
     test('Priority Is Correct', () => expect(obj.priority).toBe('0'));
     test('Always Install Is Correct', () => expect(obj.alwaysInstall).toBe('false'));
     test('Install If Usable Is Correct', () => expect(obj.installIfUsable).toBe('false'));
-    test('Is Valid', () => expect(obj.isValid()).toBe(true));
+    test('Is Valid', () => testValidity(obj));
 });
 
 describe('Typical Folder Install', () => {
@@ -21,7 +21,7 @@ describe('Typical Folder Install', () => {
     test('Priority Is Correct', () => expect(obj.priority).toBe('0'));
     test('Always Install Is Correct', () => expect(obj.alwaysInstall).toBe('false'));
     test('Install If Usable Is Correct', () => expect(obj.installIfUsable).toBe('false'));
-    test('Is Valid', () => expect(obj.isValid()).toBe(true));
+    test('Is Valid', () => testValidity(obj));
 });
 
 describe('File Install Without Explicit Destination', () => {
@@ -37,7 +37,7 @@ describe('Folder With Always Install', () => {
     test('Source Is Correct', () => expect(obj.fileSource).toBe('apple/'));
     test('Destination Is Correct', () => expect(obj.fileDestination).toBe('banana/'));
     test('Always Install Is True', () => expect(obj.alwaysInstall).toBe('true'));
-    test('Is Valid', () => expect(obj.isValid()).toBe(true));
+    test('Is Valid', () => testValidity(obj));
 });
 
 describe('Folder With Install If Usable', () => {
@@ -46,7 +46,7 @@ describe('Folder With Install If Usable', () => {
     test('Source Is Correct', () => expect(obj.fileSource).toBe('apple/'));
     test('Destination Is Correct', () => expect(obj.fileDestination).toBe('banana/'));
     test('Install If Usable Is True', () => expect(obj.installIfUsable).toBe('true'));
-    test('Is Valid', () => expect(obj.isValid()).toBe(true));
+    test('Is Valid', () => testValidity(obj));
 });
 
 describe('Folder With Priority', () => {
@@ -55,5 +55,5 @@ describe('Folder With Priority', () => {
     test('Source Is Correct', () => expect(obj.fileSource).toBe('apple/'));
     test('Destination Is Correct', () => expect(obj.fileDestination).toBe('banana/'));
     test('Priority Is Correct', () => expect(obj.priority).toBe('100'));
-    test('Is Valid', () => expect(obj.isValid()).toBe(true));
+    test('Is Valid', () => testValidity(obj));
 });

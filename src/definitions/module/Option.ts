@@ -1,9 +1,10 @@
-import { ensureXmlDoctype, getOrCreateElementByTagName } from "../DomUtils";
-import { Dependencies, FlagDependency } from "./Dependencies";
-import { FlagInstance, FlagInstancesByDocument } from "./FlagInstance";
+import { ensureXmlDoctype, getOrCreateElementByTagNameSafe } from "../../DomUtils";
+import { Dependencies, FlagDependency } from './Dependencies';
+import { FlagInstance, FlagInstancesByDocument } from "../lib/FlagInstance";
 import { Install, InstallPattern } from "./Install";
-import { InvalidityReason, InvalidityReport } from "./InvalidityReporting";
-import { ElementObjectMap, Verifiable, XmlRepresentation } from "./_core";
+import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
+import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/_core";
+import { AttributeName, GroupBehaviorType, OptionType, TagName } from "../Enums";
 
 /***
  *     $$$$$$\              $$\     $$\                           $$$$$$$\                  $$\
@@ -21,8 +22,8 @@ import { ElementObjectMap, Verifiable, XmlRepresentation } from "./_core";
 
 /** A single option (or "plugin") for a Fomod. These are typically presented as checkboxes or radio buttons. */
 export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> {
-    static override readonly tagName = 'plugin';
-    readonly tagName = 'plugin';
+    static override readonly tagName = TagName.Plugin;
+    readonly tagName = TagName.Plugin;
 
     constructor(
         public name: string = '',
@@ -40,23 +41,23 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
 
         element.setAttribute('name', this.name);
 
-        const description = getOrCreateElementByTagName(element, 'description');
+        const description = getOrCreateElementByTagNameSafe(element, TagName.Description);
         description.textContent = this.description;
         element.appendChild(description);
 
-        if (this.image === null) element.getElementsByTagName('image')[0]?.remove();
+        if (this.image === null) element.getElementsByTagName(TagName.Image)[0]?.remove();
         else {
-            const image = getOrCreateElementByTagName(element, 'image');
+            const image = getOrCreateElementByTagNameSafe(element, TagName.Image);
             image.textContent = this.image;
             element.appendChild(image);
         }
 
         if (this.flagsToSet.size > 0) {
-            const flagsElement = getOrCreateElementByTagName(element, 'conditionFlags');
+            const flagsElement = getOrCreateElementByTagNameSafe(element, TagName.ConditionFlags);
             for (const flag of this.flagsToSet) flagsElement.appendChild(flag.asElement(document));
             element.appendChild(flagsElement);
         } else { // Create an empty `files` element
-            const filesElement = getOrCreateElementByTagName(element, 'files');
+            const filesElement = getOrCreateElementByTagNameSafe(element, TagName.Files);
             filesElement.replaceChildren();
             element.appendChild(filesElement);
         }
@@ -110,33 +111,33 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
-        const name = element.getAttribute('name');
+        const name = element.getAttribute(AttributeName.Name);
         if (name === null) return null;
 
-        const description = element.getElementsByTagName('description')[0]?.textContent ?? '';
-        const image = element.getElementsByTagName('image')[0]?.getAttribute('path') ?? null;
+        const description = element.getElementsByTagName(TagName.Description)[0]?.textContent ?? '';
+        const image = element.getElementsByTagName(TagName.Image)[0]?.getAttribute(AttributeName.Path) ?? null;
 
         const flagsToSet = new Set<FlagSetter>();
-        const conditionFlags = element.getElementsByTagName('conditionFlags')[0];
+        const conditionFlags = element.getElementsByTagName(TagName.ConditionFlags)[0];
         if (conditionFlags) {
-            for (const flagElement of conditionFlags.getElementsByTagName('flag')) {
+            for (const flagElement of conditionFlags.getElementsByTagName(TagName.Flag)) {
                 const flag = FlagSetter.parse(flagElement);
                 if (flag) flagsToSet.add(flag);
             }
         }
 
-        const typeDescriptorElement = element.getElementsByTagName('typeDescriptor')[0];
+        const typeDescriptorElement = element.getElementsByTagName(TagName.TypeDescriptor)[0];
         const typeDescriptor = typeDescriptorElement ? TypeDescriptor.parse(typeDescriptorElement) : undefined;
 
         const installsToSet = new InstallPattern();
-        const filesElement = element.getElementsByTagName('files')[0];
+        const filesElement = element.getElementsByTagName(TagName.File)[0];
         if (filesElement) {
-            for (const flagElement of filesElement.getElementsByTagName('file')) {
+            for (const flagElement of filesElement.getElementsByTagName(TagName.File)) {
                 const install = Install.parse(flagElement);
                 if (install) installsToSet.filesWrapper.installs.add(install);
             }
 
-            for (const flagElement of filesElement.getElementsByTagName('folder')) {
+            for (const flagElement of filesElement.getElementsByTagName(TagName.Folder)) {
                 const install = Install.parse(flagElement);
                 if (install) installsToSet.filesWrapper.installs.add(install);
             }
@@ -160,8 +161,8 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
 
 
 export class FlagSetter extends XmlRepresentation<true> {
-    static override readonly tagName = 'flag';
-    readonly tagName = 'flag';
+    static override readonly tagName = TagName.Flag;
+    readonly tagName = TagName.Flag;
 
 
     get name() { return this.flagInstance.name; }
@@ -177,7 +178,7 @@ export class FlagSetter extends XmlRepresentation<true> {
     asElement(document: Document): Element {
         const element = this.getElementForDocument(document);
 
-        element.setAttribute('name', this.flagInstance.name);
+        element.setAttribute(AttributeName.Name, this.flagInstance.name);
         element.textContent = this.flagInstance.usedValue;
 
         return element;
@@ -193,7 +194,7 @@ export class FlagSetter extends XmlRepresentation<true> {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
-        const flagName = element.getAttribute('name');
+        const flagName = element.getAttribute(AttributeName.Name);
         if (flagName === null) return null;
 
         const obj = new FlagSetter(new FlagInstance(flagName, element.textContent ?? '', true));
@@ -232,20 +233,6 @@ export class FlagSetter extends XmlRepresentation<true> {
  */
 
 
-/** Describes how an option should behave in regard to user selection */
-export enum OptionType {
-    /** The option will not be selected and cannot be selected. */
-    NotUsable = 'NotUsable',
-    /** Acts the same as `Optional`, except that mod managers may show a warning to the user when selecting this option. This is not universal, though, and the majority of mainstream mod managers at the moment forego this. */
-    CouldBeUsable = 'CouldBeUsable',
-    /** The option will be selectable. This is the default behavior. */
-    Optional = 'Optional',
-    /** The option will be selected by default but may be deselected. */
-    Recommended = 'Recommended',
-    /** The option will be selected by default and cannot be deselected. */
-    Required = 'Required',
-}
-
 /** Describes the desired `OptionType` for an option
  *
  * Supports setting a default type and an optional list of conditions ('patterns') that can change the type.
@@ -253,12 +240,12 @@ export enum OptionType {
  * @see `OptionType`
  */
 export class TypeDescriptor<TStrict extends boolean> extends XmlRepresentation<TStrict> {
-    static override readonly tagName = 'typeDescriptor';
-    readonly tagName = 'typeDescriptor';
+    static override readonly tagName = TagName.TypeDescriptor;
+    readonly tagName = TagName.TypeDescriptor;
 
     constructor(
         /** The type name descriptor */
-        public defaultTypeNameDescriptor: TypeNameDescriptor<'type'|'defaultType', TStrict, false> = new TypeNameDescriptor('defaultType', OptionType.Optional, false),
+        public defaultTypeNameDescriptor: TypeNameDescriptor<TypeDescriptorTagName, TStrict, false> = new TypeNameDescriptor(TagName.DefaultType, OptionType.Optional, false),
         public patterns: TypeDescriptorPattern<TStrict>[] = [],
     ) {
         super();
@@ -268,14 +255,14 @@ export class TypeDescriptor<TStrict extends boolean> extends XmlRepresentation<T
         const element = this.getElementForDocument(document);
 
         if (this.patterns.length === 0) {
-            this.defaultTypeNameDescriptor.tagName = 'type';
+            this.defaultTypeNameDescriptor.tagName = TagName.Type;
             element.appendChild(this.defaultTypeNameDescriptor.asElement(document));
             return element;
         }
 
-        this.defaultTypeNameDescriptor.tagName = 'defaultType';
+        this.defaultTypeNameDescriptor.tagName = TagName.DefaultType;
 
-        const patternsContainer = getOrCreateElementByTagName(element, 'patterns');
+        const patternsContainer = getOrCreateElementByTagNameSafe(element, TagName.Patterns);
 
         for (const pattern of this.patterns)
             patternsContainer.appendChild(pattern.asElement(document));
@@ -290,14 +277,14 @@ export class TypeDescriptor<TStrict extends boolean> extends XmlRepresentation<T
         const typeDescriptor = new TypeDescriptor();
         typeDescriptor.assignElement(element);
 
-        const defaultTypeNameDescriptorElement = element.querySelector(':scope > defaultType, :scope > type');
+        const defaultTypeNameDescriptorElement = element.querySelector(`:scope > ${TagName.DefaultType}, :scope > ${TagName.Type}`);
         if (defaultTypeNameDescriptorElement) {
             typeDescriptor.defaultTypeNameDescriptor = TypeNameDescriptor.parse(defaultTypeNameDescriptorElement);
         }
 
-        const patternsContainer = element.querySelector(':scope > patterns');
+        const patternsContainer = element.querySelector(`:scope > ${TagName.DefaultType}`);
         if (patternsContainer)
-            for (const patternElement of patternsContainer.querySelectorAll(':scope > pattern'))
+            for (const patternElement of patternsContainer.querySelectorAll(`:scope > ${TagName.Patterns}`))
                 typeDescriptor.patterns.push(TypeDescriptorPattern.parse(patternElement));
 
         return typeDescriptor;
@@ -324,14 +311,13 @@ export class TypeDescriptor<TStrict extends boolean> extends XmlRepresentation<T
     }
 }
 
-
 export class TypeDescriptorPattern<TStrict extends boolean> extends XmlRepresentation<TStrict> {
-    static override readonly tagName = 'pattern';
-    readonly tagName = 'pattern';
+    static override readonly tagName = TagName.Pattern;
+    readonly tagName = TagName.Pattern;
 
     constructor(
-        public typeNameDescriptor: TypeNameDescriptor<'type', TStrict, true> = new TypeNameDescriptor('type', OptionType.Optional, true),
-        public dependencies: Dependencies<'dependencies', TStrict> = new Dependencies('dependencies'),
+        public typeNameDescriptor: TypeNameDescriptor<TagName.Type, TStrict, true> = new TypeNameDescriptor(TagName.Type, OptionType.Optional, true),
+        public dependencies: Dependencies<TagName.Dependencies, TStrict> = new Dependencies(TagName.Dependencies),
     ) {
         super();
     }
@@ -352,11 +338,11 @@ export class TypeDescriptorPattern<TStrict extends boolean> extends XmlRepresent
         const typeDescriptorPattern = new TypeDescriptorPattern<false>();
         typeDescriptorPattern.assignElement(element);
 
-        const typeNameDescriptorElement = element.querySelector(':scope > type');
+        const typeNameDescriptorElement = element.querySelector(`:scope > ${TagName.Type}`);
         if (typeNameDescriptorElement) typeDescriptorPattern.typeNameDescriptor = TypeNameDescriptor.parse(typeNameDescriptorElement, true);
 
-        const dependenciesElement = element.querySelector(':scope > dependencies');
-        if (dependenciesElement)  typeDescriptorPattern.dependencies = Dependencies.parse<'dependencies'>(dependenciesElement);
+        const dependenciesElement = element.querySelector(`:scope > ${TagName.Dependencies}`);
+        if (dependenciesElement)  typeDescriptorPattern.dependencies = Dependencies.parse<TagName.Dependencies>(dependenciesElement);
 
         return typeDescriptorPattern;
     }
@@ -382,17 +368,19 @@ export class TypeDescriptorPattern<TStrict extends boolean> extends XmlRepresent
     }
 }
 
-export class TypeNameDescriptor<TTagName extends 'type'|'defaultType', TStrict extends boolean, TTagNameIsReadOnly extends boolean = true> extends XmlRepresentation<TStrict> {
-    static override readonly tagName = ['type', 'defaultType'];
+type TypeDescriptorTagName = TagName.Type|TagName.DefaultType;
+
+export class TypeNameDescriptor<TTagName extends TypeDescriptorTagName, TStrict extends boolean, TTagNameIsReadOnly extends boolean = true> extends XmlRepresentation<TStrict> {
+    static override readonly tagName = [TagName.Type, TagName.DefaultType] as [TagName.Type, TagName.DefaultType];
 
     get tagName() { return this._tagName; }
-    set tagName(tagName: TTagNameIsReadOnly extends true ? TTagName : 'type'|'defaultType') {
+    set tagName(tagName: TTagNameIsReadOnly extends true ? TTagName : TypeDescriptorTagName) {
         if (!this.tagNameIsReadonly) this._tagName = tagName;
         else throw new Error(`Attempted to set read-only property 'tagName' on a TypeNameDescriptor instance`);
     }
 
     constructor(
-        private _tagName: TTagNameIsReadOnly extends true ? TTagName : 'type'|'defaultType',
+        private _tagName: TTagNameIsReadOnly extends true ? TTagName : TypeDescriptorTagName,
         public targetType: TStrict extends true ? OptionType : string = OptionType.Optional,
         public tagNameIsReadonly: TTagNameIsReadOnly
     ) {
@@ -401,29 +389,29 @@ export class TypeNameDescriptor<TTagName extends 'type'|'defaultType', TStrict e
 
     asElement(document: Document): Element {
         const element = this.getElementForDocument(document);
-        element.setAttribute('name', this.targetType);
+        element.setAttribute(AttributeName.Name, this.targetType);
         return element;
     }
 
-    static override parse<TTagName extends 'type'|'defaultType' = 'type'|'defaultType', TTagNameIsReadOnly extends boolean = false>(element: Element, tagNameIsReadonly?: TTagNameIsReadOnly): TypeNameDescriptor<TTagName, boolean, TTagNameIsReadOnly> {
+    static override parse<TTagName extends TypeDescriptorTagName = TypeDescriptorTagName, TTagNameIsReadOnly extends boolean = false>(element: Element, tagNameIsReadonly?: TTagNameIsReadOnly): TypeNameDescriptor<TTagName, boolean, TTagNameIsReadOnly> {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
         const typeDescriptorName = new TypeNameDescriptor<TTagName, boolean, TTagNameIsReadOnly>(element.tagName as TTagName, 'Optional', tagNameIsReadonly as TTagNameIsReadOnly);
         typeDescriptorName.assignElement(element);
 
-        typeDescriptorName.targetType = element.getAttribute('name') ?? 'Optional';
+        typeDescriptorName.targetType = element.getAttribute(AttributeName.Name) ?? OptionType.Optional;
         return typeDescriptorName;
     }
 
     isValid(): this is TypeNameDescriptor<TTagName, true, TTagNameIsReadOnly> {
-        return this.targetType === 'NotUsable' || this.targetType === 'CouldBeUsable' || this.targetType === 'Optional' || this.targetType === 'Recommended' || this.targetType === 'Required';
+        return Object.values(OptionType).includes(this.targetType as any);
     }
 
     reasonForInvalidity(...tree: Omit<Verifiable<false>, "isValid" | "reasonForInvalidity">[]): InvalidityReport | null {
         tree.push(this);
 
-        if (this.targetType !== 'NotUsable' && this.targetType !== 'CouldBeUsable' && this.targetType !== 'Optional' && this.targetType !== 'Recommended' && this.targetType !== 'Required')
+        if (!Object.values(OptionType).includes(this.targetType as any))
             return {offendingValue: this.targetType, tree, reason: InvalidityReason.OptionTypeDescriptorUnknownOptionType};
 
         return null;
@@ -454,7 +442,7 @@ export class TypeNameDescriptor<TTagName extends 'type'|'defaultType', TStrict e
         ensureXmlDoctype(element.ownerDocument);
 
         // @ts-ignore: The logic is fine but TypeScript can't figure it out
-        if (!this.tagNameIsReadonly && (element.tagName === 'type' || element.tagName === 'defaultType')) this.tagName = element.tagName;
+        if (!this.tagNameIsReadonly && (element.tagName === TagName.Type || element.tagName === TagName.DefaultType)) this.tagName = element.tagName;
         super.assignElement(element);
     }
 

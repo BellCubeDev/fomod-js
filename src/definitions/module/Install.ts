@@ -1,7 +1,8 @@
-import { ensureXmlDoctype } from "../DomUtils";
+import { ensureXmlDoctype } from "../../DomUtils";
 import { Dependencies } from "./Dependencies";
-import { InvalidityReason, InvalidityReport } from "./InvalidityReporting";
-import { ElementObjectMap, Verifiable, XmlRepresentation } from "./_core";
+import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
+import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/_core";
+import { AttributeName, BooleanString, TagName } from "../Enums";
 
 
 
@@ -47,9 +48,11 @@ interface InstallInstances {
  */
 export const InstallInstancesByDocument = new WeakMap<Document, InstallInstances>();
 
+type InstallTagName = TagName.File|TagName.Folder;
+
 export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict> {
-    static override readonly tagName = ['file', 'folder'];
-    tagName: 'file'|'folder' = 'file'; // Very interchangeable;
+    static override readonly tagName = [TagName.File, TagName.Folder] as [TagName.File, TagName.Folder];
+    tagName: InstallTagName = TagName.File; // Very interchangeable;
 
 
     /** A list of documents this install is a part of */
@@ -60,8 +63,8 @@ export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict>
         catch { return false; }
 
         return (
-            (this.alwaysInstall === 'true' || this.alwaysInstall === 'false') &&
-            (this.installIfUsable === 'true' || this.installIfUsable === 'false')
+            Object.values(BooleanString).includes(this.alwaysInstall as any) &&
+            Object.values(BooleanString).includes(this.installIfUsable as any)
         );
     }
 
@@ -73,10 +76,10 @@ export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict>
             return { reason: InvalidityReason.InstallPriorityNotInteger, offendingValue: this.priority, tree };
         }
 
-        if (this.alwaysInstall !== 'true' && this.alwaysInstall !== 'false')
+        if (!Object.values(BooleanString).includes(this.alwaysInstall as any))
             return { reason: InvalidityReason.InstallAlwaysInstallNotBoolean, offendingValue: this.priority, tree };
 
-        if (this.installIfUsable !== 'true' && this.installIfUsable !== 'false')
+        if (!Object.values(BooleanString).includes(this.installIfUsable as any))
             return { reason: InvalidityReason.InstallInstallIfUsableNotBoolean, offendingValue: this.priority, tree };
 
         return null;
@@ -107,13 +110,13 @@ export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict>
          *
          * @deprecated Has inconsistent behavior between mod managers. Instead, you might consider duplicating the `dependencies` object to specify when a file should be installed. Included for completeness.
          */
-        public installIfUsable: TStrict extends true ? `${boolean}` : string = 'false',
+        public installIfUsable: TStrict extends true ? BooleanString : string = BooleanString.false,
 
         /** Whether to always install the file, even if the user has not selected it.
          *
          * @deprecated Has inconsistent behavior between mod managers. Instead, you might consider removing the `dependencies` object instead. Included for completeness.
          */
-        public alwaysInstall: TStrict extends true ? `${boolean}` : string = 'false',
+        public alwaysInstall: TStrict extends true ? BooleanString : string = BooleanString.false,
     ) {
         super();
 
@@ -125,41 +128,41 @@ export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict>
     asElement(document: Document): Element  {
         if (this.fileSource.endsWith('/') || this.fileSource.endsWith('\\')) {
             if (this.fileDestination && (!this.fileDestination.endsWith('/') && !this.fileDestination.endsWith('\\'))) throw new Error('Source is a folder but destination is not', {cause: this});
-            this.tagName = 'folder';
+            this.tagName = TagName.Folder;
         } else if (this.fileDestination && (this.fileDestination.endsWith('/') || this.fileDestination.endsWith('\\'))) throw new Error('Destination is a folder but source is not', {cause: this});
-        else this.tagName = 'file';
+        else this.tagName = TagName.File;
 
         const element = this.getElementForDocument(document);
 
-        element.setAttribute('source', this.fileSource);
-        if (this.fileDestination) element.setAttribute('destination', this.fileDestination);
+        element.setAttribute(AttributeName.Source, this.fileSource);
+        if (this.fileDestination) element.setAttribute(AttributeName.Destination, this.fileDestination);
 
-        if (this.priority !== '0') element.setAttribute('priority', this.priority);
-        else element.removeAttribute('priority');
+        if (this.priority !== '0') element.setAttribute(AttributeName.Priority, this.priority);
+        else element.removeAttribute(AttributeName.Priority);
 
-        if (this.alwaysInstall !== 'false') element.setAttribute('alwaysInstall', this.alwaysInstall);
-        else element.removeAttribute('alwaysInstall');
+        if (this.alwaysInstall !== BooleanString.false) element.setAttribute(AttributeName.AlwaysInstall, this.alwaysInstall);
+        else element.removeAttribute(AttributeName.AlwaysInstall);
 
-        if (this.installIfUsable !== 'false') element.setAttribute('installIfUsable', this.installIfUsable);
-        else element.removeAttribute('installIfUsable');
+        if (this.installIfUsable !== BooleanString.false) element.setAttribute(AttributeName.InstallIfUsable, this.installIfUsable);
+        else element.removeAttribute(AttributeName.InstallIfUsable);
 
         return element;
     }
 
     static override parse(element: Element): Install<boolean> {
-        let source = element.getAttribute('source') ?? '';
-        let destination = element.getAttribute('destination') ?? null;
+        let source = element.getAttribute(AttributeName.Source) ?? '';
+        let destination = element.getAttribute(AttributeName.Destination) ?? null;
 
-        if (element.tagName === 'folder') {
+        if (element.tagName === TagName.Folder) {
             if (!source.endsWith('/')) source += '/';
             if (destination && !destination.endsWith('/')) destination += '/';
         }
 
-        const install = new Install<boolean>( source, destination, element.getAttribute('priority') ?? '0' );
+        const install = new Install<boolean>( source, destination, element.getAttribute(AttributeName.Priority) ?? '0' );
         install.assignElement(element);
 
-        install.alwaysInstall = element.getAttribute('alwaysInstall') ?? 'false';
-        install.installIfUsable = element.getAttribute('installIfUsable') ?? 'false';
+        install.alwaysInstall = element.getAttribute(AttributeName.AlwaysInstall) ?? BooleanString.false;
+        install.installIfUsable = element.getAttribute(AttributeName.InstallIfUsable) ?? BooleanString.false;
 
         return install;
     }
@@ -188,7 +191,7 @@ export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict>
     override assignElement(element: Element) {
         ensureXmlDoctype(element.ownerDocument);
 
-        if (element.tagName === 'file' || element.tagName === 'folder') this.tagName = element.tagName;
+        if (element.tagName === TagName.File || element.tagName === TagName.Folder) this.tagName = element.tagName;
         super.assignElement(element);
     }
 
@@ -277,8 +280,8 @@ export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict>
 
 /** A helper class to represent the <files> element. Contains a list of files to be installed by a dependency or option. */
 export class InstallPatternFilesWrapper<TStrict extends boolean> extends XmlRepresentation<TStrict> {
-    static override tagName = 'files';
-    readonly tagName = 'files';
+    static override tagName = TagName.Files;
+    readonly tagName = TagName.Files;
 
     constructor(
         public installs: Set<Install<TStrict>> = new Set(),
@@ -379,11 +382,11 @@ export class InstallPatternFilesWrapper<TStrict extends boolean> extends XmlRepr
 
 /** A helper class to represent the <pattern> element. Contains a list of files to install and a list of dependencies that must first be fulfilled. */
 export class InstallPattern<TStrict extends boolean> extends XmlRepresentation<TStrict> {
-    static override tagName = 'pattern';
-    readonly tagName = 'pattern';
+    static override tagName = TagName.Pattern;
+    readonly tagName = TagName.Pattern;
 
     constructor(
-        public dependencies: Dependencies<'dependencies', TStrict>|null = null,
+        public dependencies: Dependencies<TagName.Dependencies, TStrict>|null = null,
         public filesWrapper: InstallPatternFilesWrapper<TStrict> = new InstallPatternFilesWrapper(),
     ) {
         super();
@@ -410,10 +413,10 @@ export class InstallPattern<TStrict extends boolean> extends XmlRepresentation<T
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
-        const dependenciesElement = element.querySelector('dependencies');
-        const dependencies = dependenciesElement ? Dependencies.parse<'dependencies'>(dependenciesElement) : undefined;
+        const dependenciesElement = element.querySelector(TagName.Dependencies);
+        const dependencies = dependenciesElement ? Dependencies.parse<TagName.Dependencies>(dependenciesElement) : undefined;
 
-        const filesElement = element.querySelector('files');
+        const filesElement = element.querySelector(TagName.Files);
         const filesWrapper = filesElement ? InstallPatternFilesWrapper.parse(filesElement) : undefined;
 
         const obj = new InstallPattern(dependencies, filesWrapper);

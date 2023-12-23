@@ -1,5 +1,5 @@
 import { ensureXmlDoctype } from "./DomUtils";
-import { Dependency, Fomod, FomodInfo } from "./definitions";
+import { Fomod, FomodInfo } from ".";
 
 export function parseModuleDoc(document: Document): Fomod<false> | null {
     ensureXmlDoctype(document);

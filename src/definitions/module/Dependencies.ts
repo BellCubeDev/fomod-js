@@ -1,7 +1,8 @@
-import { FlagInstance } from "./FlagInstance";
-import { ElementObjectMap, Verifiable, XmlRepresentation } from "./_core";
+import { FlagInstance } from "../lib/FlagInstance";
+import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/_core";
 import { Option } from './Option';
-import { InvalidityReason, InvalidityReport } from './InvalidityReporting';
+import { InvalidityReason, InvalidityReport } from '../lib/InvalidityReporting';
+import { AttributeName, BooleanString, DependencyGroupOperator, FileDependencyState, TagName } from '../Enums';
 
 /** A parent class to all forms of dependency.
  *
@@ -33,27 +34,29 @@ export abstract class Dependency<TStrict extends boolean = boolean> extends XmlR
     }
 }
 
+type DependencyTagName = TagName.Dependencies|TagName.ModuleDependencies|TagName.Visible;
 
-
-export class Dependencies<TTagName extends 'moduleDependencies'|'dependencies', TStrict extends boolean> extends Dependency {
-    static override readonly tagName = ['moduleDependencies', 'dependencies'];
+export class Dependencies<TTagName extends DependencyTagName, TStrict extends boolean> extends Dependency {
+    static override readonly tagName = [TagName.Dependencies, TagName.ModuleDependencies, TagName.Visible] as [TagName.Dependencies, TagName.ModuleDependencies, TagName.Visible];
 
     constructor(
         public readonly tagName: TTagName,
-        public operator: TStrict extends true ? 'And' | 'Or' : string = 'And',
+        public operator: TStrict extends true ? DependencyGroupOperator : string = DependencyGroupOperator.And,
         public dependencies: Set<Dependency<TStrict>> = new Set()
     ) {
         super();
     }
 
     isValid(): this is Dependencies<TTagName, true> {
-        return (this.operator === 'And' || this.operator === 'Or') && Array.from(this.dependencies).every(d => d.isValid());
+        return  Object.values(DependencyGroupOperator).includes(this.operator as any) &&
+                Array.from(this.dependencies).every(d => d.isValid());
     }
 
     reasonForInvalidity(...tree: Omit<Verifiable<false>, "isValid" | "reasonForInvalidity">[]): InvalidityReport | null {
         tree.push(this);
 
-        if (this.operator !== 'And' && this.operator !== 'Or') return {reason: InvalidityReason.DependenciesUnknownOperator, offendingValue: this.operator, tree};
+        if (!Object.values(DependencyGroupOperator).includes(this.operator as any))
+            return {reason: InvalidityReason.DependenciesUnknownOperator, offendingValue: this.operator, tree};
 
         for (const dependency of this.dependencies) {
             const reason = dependency.reasonForInvalidity(...tree);
@@ -66,7 +69,7 @@ export class Dependencies<TTagName extends 'moduleDependencies'|'dependencies', 
     override asElement(document: Document): Element {
         const element = this.getElementForDocument(document);
 
-        element.setAttribute('operator', this.operator);
+        element.setAttribute(AttributeName.Operator, this.operator);
 
         for (const dependency of this.dependencies)
             element.appendChild(dependency.asElement(document));
@@ -74,12 +77,12 @@ export class Dependencies<TTagName extends 'moduleDependencies'|'dependencies', 
         return element;
     }
 
-    static override parse<TTagName extends 'moduleDependencies'|'dependencies' = 'moduleDependencies'|'dependencies'>(element: Element): Dependencies<TTagName, false> {
+    static override parse<TTagName extends TagName.ModuleDependencies|TagName.Dependencies = TagName.ModuleDependencies|TagName.Dependencies>(element: Element): Dependencies<TTagName, false> {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
         const tagName = element.tagName as TTagName;
-        const operator = element.getAttribute('operator') ?? 'And';
+        const operator = element.getAttribute(AttributeName.Operator) ?? DependencyGroupOperator.And;
         const dependencies = Array.from(element.children).map(Dependency.parse).filter((d): d is Dependency<false> => d !== null);
 
         const obj = new Dependencies<TTagName, false>(tagName, operator, new Set(dependencies));
@@ -97,21 +100,21 @@ export class Dependencies<TTagName extends 'moduleDependencies'|'dependencies', 
 
 
 export class FileDependency<TStrict extends boolean> extends Dependency<TStrict> {
-    static override readonly tagName = 'fileDependency';
-    readonly tagName = 'fileDependency';
+    static override readonly tagName = TagName.FileDependency;
+    readonly tagName = TagName.FileDependency;
 
-    constructor(public filePath: string = '', public desiredState: TStrict extends true ? 'Active'|'Inactive'|'Missing' : string = 'Active') {
+    constructor(public filePath: string = '', public desiredState: TStrict extends true ? FileDependencyState : string = FileDependencyState.Active) {
         super();
     }
 
     isValid(): this is FileDependency<true> {
-        return this.desiredState === 'Active' || this.desiredState === 'Inactive' || this.desiredState === 'Missing';
+        return Object.values(FileDependencyState).includes(this.desiredState as any);
     }
 
     reasonForInvalidity(...tree: Omit<Verifiable<false>, 'isValid' | 'reasonForInvalidity'>[]): InvalidityReport | null {
         tree.push(this);
 
-        if (this.desiredState !== 'Active' && this.desiredState !== 'Inactive' && this.desiredState !== 'Missing')
+        if (!Object.values(FileDependencyState).includes(this.desiredState as any))
             return {reason: InvalidityReason.DependencyFileInvalidState, offendingValue: this.desiredState, tree};
 
         return null;
@@ -120,8 +123,8 @@ export class FileDependency<TStrict extends boolean> extends Dependency<TStrict>
     override asElement(document: Document): Element {
         const element = this.getElementForDocument(document);
 
-        element.setAttribute('file', this.filePath);
-        element.setAttribute('state', this.desiredState);
+        element.setAttribute(AttributeName.File, this.filePath);
+        element.setAttribute(AttributeName.State, this.desiredState);
 
         return element;
     }
@@ -130,8 +133,8 @@ export class FileDependency<TStrict extends boolean> extends Dependency<TStrict>
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
-        const filePath = element.getAttribute('file') ?? '';
-        const desiredState = element.getAttribute('state') ?? 'Active';
+        const filePath = element.getAttribute(AttributeName.File) ?? '';
+        const desiredState = element.getAttribute(AttributeName.State) ?? FileDependencyState.Active;
 
         const obj = new FileDependency<false>(filePath, desiredState);
         obj.assignElement(element);
@@ -146,8 +149,8 @@ export class FileDependency<TStrict extends boolean> extends Dependency<TStrict>
 
 
 export class FlagDependency extends Dependency {
-    static override readonly tagName = 'flagDependency';
-    readonly tagName = 'flagDependency';
+    static override readonly tagName = TagName.FlagDependency;
+    readonly tagName = TagName.FlagDependency;
 
     protected readonly flagInstance: FlagInstance<boolean, false>;
 
@@ -180,12 +183,12 @@ export class FlagDependency extends Dependency {
 
         if (typeof this.flagKey === 'string') {
             if (typeof this.desiredValue !== 'string') throw new Error('Flag dependency `name` value is a string but `value` is a boolean! Expected string.', {cause: this});
-            element.setAttribute('flag', this.flagKey);
-            element.setAttribute('value', this.desiredValue);
+            element.setAttribute(AttributeName.Flag, this.flagKey);
+            element.setAttribute(AttributeName.Value, this.desiredValue);
         } else {
             if (typeof this.flagInstance !== 'boolean') throw new Error('Flag dependency `name` value is an Option but `value` is a string! Expected boolean.', {cause: this});
-            element.setAttribute('flag', this.flagKey.getFlagName(document));
-            element.setAttribute('value', this.desiredValue ? 'true' : 'false');
+            element.setAttribute(AttributeName.Flag, this.flagKey.getFlagName(document));
+            element.setAttribute(AttributeName.Value, this.desiredValue ? BooleanString.true : BooleanString.false);
         }
 
         return element;
@@ -195,8 +198,8 @@ export class FlagDependency extends Dependency {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
-        const flagName = element.getAttribute('flag') ?? ''; // TODO: Parse Option
-        const desiredValue = element.getAttribute('value') ?? '';
+        const flagName = element.getAttribute(AttributeName.Flag) ?? ''; // TODO: Parse Option Flags
+        const desiredValue = element.getAttribute(AttributeName.Value) ?? '';
 
         const obj = new FlagDependency(flagName, desiredValue);
         obj.assignElement(element);
@@ -229,7 +232,7 @@ export abstract class VersionDependency extends Dependency {
     override asElement(document: Document): Element {
         const element = this.getElementForDocument(document);
 
-        element.setAttribute('version', this.desiredVersion);
+        element.setAttribute(AttributeName.Version, this.desiredVersion);
 
         return element;
     }
@@ -239,7 +242,7 @@ export abstract class VersionDependency extends Dependency {
         if (existing && (existing instanceof ScriptExtenderVersionDependency || existing instanceof GameVersionDependency || existing instanceof ModManagerVersionDependency)) return existing;
 
 
-        const desiredVersion = element.getAttribute('version') ?? '';
+        const desiredVersion = element.getAttribute(AttributeName.Version) ?? '';
 
         let obj: ReturnType<typeof VersionDependency['parse']> = null;
 
@@ -265,15 +268,15 @@ export abstract class VersionDependency extends Dependency {
  * Can be useful in a number of circumstances where the game executable version matters, such as determining what version of a script extender plugin to install.
  */
 export class GameVersionDependency extends VersionDependency {
-    static override readonly tagName = 'gameDependency';
-    readonly tagName = 'gameDependency';
+    static override readonly tagName = TagName.GameDependency;
+    readonly tagName = TagName.GameDependency;
     constructor(desiredVersion?: string) { super(desiredVersion); }
 
     static override parse(element: Element): GameVersionDependency {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
-        const desiredVersion = element.getAttribute('version') ?? '';
+        const desiredVersion = element.getAttribute(AttributeName.Version) ?? '';
 
         const obj = new GameVersionDependency(desiredVersion);
         obj.assignElement(element);
@@ -288,15 +291,15 @@ export class GameVersionDependency extends VersionDependency {
  * Can be useful in a number of circumstances where the script extender version matters, such as determining if a mod is compatible with the given version.
 */
 export class ScriptExtenderVersionDependency extends VersionDependency {
-    static override readonly tagName = 'foseDependency';
-    readonly tagName = 'foseDependency';
+    static override readonly tagName = TagName.FOSEDependency;
+    readonly tagName = TagName.FOSEDependency;
     constructor(desiredVersion?: string) { super(desiredVersion); }
 
     static override parse(element: Element): ScriptExtenderVersionDependency {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
-        const desiredVersion = element.getAttribute('version') ?? '';
+        const desiredVersion = element.getAttribute(AttributeName.Version) ?? '';
 
         const obj = new ScriptExtenderVersionDependency(desiredVersion);
         obj.assignElement(element);
@@ -312,15 +315,15 @@ export class ScriptExtenderVersionDependency extends VersionDependency {
  * @deprecated Should generally not be used as the value is inconsistent between mod managers. Included for completeness.
  */
 export class ModManagerVersionDependency extends VersionDependency {
-    static override readonly tagName = 'fommDependency';
-    readonly tagName = 'fommDependency';
+    static override readonly tagName = TagName.FOMMDependency;
+    readonly tagName = TagName.FOMMDependency;
     constructor(desiredVersion?: string) { super(desiredVersion); }
 
     static override parse(element: Element): ModManagerVersionDependency {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
-        const desiredVersion = element.getAttribute('version') ?? '';
+        const desiredVersion = element.getAttribute(AttributeName.Version) ?? '';
 
         const obj = new ModManagerVersionDependency(desiredVersion);
         obj.assignElement(element);

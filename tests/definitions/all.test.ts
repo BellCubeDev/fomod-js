@@ -1,6 +1,5 @@
 import * as index from '../../src/index';
 import { parseTag } from '../testUtils';
-import { InstallPattern } from '../../src/definitions/Install';
 
 const isPrototypeOf = Function.call.bind(Object.prototype.isPrototypeOf);
 
@@ -61,7 +60,7 @@ describe('All XmlRepresentation classes with `parse()` should add that element t
 
             expect(asElement).toSatisfy(() => {
                 if (asElement === element) return true;
-                if (result instanceof InstallPattern) {
+                if (result instanceof index.InstallPattern) {
                     return asElement.tagName === index.InstallPatternFilesWrapper.tagName;
                 }
 

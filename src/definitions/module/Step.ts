@@ -1,21 +1,12 @@
-import { getOrCreateElementByTagName } from "../DomUtils";
+import { getOrCreateElementByTagNameSafe } from "../../DomUtils";
 import { Group } from "./Group";
-import { InvalidityReason, InvalidityReport } from "./InvalidityReporting";
-import { ElementObjectMap, Verifiable, XmlRepresentation } from "./_core";
-
-/** Describes how the group should behave when allowing users to select its options */
-export enum SortingOrder {
-    /** Items are ordered alphabetically starting with A and ending with Z. This is the default behavior. */
-    Ascending = 'Ascending',
-    /** Items are ordered alphabetically starting with Z and ending with A. */
-    Descending = 'Descending',
-    /** Items are ordered precisely as they appear in the XML (and, consequently, the Set within JS) */
-    Explicit = 'Explicit'
-}
+import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
+import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/_core";
+import { AttributeName, SortingOrder, TagName } from "../Enums";
 
 export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
-    static override readonly tagName = 'installStep';
-    readonly tagName = 'installStep';
+    static override readonly tagName = TagName.InstallStep;
+    readonly tagName = TagName.InstallStep;
 
 
     constructor(
@@ -29,11 +20,11 @@ export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     asElement(document: Document): Element {
         const element = this.getElementForDocument(document);
 
-        element.setAttribute('name', this.name);
+        element.setAttribute(AttributeName.Name, this.name);
 
-        const groupsContainer = getOrCreateElementByTagName(element, 'optionalFileGroups');
+        const groupsContainer = getOrCreateElementByTagNameSafe(element, TagName.OptionalFileGroups);
 
-        groupsContainer.setAttribute('order', this.sortingOrder);
+        groupsContainer.setAttribute(AttributeName.Order, this.sortingOrder);
         for (const group of this.groups)  groupsContainer.appendChild(group.asElement(document));
 
         return element;
@@ -41,7 +32,7 @@ export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
 
     isValid(): this is Step<true> {
         return (
-            (this.sortingOrder === 'Ascending' || this.sortingOrder === 'Descending' || this.sortingOrder === 'Explicit') &&
+            Object.values(SortingOrder).includes(this.sortingOrder as any) &&
             Array.from(this.groups).every(group => group.isValid())
         );
     }
@@ -49,7 +40,7 @@ export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     reasonForInvalidity(...tree: Omit<Verifiable<false>, 'isValid' | 'reasonForInvalidity'>[]): InvalidityReport | null {
         tree.push(this);
 
-        if (this.sortingOrder !== 'Ascending' && this.sortingOrder !== 'Descending' && this.sortingOrder !== 'Explicit')
+        if (!Object.values(SortingOrder).includes(this.sortingOrder as any))
             return { reason: InvalidityReason.StepUnknownGroupSortingOrder, offendingValue: this.sortingOrder, tree };
 
         for (const group of this.groups) {
@@ -64,18 +55,18 @@ export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
-        const name = element.getAttribute('name');
+        const name = element.getAttribute(AttributeName.Name);
 
         const step = new Step<false>(name ?? '');
         step.assignElement(element);
 
-        const groupsContainer = element.querySelector('optionalFileGroups');
+        const groupsContainer = element.querySelector(TagName.OptionalFileGroups);
         if (groupsContainer === null) return step;
 
-        const sortingOrder = groupsContainer.getAttribute('order');
+        const sortingOrder = groupsContainer.getAttribute(AttributeName.Order);
         if (sortingOrder !== null) step.sortingOrder = sortingOrder;
 
-        for (const groupElement of groupsContainer.querySelectorAll('group')) {
+        for (const groupElement of groupsContainer.querySelectorAll(TagName.Group)) {
             const group = Group.parse(groupElement);
             if (group !== null) step.groups.add(group);
         }

@@ -1,7 +1,6 @@
-import { Fomod } from '../../src';
+import { Fomod, Install } from '../../src';
 
 import { parseTag } from '../testUtils';
-import { Install } from '../../src/definitions/Install';
 
 
 
@@ -182,10 +181,6 @@ describe('Fomod/ModuleConfig', () => {
     });
 
     describe('requiredInstallFiles', () => {
-        test('Fomod Has Required Install Files', () => {
-            expect(Array.from(cleanElement.children).findIndex(e => e.tagName === 'requiredInstallFiles')).toBeGreaterThan(-1);
-        });
-
         test('We Have Files Set In The Fomod', () => {
             expect(fomod.installs.size).toBe(3);
         });
@@ -207,6 +202,11 @@ describe('Fomod/ModuleConfig', () => {
             expect(f2).toBeInstanceOf(Install);
             if (   !(f2 instanceof Install)   ) return;
             expect(f2.fileSource).toBe('some-file-1');
+        });
+
+        test('Fomod Has Required Install Files', () => {
+            const childArr = Array.from(cleanElement.children);
+            expect(childArr.findIndex(e => e.tagName === 'requiredInstallFiles')).toBeGreaterThan(-1);
         });
     });
 });

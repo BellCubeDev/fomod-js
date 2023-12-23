@@ -1,3 +1,15 @@
+import { TagName } from "./definitions";
+
+/** Searches for an existing tag by the provided name. If one does not yet exist, create one instead.
+ *
+ * @param fromElement The parent element
+ * @param tagName The tag name to search for, restricted to members of the TagName enum
+ * @returns The first element by the provided tagname or a new one if it did not yet exist.
+ */
+export function getOrCreateElementByTagNameSafe(fromElement: Element, tagName: TagName): Element {
+    return getOrCreateElementByTagName(fromElement, tagName);
+}
+
 /** Searches for an existing tag by the provided name. If one does not yet exist, create one instead.
  *
  * @param fromElement The parent element

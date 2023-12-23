@@ -1,10 +1,5 @@
-export * from './_core';
-export * from './Dependencies';
-export * from './FlagInstance';
-export * from './Fomod';
-export * from './Group';
-export * from './Install';
-export * from './InvalidityReporting';
+export * from './lib';
+export * from './module';
+
+export * from './Enums';
 export * from './Metadata';
-export * from './Option';
-export * from './Step';

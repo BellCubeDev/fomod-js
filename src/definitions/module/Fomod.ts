@@ -1,18 +1,19 @@
-import { getOrCreateElementByTagName } from "../DomUtils";
+import { getOrCreateElementByTagNameSafe } from "../../DomUtils";
 import { Dependencies } from "./Dependencies";
 import { Install, InstallPattern } from "./Install";
-import { InvalidityReason, InvalidityReport } from "./InvalidityReporting";
-import { SortingOrder, Step } from "./Step";
-import { ElementObjectMap, Verifiable, XmlRepresentation } from "./_core";
+import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
+import { Step } from "./Step";
+import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/_core";
+import { AttributeName, BooleanString, ModuleNamePosition, SortingOrder, TagName } from "../Enums";
 
 export interface ModuleImageMetadata<TStrict extends boolean> {
     showFade?: TStrict extends true ? `${boolean}` : string;
     showImage?: TStrict extends true ? `${boolean}` : string;
-    height?: TStrict extends true ? `${bigint}`|'' : string;
+    height?: TStrict extends true ? `${bigint}` | '' : string;
 }
 
 export interface ModuleNameMetadata<TStrict extends boolean> {
-    position?: TStrict extends true ? 'Left'|'Right'|'RightOfImage' : string;
+    position?: TStrict extends true ? ModuleNamePosition : string;
 
     /** Must be an XML-valid hex string. XML-valid hex strings accept the standard `1234567890ABCDEF` range and the length must be even
      *
@@ -32,8 +33,8 @@ function attrToObject(attributes: Iterable<Attr> | ArrayLike<Attr>): Record<stri
  * @template TStrict Whether or not to use strict typing for this class. Any data parsed from user input should be considered untrusted and thus `false` should be used. Otherwise, `true` should be used.
  */
 export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
-    static override readonly tagName = 'config';
-    readonly tagName = 'config';
+    static override readonly tagName = TagName.Config;
+    readonly tagName = TagName.Config;
 
 
 
@@ -44,12 +45,12 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
          * Note that Info.xml also has its own name.
         */
         public moduleName: string = '',
-        public moduleImage: string|null = null,
+        public moduleImage: string | null = null,
         /** Dependencies required for this FOMOD to be shown to the user.
          *
          * Mod managers will show the user an error message if attempting to install a FOMOD that does not meet the requirements specified here.
          */
-        public moduleDependencies: Dependencies<'moduleDependencies', TStrict> = new Dependencies<'moduleDependencies', TStrict>('moduleDependencies'),
+        public moduleDependencies: Dependencies<TagName.ModuleDependencies, TStrict> = new Dependencies<TagName.ModuleDependencies, TStrict>(TagName.ModuleDependencies),
         /** Top-level file installs for the FOMOD
          *
          * Covers both the `requiredInstallFiles` and `conditionalFileInstalls` tags.
@@ -79,9 +80,9 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     isValid(): this is Fomod<true> {
 
         return (
-            (!this.moduleNameMetadata.position || this.moduleNameMetadata.position === 'Left' || this.moduleNameMetadata.position === 'Right' || this.moduleNameMetadata.position === 'RightOfImage') &&
-            (!this.moduleImageMetadata.showFade || this.moduleImageMetadata.showFade === 'true' || this.moduleImageMetadata.showFade === 'false') &&
-            (!this.moduleImageMetadata.showImage || this.moduleImageMetadata.showImage === 'true' || this.moduleImageMetadata.showImage === 'false') &&
+            (!this.moduleNameMetadata.position || Object.values(ModuleNamePosition).includes(this.moduleNameMetadata.position as any)) &&
+            (!this.moduleImageMetadata.showFade || Object.values(BooleanString).includes(this.moduleImageMetadata.showFade as any)) &&
+            (!this.moduleImageMetadata.showImage || Object.values(BooleanString).includes(this.moduleImageMetadata.showImage as any)) &&
             !isNaN(parseInt(this.moduleNameMetadata.colour ?? '2', 16)) &&
             !isNaN(parseInt(this.moduleImageMetadata.height ?? '1')) &&
             (this.moduleDependencies?.isValid() ?? true) &&
@@ -93,7 +94,7 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     reasonForInvalidity(...tree: Omit<Verifiable<false>, "isValid" | "reasonForInvalidity">[]): InvalidityReport | null {
         tree.push(this);
 
-        if (this.moduleNameMetadata.position && this.moduleNameMetadata.position !== 'Left' && this.moduleNameMetadata.position !== 'Right' && this.moduleNameMetadata.position !== 'RightOfImage') return {
+        if (this.moduleNameMetadata.position && !Object.values(ModuleNamePosition).includes(this.moduleNameMetadata.position as any)) return {
             tree,
             offendingValue: this.moduleNameMetadata.position,
             reason: InvalidityReason.FomodModuleNameMetadataInvalidPosition,
@@ -105,13 +106,13 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
             reason: InvalidityReason.FomodModuleNameMetadataColorHexNotHexNumber,
         };
 
-        if (this.moduleImageMetadata.showFade && this.moduleImageMetadata.showFade !== 'true' && this.moduleImageMetadata.showFade !== 'false') return {
+        if (this.moduleImageMetadata.showFade && !Object.values(BooleanString).includes(this.moduleImageMetadata.showFade as any)) return {
             tree,
             offendingValue: this.moduleImageMetadata.showFade,
             reason: InvalidityReason.FomodModuleImageMetadataShowFadeNotBool,
         };
 
-        if (this.moduleImageMetadata.showImage && this.moduleImageMetadata.showImage !== 'true' && this.moduleImageMetadata.showImage !== 'false') return {
+        if (this.moduleImageMetadata.showImage && !Object.values(BooleanString).includes(this.moduleImageMetadata.showImage as any)) return {
             tree,
             offendingValue: this.moduleImageMetadata.showImage,
             reason: InvalidityReason.FomodModuleImageMetadataShowImageNotBool,
@@ -141,12 +142,12 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         element.setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:noNamespaceSchemaLocation', 'http://qconsulting.ca/fo3/ModConfig5.0.xsd');
 
 
-        const moduleNameElement = getOrCreateElementByTagName(element, 'moduleName');
+        const moduleNameElement = getOrCreateElementByTagNameSafe(element, TagName.ModuleName);
         moduleNameElement.textContent = this.moduleName;
-        for (const [key, value] of Object.entries(this.moduleNameMetadata) as [string, string|undefined][]) {
+        for (const [key, value] of Object.entries(this.moduleNameMetadata) as [string, string | undefined][]) {
             if (!value) continue;
 
-            if (key !== 'colour') moduleNameElement.setAttribute(key, value);
+            if (key !== AttributeName.Color) moduleNameElement.setAttribute(key, value);
 
             else { // `xs:hexBinary` values are required to have an even number of digits. This enforces that so long as the color value is a valid hex number.
                 let colorString = value;
@@ -155,19 +156,19 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
             }
         }
 
-        const moduleImageElement = getOrCreateElementByTagName(element, 'moduleImage');
+        const moduleImageElement = getOrCreateElementByTagNameSafe(element, TagName.ModuleImage);
         if (this.moduleImage === null) moduleImageElement.remove();
         else {
             for (const [key, value] of Object.entries(this.moduleImageMetadata)) moduleImageElement.setAttribute(key, value);
-            moduleImageElement.setAttribute('path', this.moduleImage);
+            moduleImageElement.setAttribute(AttributeName.Path, this.moduleImage);
         }
 
         if (this.moduleDependencies.dependencies.size > 0) element.appendChild(this.moduleDependencies.asElement(document));
         else this.moduleDependencies.getElementForDocument(document).remove();
 
-        const requiredInstallContainer = getOrCreateElementByTagName(element, 'requiredInstallFiles');
-        const conditionalInstallContainerRoot = getOrCreateElementByTagName(element, 'conditionalFileInstalls');
-        const conditionalInstallContainer = getOrCreateElementByTagName(conditionalInstallContainerRoot, 'patterns');
+        const requiredInstallContainer = getOrCreateElementByTagNameSafe(element, TagName.RequiredInstallFiles);
+        const conditionalInstallContainerRoot = getOrCreateElementByTagNameSafe(element, TagName.ConditionalFileInstalls);
+        const conditionalInstallContainer = getOrCreateElementByTagNameSafe(conditionalInstallContainerRoot, TagName.Patterns);
 
         for (const installOrPattern of this.installs) {
             if (installOrPattern instanceof Install) requiredInstallContainer.appendChild(installOrPattern.asElement(document));
@@ -177,13 +178,12 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         if (requiredInstallContainer.children.length === 0) requiredInstallContainer.remove();
         else element.appendChild(requiredInstallContainer);
 
-
-        const stepContainer = getOrCreateElementByTagName(element, 'installSteps');
+        const stepContainer = getOrCreateElementByTagNameSafe(element, TagName.InstallSteps);
         for (const step of this.steps) stepContainer.appendChild(step.asElement(document));
 
         if (stepContainer.children.length === 0) stepContainer.remove();
         else {
-            stepContainer.setAttribute('order', this.sortingOrder);
+            stepContainer.setAttribute(AttributeName.Order, this.sortingOrder);
             element.appendChild(stepContainer);
         }
 
@@ -197,33 +197,35 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
-        const moduleName = element.querySelector('moduleName')?.textContent ?? '';
-        const moduleImage = element.querySelector('moduleImage')?.getAttribute('path');
+        const moduleNameElement = element.querySelector(`:scope > ${TagName.ModuleName}`);
+        const ModuleImageEllement = element.querySelector(`:scope > ${TagName.ModuleImage}`);
+        const moduleName = moduleNameElement?.textContent ?? '';
+        const moduleImage = ModuleImageEllement?.getAttribute(AttributeName.Path) ?? null;
 
         const fomod = new Fomod<false>(moduleName, moduleImage);
         fomod.assignElement(element);
 
-        fomod.moduleNameMetadata = attrToObject(element.querySelector('moduleName')?.attributes ?? []);
-        fomod.moduleImageMetadata = attrToObject(element.querySelector('moduleImage')?.attributes ?? []);
+        fomod.moduleNameMetadata = attrToObject(moduleNameElement?.attributes ?? []);
+        fomod.moduleImageMetadata = attrToObject(ModuleImageEllement?.attributes ?? []);
 
         fomod.moduleImageMetadata.path = '';
 
-        const moduleDependencies = element.querySelector('moduleDependencies');
+        const moduleDependencies = element.querySelector(`:scope > ${TagName.ModuleDependencies}`);
         if (moduleDependencies) fomod.moduleDependencies = Dependencies.parse(moduleDependencies);
 
-        for (const install of element.querySelectorAll(':scope > requiredInstallFiles > :is(file, folder)')) {
+        for (const install of element.querySelectorAll(`:scope > ${TagName.RequiredInstallFiles} > :is(${TagName.File}, ${TagName.Folder})`)) {
             const parsed = Install.parse(install);
             if (parsed) fomod.installs.add(parsed);
         }
 
-        fomod.sortingOrder = element.querySelector('installSteps')?.getAttribute('order') ?? SortingOrder.Ascending;
+        fomod.sortingOrder = element.querySelector(`:scope > ${TagName.InstallStep}`)?.getAttribute(AttributeName.Order) ?? SortingOrder.Ascending;
 
-        for (const install of element.querySelectorAll(':scope > conditionalFileInstalls > pattern')) {
+        for (const install of element.querySelectorAll(`:scope > ${TagName.ConditionalFileInstalls} > ${TagName.Pattern}`)) {
             const parsed = Install.parse(install);
             if (parsed) fomod.installs.add(parsed);
         }
 
-        for (const step of element.querySelectorAll(':scope > installSteps > installStep')) {
+        for (const step of element.querySelectorAll(`:scope > ${TagName.InstallSteps} > ${TagName.InstallStep}`)) {
             const parsed = Step.parse(step);
             if (parsed) fomod.steps.add(parsed);
         }

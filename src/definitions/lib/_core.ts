@@ -1,5 +1,6 @@
-import { ensureXmlDoctype } from "../DomUtils";
-import { InvalidityReason, InvalidityReport } from "./InvalidityReporting";
+import { ensureXmlDoctype } from "../../DomUtils";
+import { TagName } from "../Enums";
+import { InvalidityReport } from "./InvalidityReporting";
 
 /** The foundation of a class that can be validated against a schema.
  *
@@ -24,8 +25,8 @@ export const ElementObjectMap = new WeakMap<Element, XmlRepresentation<boolean>>
  *
  */
 export abstract class XmlRepresentation<TStrict extends boolean> extends Verifiable<TStrict> {
-    static readonly tagName: string|string[];
-    abstract readonly tagName: string;
+    static readonly tagName: TagName|TagName[];
+    abstract readonly tagName: TagName;
 
     /** A [weak map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) of documents to this representation's associated element within that document.
      *

@@ -90,4 +90,3 @@ test('Mod Manager Version Dependencies', () => {
 
     versionTest(ModManagerVersionDependency, tag, version);
 });
-

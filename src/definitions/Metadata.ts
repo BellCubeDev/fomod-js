@@ -1,5 +1,5 @@
-import { InvalidityReport } from "./InvalidityReporting";
-import { ElementObjectMap, Verifiable, XmlRepresentation } from "./_core";
+import { TagName } from "./Enums";
+import { ElementObjectMap, XmlRepresentation } from "./lib/_core";
 
 export interface FomodInfoData {
     [key: string]: string|undefined;
@@ -28,8 +28,8 @@ export const DefaultInfoSchema = 'https://fomod.bellcube.dev/schemas/info.xsd';
  * Explicit types are given for known values, however there are no explicit specifications given for what is allowed or expected in the file.
  */
 export class FomodInfo extends XmlRepresentation<boolean> {
-    static override readonly tagName = 'fomod';
-    readonly tagName = 'fomod';
+    static override readonly tagName = TagName.Fomod;
+    readonly tagName = TagName.Fomod;
 
     constructor(
         public data: FomodInfoData = {}
