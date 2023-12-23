@@ -72,7 +72,7 @@ export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         const sortingOrder = optionsContainer.getAttribute(AttributeName.Order);
         if (sortingOrder !== null) group.sortingOrder = sortingOrder;
 
-        for (const optionElement of optionsContainer.querySelectorAll(`:scope > ${TagName.Plugins}`)) {
+        for (const optionElement of optionsContainer.querySelectorAll(`:scope > ${TagName.Plugin}`)) {
             const option = Option.parse(optionElement);
             if (option !== null) group.options.add(option);
         }
