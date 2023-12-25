@@ -1,9 +1,9 @@
-import { getOrCreateElementByTagNameSafe } from "../../DomUtils";
+import { XmlNamespaces, getOrCreateElementByTagNameSafe } from "../../DomUtils";
 import { Dependencies } from "./Dependencies";
 import { Install, InstallPattern } from "./Install";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { Step } from "./Step";
-import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/_core";
+import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, BooleanString, ModuleNamePosition, SortingOrder, TagName } from "../Enums";
 
 export interface ModuleImageMetadata<TStrict extends boolean> {
@@ -136,11 +136,8 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
 
 
         // Schemas are mandatory for ModuleConfig.xml
-
-        //element.setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        //element.setAttribute('xsi:noNamespaceSchemaLocation', 'http://qconsulting.ca/fo3/ModConfig5.0.xsd');
-        element.setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:noNamespaceSchemaLocation', 'http://qconsulting.ca/fo3/ModConfig5.0.xsd');
-
+        element.setAttributeNS(XmlNamespaces.XMLNS, 'xmlns:xsi', XmlNamespaces.XSI);
+        element.setAttributeNS(XmlNamespaces.XSI, 'xsi:noNamespaceSchemaLocation', 'http://qconsulting.ca/fo3/ModConfig5.0.xsd');
 
         const moduleNameElement = getOrCreateElementByTagNameSafe(element, TagName.ModuleName);
         moduleNameElement.textContent = this.moduleName;
@@ -220,8 +217,8 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
 
         fomod.sortingOrder = element.querySelector(`:scope > ${TagName.InstallStep}`)?.getAttribute(AttributeName.Order) ?? SortingOrder.Ascending;
 
-        for (const install of element.querySelectorAll(`:scope > ${TagName.ConditionalFileInstalls} > ${TagName.Pattern}`)) {
-            const parsed = Install.parse(install);
+        for (const install of element.querySelectorAll(`:scope > ${TagName.ConditionalFileInstalls} > ${TagName.Patterns} > ${TagName.Pattern}`)) {
+            const parsed = InstallPattern.parse(install);
             if (parsed) fomod.installs.add(parsed);
         }
 

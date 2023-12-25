@@ -37,5 +37,10 @@ export function ensureXmlDoctype(doc: Document): void {
     }
 }
 
-export const BlankModuleConfig = '<config />';
-export const BlankInfoDoc = '<fomod />';
+export const BlankModuleConfig = '<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />';
+export const BlankInfoDoc = '<fomod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />';
+
+export enum XmlNamespaces {
+    XMLNS = 'http://www.w3.org/2000/xmlns/',
+    XSI = 'http://www.w3.org/2001/XMLSchema-instance',
+}

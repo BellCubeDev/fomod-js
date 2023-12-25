@@ -1,7 +1,7 @@
 import { ensureXmlDoctype } from "../../DomUtils";
 import { Dependencies } from "./Dependencies";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
-import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/_core";
+import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, BooleanString, TagName } from "../Enums";
 
 

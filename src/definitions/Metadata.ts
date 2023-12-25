@@ -1,5 +1,6 @@
+import { XmlNamespaces } from "../DomUtils";
 import { TagName } from "./Enums";
-import { ElementObjectMap, XmlRepresentation } from "./lib/_core";
+import { ElementObjectMap, XmlRepresentation } from "./lib/XmlRepresentation";
 
 export interface FomodInfoData {
     [key: string]: string|undefined;
@@ -45,7 +46,7 @@ export class FomodInfo extends XmlRepresentation<boolean> {
     override asElement(document: Document, includeSchema: boolean|string = true): Element {
         const element = this.getElementForDocument(document);
 
-        // An empty call removes all children
+        // Replace all data
         element.replaceChildren();
 
         for (const [key, value] of Object.entries(this.data)) {
@@ -57,16 +58,15 @@ export class FomodInfo extends XmlRepresentation<boolean> {
             element.appendChild(child);
         }
 
-        element.setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-
-        const currentSchema = element.getAttribute('xsi:noNamespaceSchemaLocation');
+        element.setAttributeNS(XmlNamespaces.XMLNS, 'xmlns:xsi', XmlNamespaces.XSI);
+        const currentSchema = element.getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation');
 
         if (includeSchema) {
-            if (typeof includeSchema === 'string') element.setAttribute('xsi:noNamespaceSchemaLocation', includeSchema);
-            else if (currentSchema === null) element.setAttribute('xsi:noNamespaceSchemaLocation', DefaultInfoSchema);
+            if (typeof includeSchema === 'string') element.setAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation', includeSchema);
+            else if (currentSchema === null) element.setAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation', DefaultInfoSchema);
 
         } else
-            if (currentSchema === DefaultInfoSchema) element.removeAttribute('xsi:noNamespaceSchemaLocation');
+            if (currentSchema === DefaultInfoSchema) element.removeAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation');
 
         return element;
     }

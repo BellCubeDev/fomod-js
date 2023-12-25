@@ -3,7 +3,7 @@ import { Dependencies, FlagDependency } from './Dependencies';
 import { FlagInstance, FlagInstancesByDocument } from "../lib/FlagInstance";
 import { Install, InstallPattern } from "./Install";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
-import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/_core";
+import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, GroupBehaviorType, OptionType, TagName } from "../Enums";
 
 /***
@@ -130,7 +130,7 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
         const typeDescriptor = typeDescriptorElement ? TypeDescriptor.parse(typeDescriptorElement) : undefined;
 
         const installsToSet = new InstallPattern();
-        const filesElement = element.getElementsByTagName(TagName.File)[0];
+        const filesElement = element.getElementsByTagName(TagName.Files)[0];
         if (filesElement) {
             for (const flagElement of filesElement.getElementsByTagName(TagName.File)) {
                 const install = Install.parse(flagElement);
@@ -277,15 +277,18 @@ export class TypeDescriptor<TStrict extends boolean> extends XmlRepresentation<T
         const typeDescriptor = new TypeDescriptor();
         typeDescriptor.assignElement(element);
 
-        const defaultTypeNameDescriptorElement = element.querySelector(`:scope > ${TagName.DefaultType}, :scope > ${TagName.Type}`);
-        if (defaultTypeNameDescriptorElement) {
-            typeDescriptor.defaultTypeNameDescriptor = TypeNameDescriptor.parse(defaultTypeNameDescriptorElement);
-        }
+        const dependencyTypeEl = element.querySelector(`:scope > ${TagName.DependencyType}`);
 
-        const patternsContainer = element.querySelector(`:scope > ${TagName.DefaultType}`);
-        if (patternsContainer)
-            for (const patternElement of patternsContainer.querySelectorAll(`:scope > ${TagName.Patterns}`))
+        if (!dependencyTypeEl) {
+            const typeElement = element.querySelector(`:scope > ${TagName.Type}`);
+            if (typeElement) typeDescriptor.defaultTypeNameDescriptor = TypeNameDescriptor.parse(typeElement);
+        } else {
+            const defaultTypeNameDescriptorElement = dependencyTypeEl.querySelector(`:scope > ${TagName.DefaultType}`);
+            if (defaultTypeNameDescriptorElement) typeDescriptor.defaultTypeNameDescriptor = TypeNameDescriptor.parse(defaultTypeNameDescriptorElement);
+
+            for (const patternElement of dependencyTypeEl.querySelectorAll(`:scope > ${TagName.Pattern}`))
                 typeDescriptor.patterns.push(TypeDescriptorPattern.parse(patternElement));
+        }
 
         return typeDescriptor;
     }

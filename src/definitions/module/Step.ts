@@ -1,7 +1,7 @@
 import { getOrCreateElementByTagNameSafe } from "../../DomUtils";
 import { Group } from "./Group";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
-import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/_core";
+import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, SortingOrder, TagName } from "../Enums";
 
 export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {

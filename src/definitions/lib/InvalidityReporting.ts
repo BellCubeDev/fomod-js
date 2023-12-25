@@ -1,4 +1,4 @@
-import { Verifiable } from "./_core";
+import { Verifiable } from "./XmlRepresentation";
 
 /** A list of reasons why a Fomod might be invalid
  *

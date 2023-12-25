@@ -1,7 +1,7 @@
 import { getOrCreateElementByTagNameSafe } from "../../DomUtils";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { Option } from "./Option";
-import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/_core";
+import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, GroupBehaviorType, SortingOrder, TagName } from "../Enums";
 
 export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {

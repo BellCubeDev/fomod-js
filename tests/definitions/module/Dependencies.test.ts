@@ -2,8 +2,65 @@
  * @jest-environment jsdom
  */
 
-import { FileDependency, FlagDependency, GameVersionDependency, InvalidityReason, ModManagerVersionDependency, ScriptExtenderVersionDependency, VersionDependency } from "../../../src";
+import { Dependencies, Dependency, FileDependency, FlagDependency, GameVersionDependency, InvalidityReason, ModManagerVersionDependency, ScriptExtenderVersionDependency, TagName, VersionDependency } from "../../../src";
 import { parseTag, testValidity } from "../../testUtils";
+
+describe('Parsing', () => {
+    test(TagName.ModuleDependencies, () => {
+        const element = parseTag`<${TagName.ModuleDependencies} />`;
+        const obj = Dependency.parse(element);
+        expect(obj).toBeInstanceOf(Dependencies);
+    });
+
+    test(TagName.Dependencies, () => {
+        const element = parseTag`<${TagName.Dependencies} />`;
+        const obj = Dependency.parse(element);
+        expect(obj).toBeInstanceOf(Dependencies);
+    });
+
+    test(TagName.Visible, () => {
+        const element = parseTag`<${TagName.Visible} />`;
+        const obj = Dependency.parse(element);
+        expect(obj).toBeInstanceOf(Dependencies);
+    });
+
+    test(TagName.FileDependency, () => {
+        const element = parseTag`<${TagName.FileDependency} />`;
+        const obj = Dependency.parse(element);
+        expect(obj).toBeInstanceOf(FileDependency);
+    });
+
+    test(TagName.FlagDependency, () => {
+        const element = parseTag`<${TagName.FlagDependency} />`;
+        const obj = Dependency.parse(element);
+        expect(obj).toBeInstanceOf(FlagDependency);
+    });
+
+    test(TagName.GameDependency, () => {
+        const element = parseTag`<${TagName.GameDependency} />`;
+        const obj = Dependency.parse(element);
+        expect(obj).toBeInstanceOf(GameVersionDependency);
+    });
+
+    test(TagName.FOSEDependency, () => {
+        const element = parseTag`<${TagName.FOSEDependency} />`;
+        const obj = Dependency.parse(element);
+        expect(obj).toBeInstanceOf(ScriptExtenderVersionDependency);
+    });
+
+    test(TagName.FOMMDependency, () => {
+        const element = parseTag`<${TagName.FOMMDependency} />`;
+        const obj = Dependency.parse(element);
+        expect(obj).toBeInstanceOf(ModManagerVersionDependency);
+    });
+
+    test('Invalid Tag', () => {
+        const element = parseTag`<invalidTag />`;
+        const obj = Dependency.parse(element);
+        expect(obj).toBeNull();
+    });
+
+});
 
 describe('Flag Dependencies', () => {
     const flagName = 'Some Flag 01';

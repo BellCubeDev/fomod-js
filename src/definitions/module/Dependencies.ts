@@ -1,5 +1,5 @@
 import { FlagInstance } from "../lib/FlagInstance";
-import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/_core";
+import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { Option } from './Option';
 import { InvalidityReason, InvalidityReport } from '../lib/InvalidityReporting';
 import { AttributeName, BooleanString, DependencyGroupOperator, FileDependencyState, TagName } from '../Enums';
@@ -15,7 +15,8 @@ export abstract class Dependency<TStrict extends boolean = boolean> extends XmlR
         switch (element.tagName) {
             case Dependencies.tagName[0]:
             case Dependencies.tagName[1]:
-                    return Dependencies.parse(element);
+            case Dependencies.tagName[2]:
+                return Dependencies.parse(element);
 
             case FileDependency.tagName:
                 return FileDependency.parse(element);

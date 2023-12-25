@@ -1,4 +1,4 @@
-import { FileDependency, FlagDependency, Fomod, GameVersionDependency, Install, ModManagerVersionDependency, ScriptExtenderVersionDependency } from '../../../src';
+import { FileDependency, FlagDependency, Fomod, GameVersionDependency, Install, InstallPattern, ModManagerVersionDependency, ScriptExtenderVersionDependency } from '../../../src';
 
 import { parseTag, testValidity } from '../../testUtils';
 
@@ -173,7 +173,7 @@ test('Is Valid', () => { testValidity(fomod); });
 
 describe('Installer Dependencies', () => {
     test('Has Dependencies', () => {
-        expect(fomod.moduleDependencies).not.toBe(null);
+        expect(fomod.moduleDependencies).not.toBeNull();
     });
 
     test('Has Correct Operator', () => {
@@ -224,32 +224,32 @@ describe('Installer Dependencies', () => {
 });
 
 describe('Required Install Files', () => {
+    test('Fomod Has Required Install Files', () => {
+        const childArr = Array.from(cleanElement.children);
+        expect(childArr.findIndex(e => e.tagName === 'requiredInstallFiles')).toBeGreaterThan(-1);
+    });
+
+    const installs = Array.from(fomod.installs).filter(i => !(i instanceof InstallPattern)) as Install<false>[];
+
     test('We Have Files Set In The Fomod', () => {
-        expect(fomod.installs.size).toBe(3);
+        expect(installs.length).toBe(3);
     });
 
     test('We Have The Right Sources', () => {
-        const installsArr = Array.from(fomod.installs);
-
-        const f0 = installsArr[0];
+        const f0 = installs[0];
         expect(f0).toBeInstanceOf(Install);
         if (   !(f0 instanceof Install)   ) return;
         expect(f0.fileSource).toBe('some-folder-1/');
 
-        const f1 = installsArr[1];
+        const f1 = installs[1];
         expect(f1).toBeInstanceOf(Install);
         if (   !(f1 instanceof Install)   ) return;
         expect(f1.fileSource).toBe('some-folder-2/');
 
-        const f2 = installsArr[2];
+        const f2 = installs[2];
         expect(f2).toBeInstanceOf(Install);
         if (   !(f2 instanceof Install)   ) return;
         expect(f2.fileSource).toBe('some-file-1');
-    });
-
-    test('Fomod Has Required Install Files', () => {
-        const childArr = Array.from(cleanElement.children);
-        expect(childArr.findIndex(e => e.tagName === 'requiredInstallFiles')).toBeGreaterThan(-1);
     });
 });
 
@@ -330,19 +330,19 @@ describe('Steps', () => {
                 });
 
                 test('Has Correct Destination', () => {
-                    expect(file1.fileDestination).toBe('');
+                    expect(file1.fileDestination).toBeNull();
                 });
 
                 test('Has Correct Always Install', () => {
-                    expect(file1.alwaysInstall).toBe(true);
+                    expect(file1.alwaysInstall).toBe('true');
                 });
 
                 test('Has Correct Install If Usable', () => {
-                    expect(file1.installIfUsable).toBe(true);
+                    expect(file1.installIfUsable).toBe('false');
                 });
 
                 test('Has Correct Priority', () => {
-                    expect(file1.priority).toBe(100);
+                    expect(file1.priority).toBe('0');
                 });
             });
 
@@ -356,15 +356,15 @@ describe('Steps', () => {
                 });
 
                 test('Has Correct Always Install', () => {
-                    expect(file2.alwaysInstall).toBe(false);
+                    expect(file2.alwaysInstall).toBe('false');
                 });
 
                 test('Has Correct Install If Usable', () => {
-                    expect(file2.installIfUsable).toBe(false);
+                    expect(file2.installIfUsable).toBe('false');
                 });
 
                 test('Has Correct Priority', () => {
-                    expect(file2.priority).toBe(95);
+                    expect(file2.priority).toBe('95');
                 });
             });
         });
@@ -545,4 +545,78 @@ describe('Steps', () => {
         });
     });
 
+});
+
+describe('Conditional File Installs', () => {
+    test('Fomod Has Conditional File Installs', () => {
+        expect(Array.from(cleanElement.children).findIndex(e => e.tagName === 'conditionalFileInstalls')).toBeGreaterThan(-1);
+    });
+
+    const conditionalInstalls = Array.from(fomod.installs).filter(i=> i instanceof InstallPattern) as InstallPattern<false>[];
+
+    test('Has Correct Number Of Patterns', () => {
+        expect(conditionalInstalls.length).toBe(1);
+    });
+
+    const [pattern1] = conditionalInstalls;
+    if (!pattern1) return;
+
+    test('Has Correct Number Of Dependencies', () => {
+        expect(pattern1.dependencies?.dependencies.size).toBe(1);
+    });
+
+    test('Has Correct Operator', () => {
+        expect(pattern1.dependencies?.operator).toBe('And');
+    });
+
+    test('Has Correct Number Of Files', () => {
+        expect(pattern1.filesWrapper.installs.size).toBe(2);
+    });
+
+    const [file1, file2] = Array.from(pattern1.filesWrapper.installs);
+    if (!file1 || !file2) return;
+
+    describe('File 1', () => {
+        test('Has Correct Source', () => {
+            expect(file1.fileSource).toBe('');
+        });
+
+        test('Has Correct Destination', () => {
+            expect(file1.fileDestination).toBeNull();
+        });
+
+        test('Has Correct Always Install', () => {
+            expect(file1.alwaysInstall).toBe('false');
+        });
+
+        test('Has Correct Install If Usable', () => {
+            expect(file1.installIfUsable).toBe('false');
+        });
+
+        test('Has Correct Priority', () => {
+            expect(file1.priority).toBe('0');
+        });
+    });
+
+    describe('File 2', () => {
+        test('Has Correct Source', () => {
+            expect(file2.fileSource).toBe('/');
+        });
+
+        test('Has Correct Destination', () => {
+            expect(file2.fileDestination).toBeNull();
+        });
+
+        test('Has Correct Always Install', () => {
+            expect(file2.alwaysInstall).toBe('false');
+        });
+
+        test('Has Correct Install If Usable', () => {
+            expect(file2.installIfUsable).toBe('false');
+        });
+
+        test('Has Correct Priority', () => {
+            expect(file2.priority).toBe('0');
+        });
+    });
 });

@@ -47,7 +47,7 @@ export abstract class XmlRepresentation<TStrict extends boolean> extends Verifia
 
         if (element.tagName !== this.tagName && element.tagName !== this.tagName.toUpperCase()) throw new Error(`Cannot assign an element with tag name "${element.tagName}" to a class with tag name "${this.tagName}".`);
 
-        if (this.documentMap.has(document)) throw new Error('Cannot assign an element to a document more than once.');
+        if (this.documentMap.has(document)) throw new Error('Cannot assign an XmlRepresentation to an element from a given document more than once.');
 
         if (ElementObjectMap.has(element)) throw new Error('Cannot assign an element that has already been assigned to a different instance of a Fomod class.');
 

@@ -2,7 +2,7 @@
   "type": "module",
   "name": "fomod",
   "description": "A library for creating, parsing, editing, and validating XML-based Fomod installers, widely popularized in the Bethesda modding scene",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "main": "dist/index.js",
   "repository": "https://github.com/BellCubeDev/fomod-js/",
   "bugs": {
@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "npx jest",
+    "test": "npx jest --verbose --colors",
+    "test-ci": "npx jest --verbose --colors --ci --coverage --debug",
     "type-check": "tsc --noEmit"
   },
   "files": [
@@ -29,21 +30,21 @@
     "exec": "ts-node --project ./tsconfig.json --esm"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.2",
-    "@types/jsdom": "^21.1.1",
-    "@types/node": "^20.3.3",
-    "@typescript-eslint/eslint-plugin": "^5.60.1",
-    "@typescript-eslint/parser": "^5.60.1",
-    "eslint": "^8.44.0",
-    "eslint-plugin-github": "^4.8.0",
+    "@types/jest": "^29.5.11",
+    "@types/jsdom": "^21.1.6",
+    "@types/node": "^20.10.5",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-github": "^4.10.1",
     "eslint-plugin-sonarjs": "^0.19.0",
     "eslint-plugin-unicorn": "^47.0.0",
-    "jest-environment-jsdom": "^29.5.0",
+    "jest-environment-jsdom": "^29.7.0",
     "jest-extended": "^4.0.2",
-    "jsdom": "latest",
+    "jsdom": "^23.0.1",
     "ts-jest": "^29.1.1",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   },
   "keywords": [
     "fomod",
