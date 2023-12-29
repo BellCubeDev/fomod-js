@@ -1,6 +1,6 @@
 import { Option } from '../module/Option';
 
-interface FlagInstances {
+export interface FlagInstances {
     all: Set<FlagInstance<boolean, boolean>>;
     byName: Map<string|Option<boolean>, Set<FlagInstance<boolean, boolean>>>;
 }

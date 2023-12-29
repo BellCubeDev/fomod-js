@@ -36,7 +36,7 @@ import { AttributeName, BooleanString, TagName } from "../Enums";
 
 
 
-interface InstallInstances {
+export interface InstallInstances {
     all: Set<Install<boolean>>;
     bySource: Map<string, Set<Install<boolean>>>;
     byDestination: Map<string, Set<Install<boolean>>>;
