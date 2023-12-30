@@ -1,8 +1,10 @@
 import { InvalidityReason, Verifiable } from "../src";
+import { addTo } from "polyfill-pseudoclass-has";
 
 import * as matchers from 'jest-extended';
 expect.extend(matchers);
 
+addTo(Element, Document, DocumentFragment);
 const parser = new DOMParser();
 
 export function parseTag(literals: TemplateStringsArray, ...expressions: string[]) {

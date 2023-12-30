@@ -73,8 +73,11 @@ export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         const sortingOrder = optionsContainer.getAttribute(AttributeName.Order);
         if (sortingOrder !== null) group.sortingOrder = sortingOrder;
 
+        let configForOptions = config;
+        if (configForOptions.parseOptionFlags) configForOptions = Object.assign({}, configForOptions, {parseOptionFlags: false});
+
         for (const optionElement of optionsContainer.querySelectorAll(`:scope > ${TagName.Plugin}`)) {
-            const option = Option.parse(optionElement, config);
+            const option = Option.parse(optionElement, configForOptions);
             if (option !== null) group.options.add(option);
         }
 

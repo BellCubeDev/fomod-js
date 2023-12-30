@@ -197,10 +197,7 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
                 }
             }
 
-            
-            const hasAnything = el.querySelector(`:scope > ${TagName.Files} > *`) || el.querySelector(`:scope > ${TagName.Dependencies} > *`);
-            if (hasAnything) conditionalInstallContainer.appendChild(el);
-            else el.remove();
+            conditionalInstallContainer.appendChild(el);
         }
 
         if (requiredInstallContainer.children.length === 0) requiredInstallContainer.remove();
@@ -253,8 +250,11 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
             if (parsed) fomod.installs.add(parsed);
         }
 
+        let configForSteps = config;
+        if (configForSteps.parseOptionFlags) configForSteps = Object.assign({}, configForSteps, {parseOptionFlags: false});
+
         for (const step of element.querySelectorAll(`:scope > ${TagName.InstallSteps} > ${TagName.InstallStep}`)) {
-            const parsed = Step.parse(step, config);
+            const parsed = Step.parse(step, configForSteps);
             if (parsed) fomod.steps.add(parsed);
         }
 

@@ -67,8 +67,11 @@ export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         const sortingOrder = groupsContainer.getAttribute(AttributeName.Order);
         if (sortingOrder !== null) step.sortingOrder = sortingOrder;
 
+        let configForGroups = config;
+        if (configForGroups.parseOptionFlags) configForGroups = Object.assign({}, configForGroups, {parseOptionFlags: false});
+
         for (const groupElement of groupsContainer.querySelectorAll(TagName.Group)) {
-            const group = Group.parse(groupElement, config);
+            const group = Group.parse(groupElement, configForGroups);
             if (group !== null) step.groups.add(group);
         }
 
