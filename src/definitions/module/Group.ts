@@ -3,6 +3,7 @@ import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { Option } from "./Option";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, GroupBehaviorType, SortingOrder, TagName } from "../Enums";
+import { FomodDocumentConfig } from "../lib/FomodDocumentConfig";
 
 export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override readonly tagName = TagName.Group;
@@ -56,7 +57,7 @@ export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         return null;
     }
 
-    static override parse(element: Element): Group<boolean> {
+    static override parse(element: Element, config: FomodDocumentConfig = {}): Group<boolean> {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
@@ -73,7 +74,7 @@ export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         if (sortingOrder !== null) group.sortingOrder = sortingOrder;
 
         for (const optionElement of optionsContainer.querySelectorAll(`:scope > ${TagName.Plugin}`)) {
-            const option = Option.parse(optionElement);
+            const option = Option.parse(optionElement, config);
             if (option !== null) group.options.add(option);
         }
 

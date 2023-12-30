@@ -1,8 +1,9 @@
-import { ensureXmlDoctype } from "../../DomUtils";
-import { Dependencies } from "./Dependencies";
+import { ensureXmlDoctype, getOrCreateElementByTagName, getOrCreateElementByTagNameSafe } from "../../DomUtils";
+import { DependenciesGroup } from "./dependencies";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, BooleanString, TagName } from "../Enums";
+import { FomodDocumentConfig } from "../lib/FomodDocumentConfig";
 
 
 
@@ -149,7 +150,7 @@ export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict>
         return element;
     }
 
-    static override parse(element: Element): Install<boolean> {
+    static override parse(element: Element, config: FomodDocumentConfig = {}): Install<boolean> {
         let source = element.getAttribute(AttributeName.Source) ?? '';
         let destination = element.getAttribute(AttributeName.Destination) ?? null;
 
@@ -305,14 +306,14 @@ export class InstallPatternFilesWrapper<TStrict extends boolean> extends XmlRepr
         return true;
     }
 
-    static override parse(element: Element): InstallPatternFilesWrapper<boolean> {
+    static override parse(element: Element, config: FomodDocumentConfig = {}): InstallPatternFilesWrapper<boolean> {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
         const installs = new Set<Install<boolean>>();
 
         for (const child of element.children) {
-            const install = Install.parse(child);
+            const install = Install.parse(child, config);
             installs.add(install);
         }
 
@@ -386,19 +387,15 @@ export class InstallPattern<TStrict extends boolean> extends XmlRepresentation<T
     readonly tagName = TagName.Pattern;
 
     constructor(
-        public dependencies: Dependencies<TagName.Dependencies, TStrict>|null = null,
+        public dependencies: DependenciesGroup<TagName.Dependencies, TStrict> = new DependenciesGroup<TagName.Dependencies, TStrict>(TagName.Dependencies),
         public filesWrapper: InstallPatternFilesWrapper<TStrict> = new InstallPatternFilesWrapper(),
     ) {
         super();
     }
 
     override asElement(document: Document): Element {
-        if (!this.dependencies || this.dependencies.dependencies.size === 0) {
-            this.documentMap.get(document)?.remove();
-            return this.filesWrapper.asElement(document);
-        }
-
         const el = this.getElementForDocument(document);
+
         el.appendChild(this.dependencies.asElement(document));
         el.appendChild(this.filesWrapper.asElement(document));
 
@@ -409,15 +406,15 @@ export class InstallPattern<TStrict extends boolean> extends XmlRepresentation<T
         return this.filesWrapper.isValid() && (this.dependencies ? this.dependencies.isValid() : true);
     }
 
-    static override parse(element: Element): InstallPattern<boolean> {
+    static override parse(element: Element, config: FomodDocumentConfig = {}): InstallPattern<boolean> {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
         const dependenciesElement = element.querySelector(TagName.Dependencies);
-        const dependencies = dependenciesElement ? Dependencies.parse<TagName.Dependencies>(dependenciesElement) : undefined;
+        const dependencies = dependenciesElement ? DependenciesGroup.parse<TagName.Dependencies>(dependenciesElement) : undefined;
 
         const filesElement = element.querySelector(TagName.Files);
-        const filesWrapper = filesElement ? InstallPatternFilesWrapper.parse(filesElement) : undefined;
+        const filesWrapper = filesElement ? InstallPatternFilesWrapper.parse(filesElement, config) : undefined;
 
         const obj = new InstallPattern(dependencies, filesWrapper);
         obj.assignElement(element);

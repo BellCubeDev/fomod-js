@@ -44,3 +44,9 @@ export enum XmlNamespaces {
     XMLNS = 'http://www.w3.org/2000/xmlns/',
     XSI = 'http://www.w3.org/2001/XMLSchema-instance',
 }
+
+export function attrToObject(attributes: Iterable<Attr> | ArrayLike<Attr>): Record<string, string> {
+    const arr = Array.from(attributes);
+    const entries = arr.map(attr => [attr.name, attr.value]);
+    return Object.fromEntries(entries);
+}

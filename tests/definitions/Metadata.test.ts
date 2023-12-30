@@ -31,7 +31,7 @@ test('Will include schema if asked', () => {
     const info = new FomodInfo(sampleData);
     const doc = parseTag`<p/>`.ownerDocument;
 
-    const asElement = info.asElement(doc, true);
+    const asElement = info.asElement(doc, {includeInfoSchema: true});
     console.log(asElement.outerHTML);
     expect(asElement.getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation')).toBe(DefaultInfoSchema);
 });
@@ -40,7 +40,7 @@ test('Will not include schema if asked', () => {
     const info = new FomodInfo(sampleData);
     const doc = parseTag`<p/>`.ownerDocument;
 
-    const asElement = info.asElement(doc, false);
+    const asElement = info.asElement(doc, {includeInfoSchema: false});
     expect(asElement.getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation')).toBeNull();
 });
 
@@ -50,7 +50,7 @@ test('Will remove the schema if it\'s the default and we asked for no schema', (
 
     expect(el.getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation')).toBe(DefaultInfoSchema);
 
-    expect(info.asElement(el.ownerDocument, false).getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation')).toBeNull();
+    expect(info.asElement(el.ownerDocument, {includeInfoSchema: false}).getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation')).toBeNull();
 });
 
 test('Will not overwrite an existing schema if not given a schema', () => {
@@ -60,8 +60,8 @@ test('Will not overwrite an existing schema if not given a schema', () => {
 
     expect(el.getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation')).toBe(schema);
 
-    expect(info.asElement(el.ownerDocument, true).getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation')).toBe(schema);
-    expect(info.asElement(el.ownerDocument, DefaultInfoSchema).getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation')).toBe(DefaultInfoSchema);
+    expect(info.asElement(el.ownerDocument, {includeInfoSchema: true}).getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation')).toBe(schema);
+    expect(info.asElement(el.ownerDocument, {includeInfoSchema: DefaultInfoSchema}).getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation')).toBe(DefaultInfoSchema);
 });
 
 test('Will include an arbitrary schema', () => {
@@ -69,6 +69,6 @@ test('Will include an arbitrary schema', () => {
     const doc = parseTag`<p/>`.ownerDocument;
 
     const schema = 'https://example.com';
-    const asElement = info.asElement(doc, schema);
+    const asElement = info.asElement(doc, {includeInfoSchema: schema});
     expect(asElement.getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation')).toBe(schema);
 });

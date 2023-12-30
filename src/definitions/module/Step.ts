@@ -3,6 +3,7 @@ import { Group } from "./Group";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, SortingOrder, TagName } from "../Enums";
+import { FomodDocumentConfig } from "../lib/FomodDocumentConfig";
 
 export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override readonly tagName = TagName.InstallStep;
@@ -51,7 +52,7 @@ export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         return null;
     }
 
-    static override parse(element: Element): Step<boolean> {
+    static override parse(element: Element, config: FomodDocumentConfig = {}): Step<boolean> {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
@@ -67,7 +68,7 @@ export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         if (sortingOrder !== null) step.sortingOrder = sortingOrder;
 
         for (const groupElement of groupsContainer.querySelectorAll(TagName.Group)) {
-            const group = Group.parse(groupElement);
+            const group = Group.parse(groupElement, config);
             if (group !== null) step.groups.add(group);
         }
 

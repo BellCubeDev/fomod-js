@@ -1,4 +1,4 @@
-export * from './Dependencies';
+export * from './dependencies';
 export * from './Fomod';
 export * from './Group';
 export * from './Install';

@@ -2,26 +2,26 @@
  * @jest-environment jsdom
  */
 
-import { Dependencies, Dependency, FileDependency, FlagDependency, GameVersionDependency, InvalidityReason, ModManagerVersionDependency, ScriptExtenderVersionDependency, TagName, VersionDependency } from "../../../src";
+import { DependenciesGroup, Dependency, FileDependency, FlagDependency, GameVersionDependency, InvalidityReason, ModManagerVersionDependency, ScriptExtenderVersionDependency, TagName, VersionDependency } from "../../../src";
 import { parseTag, testValidity } from "../../testUtils";
 
 describe('Parsing', () => {
     test(TagName.ModuleDependencies, () => {
         const element = parseTag`<${TagName.ModuleDependencies} />`;
         const obj = Dependency.parse(element);
-        expect(obj).toBeInstanceOf(Dependencies);
+        expect(obj).toBeInstanceOf(DependenciesGroup);
     });
 
     test(TagName.Dependencies, () => {
         const element = parseTag`<${TagName.Dependencies} />`;
         const obj = Dependency.parse(element);
-        expect(obj).toBeInstanceOf(Dependencies);
+        expect(obj).toBeInstanceOf(DependenciesGroup);
     });
 
     test(TagName.Visible, () => {
         const element = parseTag`<${TagName.Visible} />`;
         const obj = Dependency.parse(element);
-        expect(obj).toBeInstanceOf(Dependencies);
+        expect(obj).toBeInstanceOf(DependenciesGroup);
     });
 
     test(TagName.FileDependency, () => {

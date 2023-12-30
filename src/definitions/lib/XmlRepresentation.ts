@@ -1,5 +1,6 @@
 import { ensureXmlDoctype } from "../../DomUtils";
 import { TagName } from "../Enums";
+import { FomodDocumentConfig } from "./FomodDocumentConfig";
 import { InvalidityReport } from "./InvalidityReporting";
 
 /** The foundation of a class that can be validated against a schema.
@@ -71,9 +72,9 @@ export abstract class XmlRepresentation<TStrict extends boolean> extends Verifia
     abstract decommission?(currentDocument?: Document): unknown;
 
     /** Generates an XML element from this object. */
-    abstract asElement(document: Document): Element;
+    abstract asElement(document: Document, config?: FomodDocumentConfig): Element;
 
-    static parse(element: Element): XmlRepresentation<boolean> | null {
+    static parse(element: Element, config?: FomodDocumentConfig): XmlRepresentation<boolean> | null {
         throw new Error('This static method must be implemented by the child class!');
     }
 }

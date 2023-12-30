@@ -1,4 +1,4 @@
-import { Dependencies, Fomod, GameVersionDependency, Group, GroupBehaviorType, Install, InstallPattern, Option, ScriptExtenderVersionDependency, SortingOrder as SortingOrder, Step, TagName } from "../../../src";
+import { DependenciesGroup, Fomod, GameVersionDependency, Group, GroupBehaviorType, Install, InstallPattern, Option, ScriptExtenderVersionDependency, SortingOrder as SortingOrder, Step, TagName } from "../../../src";
 import { parseTag, testValidity } from "../../testUtils";
 
 const fomod = new Fomod('That Test Fomod', 'someImage.gif');
@@ -22,7 +22,7 @@ const conditionalDependenciesPattern = new InstallPattern();
 
 conditionalDependenciesPattern.filesWrapper.installs.add(conditionedInstall);
 
-conditionalDependenciesPattern.dependencies = new Dependencies(TagName.Dependencies);
+conditionalDependenciesPattern.dependencies = new DependenciesGroup(TagName.Dependencies);
 conditionalDependenciesPattern.dependencies.dependencies.add( new GameVersionDependency('1.6.640.0') );
 conditionalDependenciesPattern.dependencies.dependencies.add( new ScriptExtenderVersionDependency('2.2.3') );
 

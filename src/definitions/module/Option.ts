@@ -1,10 +1,11 @@
 import { ensureXmlDoctype, getOrCreateElementByTagNameSafe } from "../../DomUtils";
-import { Dependencies, FlagDependency } from './Dependencies';
+import { DependenciesGroup, FlagDependency } from './dependencies';
 import { FlagInstance, FlagInstancesByDocument } from "../lib/FlagInstance";
 import { Install, InstallPattern } from "./Install";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, GroupBehaviorType, OptionType, TagName } from "../Enums";
+import { FomodDocumentConfig } from "../lib/FomodDocumentConfig";
 
 /***
  *     $$$$$$\              $$\     $$\                           $$$$$$$\                  $$\
@@ -107,7 +108,7 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
         return tryNextName(1);
     }
 
-    static override parse(element: Element): Option<boolean> | null {
+    static override parse(element: Element, config: FomodDocumentConfig = {}): Option<boolean> | null {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
@@ -121,24 +122,24 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
         const conditionFlags = element.getElementsByTagName(TagName.ConditionFlags)[0];
         if (conditionFlags) {
             for (const flagElement of conditionFlags.getElementsByTagName(TagName.Flag)) {
-                const flag = FlagSetter.parse(flagElement);
+                const flag = FlagSetter.parse(flagElement, config);
                 if (flag) flagsToSet.add(flag);
             }
         }
 
         const typeDescriptorElement = element.getElementsByTagName(TagName.TypeDescriptor)[0];
-        const typeDescriptor = typeDescriptorElement ? TypeDescriptor.parse(typeDescriptorElement) : undefined;
+        const typeDescriptor = typeDescriptorElement ? TypeDescriptor.parse(typeDescriptorElement, config) : undefined;
 
         const installsToSet = new InstallPattern();
         const filesElement = element.getElementsByTagName(TagName.Files)[0];
         if (filesElement) {
             for (const flagElement of filesElement.getElementsByTagName(TagName.File)) {
-                const install = Install.parse(flagElement);
+                const install = Install.parse(flagElement, config);
                 if (install) installsToSet.filesWrapper.installs.add(install);
             }
 
             for (const flagElement of filesElement.getElementsByTagName(TagName.Folder)) {
-                const install = Install.parse(flagElement);
+                const install = Install.parse(flagElement, config);
                 if (install) installsToSet.filesWrapper.installs.add(install);
             }
         }
@@ -190,7 +191,7 @@ export class FlagSetter extends XmlRepresentation<true> {
         return null;
     }
 
-    static override parse(element: Element): FlagSetter | null {
+    static override parse(element: Element, config: FomodDocumentConfig = {}): FlagSetter | null {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
@@ -270,7 +271,7 @@ export class TypeDescriptor<TStrict extends boolean> extends XmlRepresentation<T
         return element;
     }
 
-    static override parse(element: Element): TypeDescriptor<boolean> {
+    static override parse(element: Element, config: FomodDocumentConfig = {}): TypeDescriptor<boolean> {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
@@ -281,13 +282,13 @@ export class TypeDescriptor<TStrict extends boolean> extends XmlRepresentation<T
 
         if (!dependencyTypeEl) {
             const typeElement = element.querySelector(`:scope > ${TagName.Type}`);
-            if (typeElement) typeDescriptor.defaultTypeNameDescriptor = TypeNameDescriptor.parse(typeElement);
+            if (typeElement) typeDescriptor.defaultTypeNameDescriptor = TypeNameDescriptor.parse(typeElement, config);
         } else {
             const defaultTypeNameDescriptorElement = dependencyTypeEl.querySelector(`:scope > ${TagName.DefaultType}`);
-            if (defaultTypeNameDescriptorElement) typeDescriptor.defaultTypeNameDescriptor = TypeNameDescriptor.parse(defaultTypeNameDescriptorElement);
+            if (defaultTypeNameDescriptorElement) typeDescriptor.defaultTypeNameDescriptor = TypeNameDescriptor.parse(defaultTypeNameDescriptorElement, config);
 
             for (const patternElement of dependencyTypeEl.querySelectorAll(`:scope > ${TagName.Pattern}`))
-                typeDescriptor.patterns.push(TypeDescriptorPattern.parse(patternElement));
+                typeDescriptor.patterns.push(TypeDescriptorPattern.parse(patternElement, config));
         }
 
         return typeDescriptor;
@@ -320,7 +321,7 @@ export class TypeDescriptorPattern<TStrict extends boolean> extends XmlRepresent
 
     constructor(
         public typeNameDescriptor: TypeNameDescriptor<TagName.Type, TStrict, true> = new TypeNameDescriptor(TagName.Type, OptionType.Optional, true),
-        public dependencies: Dependencies<TagName.Dependencies, TStrict> = new Dependencies(TagName.Dependencies),
+        public dependencies: DependenciesGroup<TagName.Dependencies, TStrict> = new DependenciesGroup(TagName.Dependencies),
     ) {
         super();
     }
@@ -334,7 +335,7 @@ export class TypeDescriptorPattern<TStrict extends boolean> extends XmlRepresent
         return element;
     }
 
-    static override parse(element: Element): TypeDescriptorPattern<boolean> {
+    static override parse(element: Element, config: FomodDocumentConfig = {}): TypeDescriptorPattern<boolean> {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
@@ -342,10 +343,10 @@ export class TypeDescriptorPattern<TStrict extends boolean> extends XmlRepresent
         typeDescriptorPattern.assignElement(element);
 
         const typeNameDescriptorElement = element.querySelector(`:scope > ${TagName.Type}`);
-        if (typeNameDescriptorElement) typeDescriptorPattern.typeNameDescriptor = TypeNameDescriptor.parse(typeNameDescriptorElement, true);
+        if (typeNameDescriptorElement) typeDescriptorPattern.typeNameDescriptor = TypeNameDescriptor.parse(typeNameDescriptorElement, config, true);
 
         const dependenciesElement = element.querySelector(`:scope > ${TagName.Dependencies}`);
-        if (dependenciesElement)  typeDescriptorPattern.dependencies = Dependencies.parse<TagName.Dependencies>(dependenciesElement);
+        if (dependenciesElement)  typeDescriptorPattern.dependencies = DependenciesGroup.parse<TagName.Dependencies>(dependenciesElement);
 
         return typeDescriptorPattern;
     }
@@ -396,7 +397,7 @@ export class TypeNameDescriptor<TTagName extends TypeDescriptorTagName, TStrict 
         return element;
     }
 
-    static override parse<TTagName extends TypeDescriptorTagName = TypeDescriptorTagName, TTagNameIsReadOnly extends boolean = false>(element: Element, tagNameIsReadonly?: TTagNameIsReadOnly): TypeNameDescriptor<TTagName, boolean, TTagNameIsReadOnly> {
+    static override parse<TTagName extends TypeDescriptorTagName = TypeDescriptorTagName, TTagNameIsReadOnly extends boolean = false>(element: Element, config: FomodDocumentConfig = {}, tagNameIsReadonly?: TTagNameIsReadOnly): TypeNameDescriptor<TTagName, boolean, TTagNameIsReadOnly> {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
