@@ -410,10 +410,10 @@ export class InstallPattern<TStrict extends boolean> extends XmlRepresentation<T
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
 
-        const dependenciesElement = element.querySelector(TagName.Dependencies);
+        const dependenciesElement = element.querySelector(`:scope > ${TagName.Dependencies}`);
         const dependencies = dependenciesElement ? DependenciesGroup.parse<TagName.Dependencies>(dependenciesElement) : undefined;
 
-        const filesElement = element.querySelector(TagName.Files);
+        const filesElement = element.querySelector(`:scope > ${TagName.Files}`);
         const filesWrapper = filesElement ? InstallPatternFilesWrapper.parse(filesElement, config) : undefined;
 
         const obj = new InstallPattern(dependencies, filesWrapper);
