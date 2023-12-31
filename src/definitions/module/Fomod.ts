@@ -7,7 +7,7 @@ import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepre
 import { AttributeName, BooleanString, ModuleNamePosition, SortingOrder, TagName } from "../Enums";
 import { Option } from "./Option";
 import { gatherDependedUponOptions, gatherFlagDependencies } from "../lib/utils";
-import { DefaultFomodAsElementConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
+import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
 import { parseOptionFlags } from "../lib/ParseOptionFlags";
 
 export interface ModuleImageMetadata<TStrict extends boolean> {
@@ -174,7 +174,7 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
             const el = installOrPattern.asElement(document, config);
 
 
-            if (config.flattenConditionalInstalls ?? DefaultFomodAsElementConfig.flattenConditionalInstalls) {
+            if (config.flattenConditionalInstalls ?? DefaultFomodDocumentConfig.flattenConditionalInstalls) {
                 const optionDependencies = gatherDependedUponOptions(installOrPattern.dependencies);
                 if (optionDependencies.size === 1) {
                     const option = optionDependencies.values().next().value as Option<boolean>;
@@ -187,10 +187,10 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
 
 
             if (installOrPattern.dependencies.dependencies.size === 0) {
-                if ((config.removeEmptyConditionalInstalls ?? DefaultFomodAsElementConfig.removeEmptyConditionalInstalls) && installOrPattern.filesWrapper.installs.size === 0) {
+                if ((config.removeEmptyConditionalInstalls ?? DefaultFomodDocumentConfig.removeEmptyConditionalInstalls) && installOrPattern.filesWrapper.installs.size === 0) {
                     el.remove();
                     continue;
-                } else if (config.flattenConditionalInstallsNoDependencies ?? DefaultFomodAsElementConfig.flattenConditionalInstallsNoDependencies) {
+                } else if (config.flattenConditionalInstallsNoDependencies ?? DefaultFomodDocumentConfig.flattenConditionalInstallsNoDependencies) {
                     installOrPattern.filesWrapper.installs.forEach(install => requiredInstallContainer.appendChild(install.asElement(document, config)));
 
                     el.remove();
@@ -267,7 +267,7 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
             if (parsed) fomod.steps.add(parsed);
         }
 
-        if (config.parseOptionFlags ?? DefaultFomodAsElementConfig.parseOptionFlags) {
+        if (config.parseOptionFlags ?? DefaultFomodDocumentConfig.parseOptionFlags) {
             const dependencies = Array.from(gatherFlagDependencies(fomod.moduleDependencies));
             for (const install of fomod.installs) if (install instanceof InstallPattern) dependencies.push(...gatherFlagDependencies(install.dependencies));
 

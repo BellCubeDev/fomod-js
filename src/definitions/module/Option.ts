@@ -5,7 +5,7 @@ import { Install, InstallPattern } from "./Install";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, OptionType, TagName } from "../Enums";
-import { DefaultFomodAsElementConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
+import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
 
 /***
  *     $$$$$$\              $$\     $$\                           $$$$$$$\                  $$\
@@ -112,7 +112,7 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
             const name = baseName + `--${suffix}`;
 
             if (!existingFlagNames.has(name)) {
-                const setter = new FlagSetter(new FlagInstance(name, config.optionSelectedValue ?? DefaultFomodAsElementConfig.optionSelectedValue, true));
+                const setter = new FlagSetter(new FlagInstance(name, config.optionSelectedValue ?? DefaultFomodDocumentConfig.optionSelectedValue, true));
                 thisObj._existingOptionFlagSetterByDocument.set(document, setter);
                 return setter;
             }

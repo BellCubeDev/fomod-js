@@ -43,7 +43,7 @@ export interface FomodDocumentConfig {
     parseOptionFlags?: boolean | 'loose';
 }
 
-export const DefaultFomodAsElementConfig = {
+export const DefaultFomodDocumentConfig = {
     includeInfoSchema: true,
     flattenConditionalInstalls: false,
     flattenConditionalInstallsNoDependencies: false,

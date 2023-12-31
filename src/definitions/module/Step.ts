@@ -3,7 +3,7 @@ import { Group } from "./Group";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, SortingOrder, TagName } from "../Enums";
-import { DefaultFomodAsElementConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
+import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
 import { Option } from "./Option";
 import { parseOptionFlags } from "../lib/ParseOptionFlags";
 import { gatherFlagDependencies } from "../lib/utils";
@@ -95,7 +95,7 @@ export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
             if (group !== null) step.groups.add(group);
         }
 
-        if (config.parseOptionFlags ?? DefaultFomodAsElementConfig.parseOptionFlags) {
+        if (config.parseOptionFlags ?? DefaultFomodDocumentConfig.parseOptionFlags) {
             const dependencies = Array.from(gatherFlagDependencies(step.visibilityDeps));
 
             const options = step.gatherOptions();

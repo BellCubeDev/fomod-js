@@ -1,6 +1,6 @@
 import { XmlNamespaces } from "../DomUtils";
 import { TagName } from "./Enums";
-import { DefaultFomodAsElementConfig, FomodDocumentConfig } from "./lib/FomodDocumentConfig";
+import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "./lib/FomodDocumentConfig";
 import { ElementObjectMap, XmlRepresentation } from "./lib/XmlRepresentation";
 
 export interface FomodInfoData {
@@ -62,7 +62,7 @@ export class FomodInfo extends XmlRepresentation<boolean> {
         element.setAttributeNS(XmlNamespaces.XMLNS, 'xmlns:xsi', XmlNamespaces.XSI);
         const currentSchema = element.getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation');
 
-        if (includeInfoSchema ?? DefaultFomodAsElementConfig.includeInfoSchema) {
+        if (includeInfoSchema ?? DefaultFomodDocumentConfig.includeInfoSchema) {
             if (typeof includeInfoSchema === 'string') element.setAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation', includeInfoSchema);
             else if (currentSchema === null) element.setAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation', DefaultInfoSchema);
 

@@ -28,7 +28,7 @@ A JavaScript/TypeScript library for working with FOMOD installers both in the br
 <details>
     <summary><span><h2>What Is a FOMOD</h2></span></summary>
 
-FOMOD, or `F`all`O`ut `MOD`, is a confusingly-named file installer format pioneered by Fallout Mod Manager (FOMM). The goal of the format is to present users with options to be taken into account when installing the mod. It's primarily used in the Bethesda modding scene, though it's typically supported for use with any game a given mod manager supports. While FOMM, Nexus Mod Manager, and Vortex all supported writing a .NET installer (called a "scripted installer"), it's very rarely observed in use in the wild. With that and the security threat that comes with arbitrary code execution, most mod managers forego its support (Nexus Mod Manager and Vortex have both supported it, though).
+FOMOD, which originally stood for `F`all`O`ut `MOD`, is a confusingly-named file installer format pioneered by Fallout Mod Manager (FOMM). The goal of the format is to present users with options to be taken into account when installing the mod. It's primarily used in the Bethesda modding scene, though it's typically supported for use with any game a given mod manager supports. While FOMM, Nexus Mod Manager, and Vortex all supported writing a .NET installer (called a "scripted installer"), it's very rarely observed in use in the wild. With that and the security threat that comes with arbitrary code execution, most mod managers forego its support.
 
 FOMOD installers are therefore nearly always written in the alternative, a [schema](https://qconsulting.ca/fo3/ModConfig5.0.xsd)-compliant XML file. This XML format is a little burdensome and a lot XML, so tools have popped up over the years to simplify their creation. Namely, GandaG's [FOMOD Designer](https://github.com/GandaG/fomod-designer/)—a direct 1-to-1 editor and representation of the XML tree—and the [FOMOD Creation Tool](https://www.nexusmods.com/fallout4/mods/6821/), a more abstract and arguably more user-friendly representation of the installer format. In development is the [Fomod Builder](https://github.com/BellCubeDev/fomod-builder), an attempt at meeting both in the middle by providing full schema-allowed control, helpful tooltips, a dark-mode UI, built-in mod manager previews & editor styles, and encouraging users to poke around in the XML as they use the tool.
 
@@ -37,12 +37,14 @@ FOMOD installers are therefore nearly always written in the alternative, a [sche
 <details>
     <summary><span><span><h3>Quick terminology breakdown</h3></span> (I chose better names)</span></summary>
 
-|  Term Used  | Canonical Name | What It Refers To |
-|     :-:     |       :-:      |        :--        |
-|   Install   |       File     | Files and folders that might be installed by the FOMOD |
-|   Step      |  Install Step  | A bundle of Groups presented as a single page |
-|   Groups    |       Group    | A bundle of checkboxes or radio buttons presented as a section with a header |
-|   Options   |      Plugins   | A single checkbox or radio button |
+|     Term Used     |          Canonical Name            | What It Refers To |
+|        :-:        |                :-:                 |        :--        |
+|      Install      |            File/Folder             | Files and folders that might be installed by the FOMOD |
+|       Step        |           Install Step             | A bundle of Groups presented as a single page |
+|       Group       |               Group                | A bundle of checkboxes or radio buttons presented as a section with a header |
+|       Option      |               Plugin               | A single checkbox or radio button |
+|  FOMM Dependency  |   Mod Manager Version Dependency   | A dependency on a specific version of a mod manager |
+|  FOSE Dependency  | Script Extender Version Dependency | A dependency on a specific version of a script extender |
 
 </details>
 
@@ -52,9 +54,8 @@ FOMOD installers are therefore nearly always written in the alternative, a [sche
 
 `fomod` is a library to parse, create, and edit FOMOD installers. It includes:
 
-
 * Full support for the FOMOD specification
-* Bundled type declarations
+* Bundled type declarations, source maps, and source code
 * Written in TypeScript and thoroughly unit-tested
 * Helpful JSDoc comments detailing:
     * Usage
@@ -69,16 +70,6 @@ FOMOD installers are therefore nearly always written in the alternative, a [sche
       > Documents will need to be explicitly decommissioned to prevent memory leaks when using large numbers of documents or allowing users to arbitrarily create them
 * Dependencies on Options (via flags)
     * Options can be used as dependency within the codebase and are converted to a flag dependency when an XML document is produced
-* Automatic Install Optimization (required for technical reasons)
-
-### Wait, what's this "Automatic Install Optimization" business?
-
-As someone who used to use Vortex on a slower machine, I've noticed significant performance issues with installers which specified their installs (files and folders to install) directly in the option. As such, I've designed a way around this—using conditional installs. In combination with dependencies on options, this will have no impact on the functionality of your existing FOMODs and is entirely safe to use. The only noteworthy downside is the readability of the resulting XML.
-
-Unfortunately, due to complications with how installs are represented on a technical level, there is currently no option to use the Files option directly. This likely will be addressed in a future release of the library.
-
-> [!NOTE]
-> This feature is not yet available. This will be available before the first stable release.
 
 <br>
 
@@ -94,13 +85,32 @@ If you're looking to use this library, this section will be your best friend.
 
 At its core, each data structure (steps, options, installs, dependencies, etc.) is represented by a class.
 
-If you're already familiar with the XML structure, each class generally represents one or two levels of element. For instance, the Option class represents the `<plugin>` container and the `<description>` tag. This is done to reduce the amount of boilerplate you as a developer need to write.
+If you're already familiar with the XML structure, each class generally represents one or two levels of element. For instance, the Option class represents the `<plugin>` element and the Group class represents `<group>` and `<plugins>`. This is done to reduce the amount of boilerplate you as a developer need to write while still giving you complete control over your installer.
 
-###
+### The XmlRepresentation Class
 
 This associates the element with this document! For most classes, this is free of side effects. For most classes, the element-document map does not restrict garbage collection. However, with certain classes (e.g. FlagInstance), this can lead to memory leaks. To prevent this, you can call the decommission method on the class.
 
 The easiest way to make sure you're covered, especially between updates, is to always decommission the document (or class) when you're done with it. The `decommission` method is recursive; therefore, you should call it on the highest level class(es) you have access to. Typically, these will be `fomod` and `fomodInfo`.
+
+### Option Dependencies
+
+This library provides a way to use an Option directly as the key for a FlagDependency. We'll handle the flag name and value for you, cutting out the flag middle-man from the developer's perspective.
+
+## Parsing/Serialization Configuration
+
+The library includes a number of options to control how the XML is parsed and serialized. These can be passed into any XmlRepresentation subclass's `XmlRepresentation.prototype.asElement()` and `XmlRepresentation.parse()` methods as well as the `parseModuleDoc()` and `parseInfoDoc()` functions. Options:
+
+| Option | Type | Default | Description |
+| --: | :-: | :-: | :-- |
+| `includeInfoSchema` | `boolean` or `string` | `true` | Whether or to include a third-party schema for Info.xml. If a string is provided, we'll use that string as the schema location. Otherwise, we'll use the library's default. |
+| `flattenConditionalInstalls` | `boolean` | `false` | Whether to move all conditional installs with only a dependency on a single option to the <files> tag of that option. Note that this may cause slight performance issues with Vortex on slower machines. |
+| `flattenConditionalInstallsNoDependencies` | `boolean` | `false` | Whether to reorganize all conditional installs with no dependencies into the <requiredInstallFiles> tag. |
+| `removeEmptyConditionalInstalls` | `boolean` | `true` | Whether to remove conditional installs with no dependencies and no files (has no effect when `flattenConditionalInstallsNoDependencies` is `true`). |
+| `optionSelectedValue` | `string` | `'OPTION_SELECTED'` | String used for the flag value of option dependencies. |
+| `parseOptionFlags` | `boolean` or `'loose'` | `true` | Whether to attempt to determine if a flag is an option flag to the best of our knowledge. If `'loose'` is provided, we'll accept any flag name or value so long as it's only set by one option. |
+
+
 
 ### Examples
 
@@ -114,17 +124,20 @@ import { parseInfoDoc, parseModuleDoc } from 'fomod';
 import { JSDOM } from 'jsdom';
 import fs from 'fs/promises';
 
+// You can use whatever config you'd like
+declare const config: FomodDocumentConfig;
+
 // ModuleConfig.xml
 
 const moduleText = await fs.readFile('path/to/ModuleConfig.xml');
 const moduleDoc = new JSDOM(moduleText, {contentType: 'text/xml'});
-const installer = parseModuleDoc(moduleDoc.window.document)
+const installer = parseModuleDoc(moduleDoc.window.document, config)
 
 // Info.xml
 
 const infoText = await fs.readFile('path/to/Info.xml');
 const infoDoc = new JSDOM(infoText, {contentType: 'text/xml'});
-const metadata = parseModuleDoc(infoDoc.window.document)
+const metadata = parseInfoDoc(infoDoc.window.document, config)
 ```
 
 Or, for a more optimized example:
@@ -132,9 +145,11 @@ Or, for a more optimized example:
 import { parseInfoDoc, parseModuleDoc } from 'fomod';
 import { JSDOM } from 'jsdom';
 
+declare const config: FomodDocumentConfig;
+
 const [installer, metadata] = Promise.all([
-    JSDOM.fromFile('path/to/ModuleConfig.xml').then((dom) => parseModuleDoc(dom.window.document)),
-    JSDOM.fromFile('path/to/Info.xml').then((dom) => parseInfoDoc(dom.window.document)),
+    JSDOM.fromFile('path/to/ModuleConfig.xml').then((dom) => parseModuleDoc(dom.window.document, config)),
+    JSDOM.fromFile('path/to/Info.xml').then((dom) => parseInfoDoc(dom.window.document, config)),
 ]);
 ```
 
@@ -201,15 +216,16 @@ const info = new FomodInfo({
 import { Fomod } from 'fomod';
 
 // you can refer to the previous examples for how you might get a Fomod instance
-declare const module: Fomod;
+declare const moduleConfig: Fomod;
+declare const config: FomodDocumentConfig;
 
 const thatOneDocument = document.implementation.createDocument(null, null, null);
 
 // Associate the document with the Fomod instance
-console.log(module.asElement(thatOneDocument));
+console.log(moduleConfig.asElement(thatOneDocument, config));
 
 // We're done with the document, so let's clean it up
-module.decommission(thatOneDocument);
+moduleConfig.decommission(thatOneDocument);
 
 ```
 

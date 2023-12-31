@@ -3,7 +3,7 @@ import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { Option } from "./Option";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, GroupBehaviorType, SortingOrder, TagName } from "../Enums";
-import { DefaultFomodAsElementConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
+import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
 import { parseOptionFlags } from "../lib/ParseOptionFlags";
 import { gatherFlagDependencies } from "../lib/utils";
 
@@ -87,7 +87,7 @@ export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
             if (option !== null) group.options.add(option);
         }
 
-        if (config.parseOptionFlags ?? DefaultFomodAsElementConfig.parseOptionFlags) {
+        if (config.parseOptionFlags ?? DefaultFomodDocumentConfig.parseOptionFlags) {
             const dependencies = [];
 
             const options = group.gatherOptions();

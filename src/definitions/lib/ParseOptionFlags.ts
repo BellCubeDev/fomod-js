@@ -1,12 +1,12 @@
 import { FlagDependency, FlagSetter, Install, InstallPattern, Option } from "../module";
-import { DefaultFomodAsElementConfig, FomodDocumentConfig } from "./FomodDocumentConfig";
+import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "./FomodDocumentConfig";
 
 export function parseOptionFlags(options: Option<boolean>[], document: Document, config: FomodDocumentConfig = {}, dependencies: FlagDependency[] = []) {
     const uniqueFlags = new Map<string, [setter: FlagSetter, option: Option<boolean>, deps: FlagDependency[]]>();
     const flagsFound = new Set<string>();
 
-    const loose = (config.parseOptionFlags ?? DefaultFomodAsElementConfig.parseOptionFlags) === 'loose';
-    const strictValue = config.optionSelectedValue ?? DefaultFomodAsElementConfig.optionSelectedValue;
+    const loose = (config.parseOptionFlags ?? DefaultFomodDocumentConfig.parseOptionFlags) === 'loose';
+    const strictValue = config.optionSelectedValue ?? DefaultFomodDocumentConfig.optionSelectedValue;
 
     for (const option of options) {
         for (const flag of option.flagsToSet) {
