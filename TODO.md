@@ -1,6 +1,9 @@
 # Fomod TODO
-[ ] Option Flags
+[x] Option Flags
     [ ] --and test it!
+        [x] Parsing
+        [ ] Using an old flag
+        [ ] Creating a flag from scratch
 [ ] Test Everything
     [ ] Flags
         [ ] Flag-Document Map
@@ -8,7 +11,6 @@
         [ ] Changing Flag Types (switching between Option and string)
     [ ] Installs
         [ ] Install-Document Map
-        [ ] Directory Handling
     [ ] Review Code Coverage & Test What Should Be Tested
     [ ] Test w/ Multiple Real (& complex) Fomods from Large Mods
 [ ] Find a way to keep nodes (such as comments) between (otherwise-)valid element orders the same ([#1](https://github.com/BellCubeDev/fomod-js/issues/1))

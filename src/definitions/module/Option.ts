@@ -4,8 +4,8 @@ import { FlagInstance, FlagInstancesByDocument } from "../lib/FlagInstance";
 import { Install, InstallPattern } from "./Install";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
-import { AttributeName, GroupBehaviorType, OptionType, TagName } from "../Enums";
-import { FomodDocumentConfig } from "../lib/FomodDocumentConfig";
+import { AttributeName, OptionType, TagName } from "../Enums";
+import { DefaultFomodAsElementConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
 
 /***
  *     $$$$$$\              $$\     $$\                           $$$$$$$\                  $$\
@@ -37,7 +37,7 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
         super();
     }
 
-    asElement(document: Document): Element {
+    asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const element = this.getElementForDocument(document);
 
         element.setAttribute('name', this.name);
@@ -49,21 +49,31 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
         if (this.image === null) element.getElementsByTagName(TagName.Image)[0]?.remove();
         else {
             const image = getOrCreateElementByTagNameSafe(element, TagName.Image);
-            image.textContent = this.image;
+            image.setAttribute(AttributeName.Path, this.image);
             element.appendChild(image);
         }
 
         if (this.flagsToSet.size > 0) {
             const flagsElement = getOrCreateElementByTagNameSafe(element, TagName.ConditionFlags);
-            for (const flag of this.flagsToSet) flagsElement.appendChild(flag.asElement(document));
+            for (const flag of this.flagsToSet) flagsElement.appendChild(flag.asElement(document, config));
             element.appendChild(flagsElement);
-        } else { // Create an empty `files` element
+        } else {
+            element.getElementsByTagName(TagName.ConditionFlags)[0]?.remove();
+        }
+
+        if (this.installsToSet.filesWrapper.installs.size > 0) {
+            const filesElement = getOrCreateElementByTagNameSafe(element, TagName.Files);
+            for (const install of this.installsToSet.filesWrapper.installs) filesElement.appendChild(install.asElement(document, config));
+            element.appendChild(filesElement);
+        }else if (this.flagsToSet.size === 0) { // Create an empty `files` element
             const filesElement = getOrCreateElementByTagNameSafe(element, TagName.Files);
             filesElement.replaceChildren();
             element.appendChild(filesElement);
+        } else {
+            element.getElementsByTagName(TagName.Files)[0]?.remove();
         }
 
-        element.appendChild(this.typeDescriptor.asElement(document));
+        element.appendChild(this.typeDescriptor.asElement(document, config));
 
         return element;
     }
@@ -78,28 +88,33 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
     }
 
 
-    _existingFlagNameByDocument = new WeakMap<Document, string>();
-    getFlagName(document: Document): string {
-        const existingFlagName = this._existingFlagNameByDocument.get(document);
-        if (existingFlagName !== undefined) return existingFlagName;
+    _existingOptionFlagSetterByDocument = new WeakMap<Document, FlagSetter>();
+    _lastUsedOptionFlagSetterDocument: Document|null = null;
+    getOptionFlagSetter(document: Document, config: FomodDocumentConfig = {}): FlagSetter {
+        const existingSetter = this._existingOptionFlagSetterByDocument.get(document);
+        if (existingSetter !== undefined) return existingSetter;
 
         const flagInstances = FlagInstancesByDocument.get(document);
-        if (!flagInstances) throw new Error(`FlagInstancesByDocument item not found for provided document`, {cause: {object: this, document}});
+        if (!flagInstances) {
+            if (!this._lastUsedOptionFlagSetterDocument) throw new Error(`Attempted to get a flag setter for option '${this.name}' but no document was provided and no document was previously used!`);
+            return this.getOptionFlagSetter(this._lastUsedOptionFlagSetterDocument, config);
+        }
 
         const baseName = 'OPTION_' + this.name.replace(/[^a-zA-Z0-9]/g, '_');
-        const existingFlagNames = [...flagInstances.byName.keys() ?? []].map(nameOrOption => typeof nameOrOption === 'string' ? nameOrOption : nameOrOption._existingFlagNameByDocument.get(document));
+        const existingFlagNames = new Set([...flagInstances.byName.keys() ?? []].map(nameOrOption => typeof nameOrOption === 'string' ? nameOrOption : nameOrOption._existingOptionFlagSetterByDocument.get(document)?.name));
 
         const thisObj = this;
 
         // Declared as const largely so TypeScript accepts the narrowed types
         // Yes, I understand that, because functions are hoisted, we can't ensure the narrowed state, but I don't write code like that.
         // I also can't be bothered to explain that to TypeScript so here we are. Const declaration it is.
-        const tryNextName = function tryNextName(suffix: number): string {
+        const tryNextName = function tryNextName(suffix: number): FlagSetter {
             const name = baseName + `--${suffix}`;
 
-            if (!existingFlagNames.includes(name)) {
-                thisObj._existingFlagNameByDocument.set(document, name);
-                return name;
+            if (!existingFlagNames.has(name)) {
+                const setter = new FlagSetter(new FlagInstance(name, config.optionSelectedValue ?? DefaultFomodAsElementConfig.optionSelectedValue, true));
+                thisObj._existingOptionFlagSetterByDocument.set(document, setter);
+                return setter;
             }
 
             return tryNextName(suffix + 1);
@@ -176,7 +191,7 @@ export class FlagSetter extends XmlRepresentation<true> {
         super();
     }
 
-    asElement(document: Document): Element {
+    asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const element = this.getElementForDocument(document);
 
         element.setAttribute(AttributeName.Name, this.flagInstance.name);
@@ -252,12 +267,12 @@ export class TypeDescriptor<TStrict extends boolean> extends XmlRepresentation<T
         super();
     }
 
-    asElement(document: Document): Element {
+    asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const element = this.getElementForDocument(document);
 
         if (this.patterns.length === 0) {
             this.defaultTypeNameDescriptor.tagName = TagName.Type;
-            element.appendChild(this.defaultTypeNameDescriptor.asElement(document));
+            element.appendChild(this.defaultTypeNameDescriptor.asElement(document, config));
             return element;
         }
 
@@ -266,7 +281,7 @@ export class TypeDescriptor<TStrict extends boolean> extends XmlRepresentation<T
         const patternsContainer = getOrCreateElementByTagNameSafe(element, TagName.Patterns);
 
         for (const pattern of this.patterns)
-            patternsContainer.appendChild(pattern.asElement(document));
+            patternsContainer.appendChild(pattern.asElement(document, config));
 
         return element;
     }
@@ -326,11 +341,11 @@ export class TypeDescriptorPattern<TStrict extends boolean> extends XmlRepresent
         super();
     }
 
-    asElement(document: Document): Element {
+    asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const element = this.getElementForDocument(document);
 
-        element.appendChild(this.typeNameDescriptor.asElement(document));
-        element.appendChild(this.dependencies.asElement(document));
+        element.appendChild(this.typeNameDescriptor.asElement(document, config));
+        element.appendChild(this.dependencies.asElement(document, config));
 
         return element;
     }
@@ -391,7 +406,7 @@ export class TypeNameDescriptor<TTagName extends TypeDescriptorTagName, TStrict 
         super();
     }
 
-    asElement(document: Document): Element {
+    asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const element = this.getElementForDocument(document);
         element.setAttribute(AttributeName.Name, this.targetType);
         return element;

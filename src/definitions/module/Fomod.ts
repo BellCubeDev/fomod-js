@@ -6,8 +6,9 @@ import { Step } from "./Step";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, BooleanString, ModuleNamePosition, SortingOrder, TagName } from "../Enums";
 import { Option } from "./Option";
-import { gatherDependedUponOptions } from "../lib/utils";
+import { gatherDependedUponOptions, gatherFlagDependencies } from "../lib/utils";
 import { DefaultFomodAsElementConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
+import { parseOptionFlags } from "../lib/ParseOptionFlags";
 
 export interface ModuleImageMetadata<TStrict extends boolean> {
     showFade?: TStrict extends true ? `${boolean}` : string;
@@ -156,7 +157,7 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
             moduleImageElement.setAttribute(AttributeName.Path, this.moduleImage);
         }
 
-        if (this.moduleDependencies.dependencies.size > 0) element.appendChild(this.moduleDependencies.asElement(document));
+        if (this.moduleDependencies.dependencies.size > 0) element.appendChild(this.moduleDependencies.asElement(document, config));
         else this.moduleDependencies.getElementForDocument(document).remove();
 
         const requiredInstallContainer = getOrCreateElementByTagNameSafe(element, TagName.RequiredInstallFiles);
@@ -165,19 +166,19 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
 
         for (const installOrPattern of this.installs) {
             if (installOrPattern instanceof Install) {
-                requiredInstallContainer.appendChild(installOrPattern.asElement(document));
+                requiredInstallContainer.appendChild(installOrPattern.asElement(document, config));
                 continue;
             }
 
 
-            const el = installOrPattern.asElement(document);
+            const el = installOrPattern.asElement(document, config);
 
 
             if (config.flattenConditionalInstalls ?? DefaultFomodAsElementConfig.flattenConditionalInstalls) {
                 const optionDependencies = gatherDependedUponOptions(installOrPattern.dependencies);
                 if (optionDependencies.size === 1) {
                     const option = optionDependencies.values().next().value as Option<boolean>;
-                    option.installsToSet.filesWrapper.installs = new Set([...option.installsToSet.filesWrapper.installs, ...installOrPattern.filesWrapper.installs]);
+                    for (const install of installOrPattern.filesWrapper.installs) option.installsToSet.filesWrapper.installs.add(install);
 
                     el.remove();
                     continue;
@@ -190,7 +191,7 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
                     el.remove();
                     continue;
                 } else if (config.flattenConditionalInstallsNoDependencies ?? DefaultFomodAsElementConfig.flattenConditionalInstallsNoDependencies) {
-                    installOrPattern.filesWrapper.installs.forEach(install => requiredInstallContainer.appendChild(install.asElement(document)));
+                    installOrPattern.filesWrapper.installs.forEach(install => requiredInstallContainer.appendChild(install.asElement(document, config)));
 
                     el.remove();
                     continue;
@@ -204,7 +205,7 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         else element.appendChild(requiredInstallContainer);
 
         const stepContainer = getOrCreateElementByTagNameSafe(element, TagName.InstallSteps);
-        for (const step of this.steps) stepContainer.appendChild(step.asElement(document));
+        for (const step of this.steps) stepContainer.appendChild(step.asElement(document, config));
 
         if (stepContainer.children.length === 0) stepContainer.remove();
         else {
@@ -216,6 +217,14 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         else element.appendChild(conditionalInstallContainerRoot);
 
         return element;
+    }
+
+    gatherOptions(): Option<TStrict>[] {
+        const options: Option<TStrict>[] = [];
+
+        for (const step of this.steps) options.push(...step.gatherOptions());
+
+        return options;
     }
 
     static override parse(element: Element, config: FomodDocumentConfig = {}): Fomod<boolean> {
@@ -256,6 +265,23 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         for (const step of element.querySelectorAll(`:scope > ${TagName.InstallSteps} > ${TagName.InstallStep}`)) {
             const parsed = Step.parse(step, configForSteps);
             if (parsed) fomod.steps.add(parsed);
+        }
+
+        if (config.parseOptionFlags ?? DefaultFomodAsElementConfig.parseOptionFlags) {
+            const dependencies = Array.from(gatherFlagDependencies(fomod.moduleDependencies));
+            for (const install of fomod.installs) if (install instanceof InstallPattern) dependencies.push(...gatherFlagDependencies(install.dependencies));
+
+            for (const step of fomod.steps)
+                dependencies.push(...gatherFlagDependencies(step.visibilityDeps));
+
+            const options = fomod.gatherOptions();
+            for (const option of options) {
+                for (const pattern of option.typeDescriptor.patterns) {
+                    dependencies.push(...gatherFlagDependencies(pattern.dependencies));
+                }
+            }
+
+            parseOptionFlags(options, element.ownerDocument!, config, dependencies);
         }
 
         return fomod;

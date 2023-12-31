@@ -42,7 +42,7 @@ export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption e
     documents: Set<Document> = new Set();
 
     constructor(_name: TIsOption extends true ? never : string, usedValue: string, write: TWrite, document?: Document)
-    constructor(_name: TIsOption extends true ? Option<boolean> : never, usedValue: boolean, write: TWrite, document?: Document)
+    constructor(_name: TIsOption extends true ? Option<boolean> : never, usedValue: true, write: TWrite, document?: Document)
     constructor(
         /** The name of the flag this instance refers to
          *
@@ -53,9 +53,9 @@ export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption e
 
         /** The value being checked/set by this instance
          *
-         * When the flag represents a traditional key-value, this will be a string. When the flag represents an option's select state, this will be a boolean.
+         * When the flag represents a traditional key-value, this will be a string. When the flag represents an option's select state, this will be `true`.
          */
-        public usedValue: TIsOption extends true? boolean : string,
+        public usedValue: TIsOption extends true? true : string,
 
         /** Whether this instance is reading or writing the flag value
          *
@@ -66,9 +66,9 @@ export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption e
         document?: Document
     ) {
         if (typeof _name === 'string' && typeof usedValue !== 'string') throw new Error(`FlagInstance's 'usedValue' property must be a string when name is a string`);
-        else if (_name instanceof Option && typeof usedValue !== 'boolean') throw new Error(`FlagInstance's 'usedValue' property must be a boolean when name is an Option`);
+        else if (_name instanceof Option && usedValue !== true) throw new Error(`FlagInstance's 'usedValue' property must be \`true\` when name is an Option`);
 
-        this.usedValue = usedValue as TIsOption extends true ? boolean : string;
+        this.usedValue = usedValue as TIsOption extends true ? true : string;
 
         if (document) this.attachDocument(document);
     }

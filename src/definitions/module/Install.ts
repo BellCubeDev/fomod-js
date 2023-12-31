@@ -126,7 +126,7 @@ export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict>
 
     /** Generates an XML element from this object.
      */
-    asElement(document: Document): Element  {
+    asElement(document: Document, config: FomodDocumentConfig = {}): Element  {
         if (this.fileSource.endsWith('/') || this.fileSource.endsWith('\\')) {
             if (this.fileDestination && (!this.fileDestination.endsWith('/') && !this.fileDestination.endsWith('\\'))) throw new Error('Source is a folder but destination is not', {cause: this});
             this.tagName = TagName.Folder;
@@ -290,11 +290,11 @@ export class InstallPatternFilesWrapper<TStrict extends boolean> extends XmlRepr
         super();
     }
 
-    override asElement(document: Document): Element {
+    override asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const el = this.getElementForDocument(document);
 
         for(const install of this.installs.values())
-            el.appendChild(install.asElement(document));
+            el.appendChild(install.asElement(document, config));
 
         return el;
     }
@@ -393,11 +393,11 @@ export class InstallPattern<TStrict extends boolean> extends XmlRepresentation<T
         super();
     }
 
-    override asElement(document: Document): Element {
+    override asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const el = this.getElementForDocument(document);
 
-        el.appendChild(this.dependencies.asElement(document));
-        el.appendChild(this.filesWrapper.asElement(document));
+        el.appendChild(this.dependencies.asElement(document, config));
+        el.appendChild(this.filesWrapper.asElement(document, config));
 
         return el;
     }

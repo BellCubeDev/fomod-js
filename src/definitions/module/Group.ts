@@ -3,7 +3,9 @@ import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { Option } from "./Option";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, GroupBehaviorType, SortingOrder, TagName } from "../Enums";
-import { FomodDocumentConfig } from "../lib/FomodDocumentConfig";
+import { DefaultFomodAsElementConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
+import { parseOptionFlags } from "../lib/ParseOptionFlags";
+import { gatherFlagDependencies } from "../lib/utils";
 
 export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override readonly tagName = TagName.Group;
@@ -19,7 +21,7 @@ export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         super();
     }
 
-    asElement(document: Document): Element {
+    asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const element = this.getElementForDocument(document);
 
         element.setAttribute(AttributeName.Name, this.name);
@@ -28,7 +30,7 @@ export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         const optionsContainer = getOrCreateElementByTagNameSafe(element, TagName.Plugins);
 
         optionsContainer.setAttribute(AttributeName.Order, this.sortingOrder);
-        for (const option of this.options) optionsContainer.appendChild(option.asElement(document));
+        for (const option of this.options) optionsContainer.appendChild(option.asElement(document, config));
 
         return element;
     }
@@ -57,6 +59,10 @@ export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         return null;
     }
 
+    gatherOptions(): Option<TStrict>[] {
+        return Array.from(this.options);
+    }
+
     static override parse(element: Element, config: FomodDocumentConfig = {}): Group<boolean> {
         const existing = ElementObjectMap.get(element);
         if (existing && existing instanceof this) return existing;
@@ -79,6 +85,19 @@ export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         for (const optionElement of optionsContainer.querySelectorAll(`:scope > ${TagName.Plugin}`)) {
             const option = Option.parse(optionElement, configForOptions);
             if (option !== null) group.options.add(option);
+        }
+
+        if (config.parseOptionFlags ?? DefaultFomodAsElementConfig.parseOptionFlags) {
+            const dependencies = [];
+
+            const options = group.gatherOptions();
+            for (const option of options) {
+                for (const pattern of option.typeDescriptor.patterns) {
+                    dependencies.push(...gatherFlagDependencies(pattern.dependencies));
+                }
+            }
+
+            parseOptionFlags(options, element.ownerDocument!, config, dependencies);
         }
 
         return group;

@@ -1,4 +1,4 @@
-import { Fomod, parseModuleDoc } from "../../../src";
+import { Fomod } from "../../../src";
 import { FomodDocumentConfig } from "../../../src/definitions/lib/FomodDocumentConfig";
 import { parseTag } from "../../testUtils";
 
@@ -74,7 +74,19 @@ describe('Dependency Parsing Config Options', () => {
      * @default true
     */
     describe('parseOptionFlags', () => {
-        test('1=1', ()=>{expect(1).toBe(1)});
+        const config: FomodDocumentConfig = {
+            parseOptionFlags: true,
+            optionSelectedValue: 'OPTION_SELECTED__CUSTOM',
+
+            removeEmptyConditionalInstalls: false,
+        };
+
+        const el = getTestElement();
+        const obj = Fomod.parse(el, config);
+
+        it('should have parsed the option flag', () => {
+            expect(obj.gatherOptions()[0]?._existingOptionFlagSetterByDocument.get(el.ownerDocument!)?.name).toBe('only_flag_for_this_option');
+        });
     });
 
     /** [asElement] Whether to move all conditional installs with only a dependency on a single option to the <files> tag of that option

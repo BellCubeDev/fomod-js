@@ -16,11 +16,11 @@ export class FlagDependency extends Dependency {
     set flagKey(value: string|Option<boolean>) { this.flagInstance.name = value; }
 
     get desiredValue() { return this.flagInstance.usedValue; }
-    set desiredValue(value: string|boolean) { this.flagInstance.usedValue = value; }
+    set desiredValue(value: string|true) { this.flagInstance.usedValue = value; }
 
     constructor(flagName?: string, desiredValue?: string)
-    constructor(flagName: Option<boolean>, desiredValue: boolean)
-    constructor(flagName: string|Option<boolean> = '', desiredValue: string|boolean = '') {
+    constructor(flagName: Option<boolean>, desiredValue: true)
+    constructor(flagName: string|Option<boolean> = '', desiredValue: string|true = '') {
         super();
 
         this.flagInstance = new FlagInstance(flagName as any, desiredValue as any, false);
@@ -34,7 +34,7 @@ export class FlagDependency extends Dependency {
         this.flagInstance.decommission(currentDocument);
     }
 
-    override asElement(document: Document): Element {
+    override asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const element = this.getElementForDocument(document);
 
         if (typeof this.flagKey === 'string') {
@@ -42,9 +42,10 @@ export class FlagDependency extends Dependency {
             element.setAttribute(AttributeName.Flag, this.flagKey);
             element.setAttribute(AttributeName.Value, this.desiredValue);
         } else {
-            if (typeof this.flagInstance !== 'boolean') throw new Error('Flag dependency `name` value is an Option but `value` is a string! Expected boolean.', {cause: this});
-            element.setAttribute(AttributeName.Flag, this.flagKey.getFlagName(document));
-            element.setAttribute(AttributeName.Value, this.desiredValue ? BooleanString.true : BooleanString.false);
+            if (this.desiredValue !== true) throw new Error('Flag dependency `name` value is an Option but `value` is a string! Expected boolean.', {cause: this});
+            const setter = this.flagKey.getOptionFlagSetter(document);
+            element.setAttribute(AttributeName.Flag, setter.name);
+            element.setAttribute(AttributeName.Value, setter.value);
         }
 
         return element;
