@@ -69,6 +69,9 @@ export abstract class XmlRepresentation<TStrict extends boolean> extends Verifia
         return newElement;
     }
 
+    /** Preforms non-serializing operations to associate this object with a document. */
+    abstract associateWithDocument(document: Document): unknown;
+
     abstract decommission?(currentDocument?: Document): unknown;
 
     /** Generates an XML element from this object. */

@@ -1,12 +1,12 @@
 import { XmlNamespaces, attrToObject, getOrCreateElementByTagNameSafe } from "../../DomUtils";
-import { DependenciesGroup, Dependency, FlagDependency } from "./dependencies";
+import { DependenciesGroup } from "./dependencies/DependenciesGroup";
 import { Install, InstallPattern } from "./Install";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { Step } from "./Step";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, BooleanString, ModuleNamePosition, SortingOrder, TagName } from "../Enums";
 import { Option } from "./Option";
-import { gatherDependedUponOptions, gatherFlagDependencies } from "../lib/utils";
+import { countDependencyConditions, gatherDependedUponOptions, gatherFlagDependencies } from "../lib/utils";
 import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
 import { parseOptionFlags } from "../lib/ParseOptionFlags";
 
@@ -129,8 +129,17 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         return null;
     }
 
-    asElement(document: Document, config: FomodDocumentConfig = {}): Element {
+    asElement(document: Document, config: FomodDocumentConfig = {}, knownOptions: Option<boolean>[] = this.gatherOptions()): Element {
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
+
+        if (config.generateNewOptionFlagNames ?? DefaultFomodDocumentConfig.generateNewOptionFlagNames) {
+            for (const option of knownOptions) {
+                option.existingOptionFlagSetterByDocument.get(document)?.decommission();
+                option.existingOptionFlagSetterByDocument.delete(document);
+            }
+            config = Object.assign({}, config, {generateNewOptionFlagNames: false});
+        }
 
         // Schemas are mandatory for ModuleConfig.xml
         element.setAttributeNS(XmlNamespaces.XMLNS, 'xmlns:xsi', XmlNamespaces.XSI);
@@ -157,7 +166,7 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
             moduleImageElement.setAttribute(AttributeName.Path, this.moduleImage);
         }
 
-        if (this.moduleDependencies.dependencies.size > 0) element.appendChild(this.moduleDependencies.asElement(document, config));
+        if (this.moduleDependencies.dependencies.size > 0) element.appendChild(this.moduleDependencies.asElement(document, config, knownOptions));
         else this.moduleDependencies.getElementForDocument(document).remove();
 
         const requiredInstallContainer = getOrCreateElementByTagNameSafe(element, TagName.RequiredInstallFiles);
@@ -171,10 +180,11 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
             }
 
 
-            const el = installOrPattern.asElement(document, config);
+            const el = installOrPattern.asElement(document, config, knownOptions);
 
+            const depCount = countDependencyConditions(installOrPattern.dependencies.dependencies);
 
-            if (config.flattenConditionalInstalls ?? DefaultFomodDocumentConfig.flattenConditionalInstalls) {
+            if ((config.flattenConditionalInstalls ?? DefaultFomodDocumentConfig.flattenConditionalInstalls) && depCount === 1) {
                 const optionDependencies = gatherDependedUponOptions(installOrPattern.dependencies);
                 if (optionDependencies.size === 1) {
                     const option = optionDependencies.values().next().value as Option<boolean>;
@@ -186,7 +196,7 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
             }
 
 
-            if (installOrPattern.dependencies.dependencies.size === 0) {
+            if (depCount === 0) {
                 if ((config.removeEmptyConditionalInstalls ?? DefaultFomodDocumentConfig.removeEmptyConditionalInstalls) && installOrPattern.filesWrapper.installs.size === 0) {
                     el.remove();
                     continue;
@@ -288,7 +298,14 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     }
 
     decommission(currentDocument?: Document) {
+        this.moduleDependencies.decommission?.(currentDocument!);
         this.steps.forEach(step => step.decommission?.(currentDocument!));
         this.installs.forEach(install => install.decommission?.(currentDocument!));
+    }
+
+    associateWithDocument(document: Document) {
+        this.moduleDependencies.associateWithDocument(document);
+        this.steps.forEach(step => step.associateWithDocument(document));
+        this.installs.forEach(install => install.associateWithDocument(document));
     }
 }

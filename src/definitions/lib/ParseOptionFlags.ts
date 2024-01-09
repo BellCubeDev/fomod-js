@@ -10,7 +10,8 @@ export function parseOptionFlags(options: Option<boolean>[], document: Document,
 
     for (const option of options) {
         for (const flag of option.flagsToSet) {
-            if (uniqueFlags.has(flag.name)) {
+            const uniqueFlag = uniqueFlags.get(flag.name);
+            if (uniqueFlag && uniqueFlag[1] !== option) {
                 uniqueFlags.delete(flag.name);
                 continue;
             }
@@ -22,7 +23,6 @@ export function parseOptionFlags(options: Option<boolean>[], document: Document,
         }
     }
 
-    // Make sure flag values match up
     for (const dep of dependencies) {
         if (dep.flagKey instanceof Option) continue;
 
@@ -34,17 +34,10 @@ export function parseOptionFlags(options: Option<boolean>[], document: Document,
         else uniqueFlags.delete(dep.flagKey);
     }
 
-    // Change the flags on their respective options
-    for (const [flagName, [setter, option]] of uniqueFlags) {
-        option.flagsToSet.delete(setter);
-        setter.decommission();
-
-        option._existingOptionFlagSetterByDocument.set(document, setter);
-        option._lastUsedOptionFlagSetterDocument = document;
-    }
-
-    // Change the dependencies to reference their options directly
     for (const [flagName, [setter, option, deps]] of uniqueFlags) {
+        option.flagsToSet.delete(setter);
+        option.existingOptionFlagSetterByDocument.set(document, setter);
+
         for (const dep of deps) {
             dep.flagKey = option;
             dep.desiredValue = true;

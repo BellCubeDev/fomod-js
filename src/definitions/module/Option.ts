@@ -1,6 +1,7 @@
 import { ensureXmlDoctype, getOrCreateElementByTagNameSafe } from "../../DomUtils";
-import { DependenciesGroup, FlagDependency } from './dependencies';
-import { FlagInstance, FlagInstancesByDocument } from "../lib/FlagInstance";
+import { FlagDependency } from './dependencies/FlagDependency';
+import { DependenciesGroup, } from './dependencies/DependenciesGroup';
+import { FlagInstance, FlagInstances, FlagInstancesByDocument } from "../lib/FlagInstance";
 import { Install, InstallPattern } from "./Install";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
@@ -37,8 +38,17 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
         super();
     }
 
-    asElement(document: Document, config: FomodDocumentConfig = {}): Element {
+    asElement(document: Document, config: FomodDocumentConfig = {}, knownOptions: Option<boolean>[] = []): Element {
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
+
+        if (config.generateNewOptionFlagNames ?? DefaultFomodDocumentConfig.generateNewOptionFlagNames) {
+            for (const option of knownOptions) {
+                option.existingOptionFlagSetterByDocument.get(document)?.decommission();
+                option.existingOptionFlagSetterByDocument.delete(document);
+            }
+            config = Object.assign({}, config, {generateNewOptionFlagNames: false});
+        }
 
         element.setAttribute('name', this.name);
 
@@ -53,6 +63,9 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
             element.appendChild(image);
         }
 
+        const selfFlag = this.getOptionFlagSetter(document, config, knownOptions);
+        this.flagsToSet.add(selfFlag);
+
         if (this.flagsToSet.size > 0) {
             const flagsElement = getOrCreateElementByTagNameSafe(element, TagName.ConditionFlags);
             for (const flag of this.flagsToSet) flagsElement.appendChild(flag.asElement(document, config));
@@ -60,6 +73,8 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
         } else {
             element.getElementsByTagName(TagName.ConditionFlags)[0]?.remove();
         }
+
+        this.flagsToSet.delete(selfFlag);
 
         if (this.installsToSet.filesWrapper.installs.size > 0) {
             const filesElement = getOrCreateElementByTagNameSafe(element, TagName.Files);
@@ -87,40 +102,42 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
         return this.typeDescriptor.reasonForInvalidity(tree, this);
     }
 
+    existingOptionFlagSetterByDocument = new WeakMap<Document, FlagSetter>();
 
-    _existingOptionFlagSetterByDocument = new WeakMap<Document, FlagSetter>();
-    _lastUsedOptionFlagSetterDocument: Document|null = null;
-    getOptionFlagSetter(document: Document, config: FomodDocumentConfig = {}): FlagSetter {
-        const existingSetter = this._existingOptionFlagSetterByDocument.get(document);
-        if (existingSetter !== undefined) return existingSetter;
+    getOptionFlagSetter(document: Document, config: FomodDocumentConfig = {}, knownOptions: Option<boolean>[] = []): FlagSetter {
+        const existing = this.existingOptionFlagSetterByDocument.get(document);
+        if (existing) return existing;
 
-        const flagInstances = FlagInstancesByDocument.get(document);
-        if (!flagInstances) {
-            if (!this._lastUsedOptionFlagSetterDocument) throw new Error(`Attempted to get a flag setter for option '${this.name}' but no document was provided and no document was previously used!`);
-            return this.getOptionFlagSetter(this._lastUsedOptionFlagSetterDocument, config);
-        }
+        const flagInstances = FlagInstancesByDocument.get(document) ?? {all: new Set(), byName: new Map()} as FlagInstances;
 
         const baseName = 'OPTION_' + this.name.replace(/[^a-zA-Z0-9]/g, '_');
-        const existingFlagNames = new Set([...flagInstances.byName.keys() ?? []].map(nameOrOption => typeof nameOrOption === 'string' ? nameOrOption : nameOrOption._existingOptionFlagSetterByDocument.get(document)?.name));
+        let thisIndex: number | undefined = undefined;
+        const existingFlagNames = new Set(Array.from(flagInstances.byName.keys()).map(nameOrOption => {
+            if (typeof nameOrOption === 'string') return nameOrOption;
 
-        const thisObj = this;
+            // We only care about the flag of the option if it appears in the installer before we do (saves performance and prevents infinite recursion)
+            thisIndex ??= knownOptions.indexOf(this);
+            if (thisIndex === -1 || knownOptions.indexOf(nameOrOption) >= thisIndex) return undefined;
+
+            nameOrOption.getOptionFlagSetter(document, config, knownOptions).name;
+        }));
 
         // Declared as const largely so TypeScript accepts the narrowed types
-        // Yes, I understand that, because functions are hoisted, we can't ensure the narrowed state, but I don't write code like that.
+        // Yes, I understand that, because functions are hoisted, we couldn't ensure the narrowed state (i.e. TS's behavior is correct), but I don't write code like that.
         // I also can't be bothered to explain that to TypeScript so here we are. Const declaration it is.
-        const tryNextName = function tryNextName(suffix: number): FlagSetter {
+        const tryNextName = function tryNextName(suffix: bigint): FlagSetter {
             const name = baseName + `--${suffix}`;
 
             if (!existingFlagNames.has(name)) {
-                const setter = new FlagSetter(new FlagInstance(name, config.optionSelectedValue ?? DefaultFomodDocumentConfig.optionSelectedValue, true));
-                thisObj._existingOptionFlagSetterByDocument.set(document, setter);
-                return setter;
+                return new FlagSetter(new FlagInstance(name, config.optionSelectedValue ?? DefaultFomodDocumentConfig.optionSelectedValue, true));
             }
 
-            return tryNextName(suffix + 1);
+            return tryNextName(suffix + 1n);
         };
 
-        return tryNextName(1);
+        const setter = tryNextName(1n);
+        this.existingOptionFlagSetterByDocument.set(document, setter);
+        return setter;
     }
 
     static override parse(element: Element, config: FomodDocumentConfig = {}): Option<boolean> | null {
@@ -172,6 +189,14 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
 
     override decommission(currentDocument?: Document) {
         this.flagsToSet.forEach(flag => flag.decommission?.(currentDocument));
+        this.installsToSet.decommission?.(currentDocument);
+        this.typeDescriptor.decommission?.(currentDocument);
+    }
+
+    override associateWithDocument(document: Document) {
+        this.flagsToSet.forEach(flag => flag.associateWithDocument(document));
+        this.installsToSet.associateWithDocument(document);
+        this.typeDescriptor.associateWithDocument(document);
     }
 }
 
@@ -193,6 +218,7 @@ export class FlagSetter extends XmlRepresentation<true> {
 
     asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
 
         element.setAttribute(AttributeName.Name, this.flagInstance.name);
         element.textContent = this.flagInstance.usedValue;
@@ -219,7 +245,11 @@ export class FlagSetter extends XmlRepresentation<true> {
     }
 
     override decommission(currentDocument?: Document) {
-        this.flagInstance.decommission?.(currentDocument);
+        this.flagInstance.decommission(currentDocument);
+    }
+
+    override associateWithDocument(document: Document) {
+        this.flagInstance.associateWithDocument(document);
     }
 }
 
@@ -269,6 +299,7 @@ export class TypeDescriptor<TStrict extends boolean> extends XmlRepresentation<T
 
     asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
 
         if (this.patterns.length === 0) {
             this.defaultTypeNameDescriptor.tagName = TagName.Type;
@@ -326,7 +357,13 @@ export class TypeDescriptor<TStrict extends boolean> extends XmlRepresentation<T
     }
 
     override decommission(currentDocument?: Document) {
+        this.defaultTypeNameDescriptor.decommission?.(currentDocument);
         this.patterns.forEach(pattern => pattern.decommission?.(currentDocument));
+    }
+
+    override associateWithDocument(document: Document) {
+        this.defaultTypeNameDescriptor.associateWithDocument(document);
+        this.patterns.forEach(pattern => pattern.associateWithDocument(document));
     }
 }
 
@@ -343,6 +380,7 @@ export class TypeDescriptorPattern<TStrict extends boolean> extends XmlRepresent
 
     asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
 
         element.appendChild(this.typeNameDescriptor.asElement(document, config));
         element.appendChild(this.dependencies.asElement(document, config));
@@ -383,7 +421,13 @@ export class TypeDescriptorPattern<TStrict extends boolean> extends XmlRepresent
     }
 
     override decommission(currentDocument?: Document) {
+        this.typeNameDescriptor.decommission?.(currentDocument);
         this.dependencies.decommission?.(currentDocument);
+    }
+
+    override associateWithDocument(document: Document) {
+        this.typeNameDescriptor.associateWithDocument(document);
+        this.dependencies.associateWithDocument(document);
     }
 }
 
@@ -408,6 +452,8 @@ export class TypeNameDescriptor<TTagName extends TypeDescriptorTagName, TStrict 
 
     asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
+
         element.setAttribute(AttributeName.Name, this.targetType);
         return element;
     }
@@ -465,5 +511,11 @@ export class TypeNameDescriptor<TTagName extends TypeDescriptorTagName, TStrict 
         super.assignElement(element);
     }
 
-    override decommission: undefined;
+    override decommission(currentDocument?: Document) {
+        //
+    }
+
+    override associateWithDocument(document: Document) {
+        //
+    }
 }

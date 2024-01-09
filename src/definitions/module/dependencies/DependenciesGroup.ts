@@ -2,6 +2,7 @@ import { Dependency } from ".";
 import { AttributeName, DependencyGroupOperator, TagName } from "../../Enums";
 import { ElementObjectMap, InvalidityReason, InvalidityReport, Verifiable } from "../../lib";
 import { FomodDocumentConfig } from "../../lib/FomodDocumentConfig";
+import type { Option } from "../Option";
 
 
 type DependencyTagName = TagName.Dependencies|TagName.ModuleDependencies|TagName.Visible;
@@ -36,13 +37,18 @@ export class DependenciesGroup<TTagName extends DependencyTagName, TStrict exten
         return null;
     }
 
-    override asElement(document: Document, config: FomodDocumentConfig = {}): Element {
+    associateWithDocument(document: Document) {
+        this.dependencies.forEach(d => d.associateWithDocument(document));
+    }
+
+    override asElement(document: Document, config: FomodDocumentConfig = {}, knownOptions: Option<boolean>[] = []): Element {
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
 
         element.setAttribute(AttributeName.Operator, this.operator);
 
         for (const dependency of this.dependencies)
-            element.appendChild(dependency.asElement(document, config));
+            element.appendChild(dependency.asElement(document, config, knownOptions));
 
         return element;
     }

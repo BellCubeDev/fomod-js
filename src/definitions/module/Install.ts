@@ -1,9 +1,10 @@
-import { ensureXmlDoctype, getOrCreateElementByTagName, getOrCreateElementByTagNameSafe } from "../../DomUtils";
-import { DependenciesGroup } from "./dependencies";
+import { ensureXmlDoctype, } from "../../DomUtils";
+import { DependenciesGroup } from "./dependencies/DependenciesGroup";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, BooleanString, TagName } from "../Enums";
 import { FomodDocumentConfig } from "../lib/FomodDocumentConfig";
+import type { Option } from "./Option";
 
 
 
@@ -134,6 +135,7 @@ export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict>
         else this.tagName = TagName.File;
 
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
 
         element.setAttribute(AttributeName.Source, this.fileSource);
         if (this.fileDestination) element.setAttribute(AttributeName.Destination, this.fileDestination);
@@ -242,6 +244,10 @@ export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict>
         this.documents.delete(document);
     }
 
+    associateWithDocument(document: Document) {
+        this.attachDocument(document);
+    }
+
     decommission(currentDocument?: Document) {
         if (currentDocument) this.removeFromDocument(currentDocument);
         else this.documents.forEach(document => this.removeFromDocument(document));
@@ -292,6 +298,7 @@ export class InstallPatternFilesWrapper<TStrict extends boolean> extends XmlRepr
 
     override asElement(document: Document, config: FomodDocumentConfig = {}): Element {
         const el = this.getElementForDocument(document);
+        this.associateWithDocument(document);
 
         for(const install of this.installs.values())
             el.appendChild(install.asElement(document, config));
@@ -331,6 +338,10 @@ export class InstallPatternFilesWrapper<TStrict extends boolean> extends XmlRepr
         }
 
         return null;
+    }
+
+    associateWithDocument(document: Document) {
+        this.installs.forEach(i => i.associateWithDocument(document));
     }
 
     decommission(currentDocument?: Document ) {
@@ -393,10 +404,11 @@ export class InstallPattern<TStrict extends boolean> extends XmlRepresentation<T
         super();
     }
 
-    override asElement(document: Document, config: FomodDocumentConfig = {}): Element {
+    override asElement(document: Document, config: FomodDocumentConfig = {}, knownOptions: Option<boolean>[] = []): Element {
         const el = this.getElementForDocument(document);
+        this.associateWithDocument(document);
 
-        el.appendChild(this.dependencies.asElement(document, config));
+        el.appendChild(this.dependencies.asElement(document, config, knownOptions));
         el.appendChild(this.filesWrapper.asElement(document, config));
 
         return el;
@@ -441,5 +453,10 @@ export class InstallPattern<TStrict extends boolean> extends XmlRepresentation<T
     decommission(currentDocument?: Document ) {
         this.filesWrapper.decommission(currentDocument);
         this.dependencies?.decommission(currentDocument);
+    }
+
+    associateWithDocument(document: Document) {
+        this.filesWrapper.installs.forEach(i => i.associateWithDocument(document));
+        this.dependencies?.associateWithDocument(document);
     }
 }

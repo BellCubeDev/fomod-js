@@ -40,12 +40,12 @@ export class FomodInfo extends XmlRepresentation<boolean> {
     }
 
     isValid() { return true; }
-    override reasonForInvalidity(): null {
-        return null;
-    }
+    override reasonForInvalidity() { return null; }
+    associateWithDocument(document: Document) { return; }
 
     override asElement(document: Document, {includeInfoSchema}: FomodDocumentConfig = {}): Element {
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
 
         // Replace all data
         element.replaceChildren();

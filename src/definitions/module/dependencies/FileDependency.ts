@@ -2,6 +2,7 @@ import { Dependency } from ".";
 import { AttributeName, FileDependencyState, TagName } from "../../Enums";
 import { ElementObjectMap, InvalidityReason, InvalidityReport, Verifiable } from "../../lib";
 import { FomodDocumentConfig } from "../../lib/FomodDocumentConfig";
+import type { Option } from "../Option";
 
 
 export class FileDependency<TStrict extends boolean> extends Dependency<TStrict> {
@@ -25,8 +26,13 @@ export class FileDependency<TStrict extends boolean> extends Dependency<TStrict>
         return null;
     }
 
+    associateWithDocument(document: Document) {
+        return;
+    }
+
     override asElement(document: Document): Element {
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
 
         element.setAttribute(AttributeName.File, this.filePath);
         element.setAttribute(AttributeName.State, this.desiredState);

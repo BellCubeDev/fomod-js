@@ -23,6 +23,7 @@ export abstract class VersionDependency extends Dependency {
 
     override asElement(document: Document): Element {
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
 
         element.setAttribute(AttributeName.Version, this.desiredVersion);
 
@@ -51,6 +52,7 @@ export abstract class VersionDependency extends Dependency {
     override decommission: undefined;
 
     reasonForInvalidity() { return null; }
+    associateWithDocument(document: Document) { return; }
 }
 
 /** A dependency on the version of the game.

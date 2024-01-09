@@ -119,4 +119,8 @@ export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption e
     decommission(currentDocument?: Document) {
         currentDocument ? this.removeFromDocument(currentDocument) : this.delete();
     }
+
+    associateWithDocument(document: Document) {
+        this.attachDocument(document);
+    }
 }

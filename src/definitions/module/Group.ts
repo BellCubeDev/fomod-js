@@ -21,8 +21,17 @@ export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         super();
     }
 
-    asElement(document: Document, config: FomodDocumentConfig = {}): Element {
+    asElement(document: Document, config: FomodDocumentConfig = {}, knownOptions: Option<boolean>[] = this.gatherOptions()): Element {
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
+        
+        if (config.generateNewOptionFlagNames ?? DefaultFomodDocumentConfig.generateNewOptionFlagNames) {
+            for (const option of knownOptions) {
+                option.existingOptionFlagSetterByDocument.get(document)?.decommission();
+                option.existingOptionFlagSetterByDocument.delete(document);
+            }
+            config = Object.assign({}, config, {generateNewOptionFlagNames: false});
+        }
 
         element.setAttribute(AttributeName.Name, this.name);
         element.setAttribute(AttributeName.Type, this.behaviorType);
@@ -105,5 +114,9 @@ export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
 
     decommission(currentDocument?: Document) {
         this.options.forEach(option => option.decommission(currentDocument));
+    }
+
+    override associateWithDocument(document: Document) {
+        this.options.forEach(option => option.associateWithDocument(document));
     }
 }

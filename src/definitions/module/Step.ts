@@ -7,7 +7,7 @@ import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "../lib/FomodDoc
 import { Option } from "./Option";
 import { parseOptionFlags } from "../lib/ParseOptionFlags";
 import { gatherFlagDependencies } from "../lib/utils";
-import { DependenciesGroup } from "./dependencies";
+import { DependenciesGroup } from "./dependencies/DependenciesGroup";
 
 export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override readonly tagName = TagName.InstallStep;
@@ -23,8 +23,17 @@ export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
         super();
     }
 
-    asElement(document: Document, config: FomodDocumentConfig = {}): Element {
+    asElement(document: Document, config: FomodDocumentConfig = {}, knownOptions: Option<boolean>[] = this.gatherOptions()): Element {
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
+
+        if (config.generateNewOptionFlagNames ?? DefaultFomodDocumentConfig.generateNewOptionFlagNames) {
+            for (const option of knownOptions) {
+                option.existingOptionFlagSetterByDocument.get(document)?.decommission();
+                option.existingOptionFlagSetterByDocument.delete(document);
+            }
+            config = Object.assign({}, config, {generateNewOptionFlagNames: false});
+        }
 
         element.setAttribute(AttributeName.Name, this.name);
 
@@ -112,6 +121,12 @@ export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     }
 
     override decommission(currentDocument?: Document | undefined) {
+        this.visibilityDeps.decommission(currentDocument);
         for (const group of this.groups) group.decommission(currentDocument);
+    }
+
+    override associateWithDocument(document: Document) {
+        this.visibilityDeps.associateWithDocument(document);
+        for (const group of this.groups) group.associateWithDocument(document);
     }
 }

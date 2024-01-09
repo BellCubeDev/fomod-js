@@ -41,6 +41,13 @@ export interface FomodDocumentConfig {
      * @default true
     */
     parseOptionFlags?: boolean | 'loose';
+
+    /**
+     * [asElement] Whether to discard existing option flag names and generate new ones for all options
+     *
+     * @default false
+     */
+    generateNewOptionFlagNames?: boolean;
 }
 
 export const DefaultFomodDocumentConfig = {
@@ -50,4 +57,5 @@ export const DefaultFomodDocumentConfig = {
     removeEmptyConditionalInstalls: true,
     optionSelectedValue: 'OPTION_SELECTED',
     parseOptionFlags: true,
+    generateNewOptionFlagNames: false,
 } as const satisfies Required<FomodDocumentConfig>;

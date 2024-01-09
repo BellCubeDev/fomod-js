@@ -1,6 +1,7 @@
 import { XmlRepresentation } from "../../lib/XmlRepresentation";
 import { FomodDocumentConfig } from "../../lib/FomodDocumentConfig";
 import { FileDependency, FlagDependency, DependenciesGroup, VersionDependency, GameVersionDependency, ModManagerVersionDependency, ScriptExtenderVersionDependency } from ".";
+import type { Option } from "../Option";
 
 /** A parent class to all forms of dependency.
  *
@@ -31,4 +32,6 @@ export abstract class Dependency<TStrict extends boolean = boolean> extends XmlR
                 return null;
         }
     }
+
+    abstract override asElement(document: Document, config?: FomodDocumentConfig | undefined, knownOptions?: Option<boolean>[]): Element;
 }

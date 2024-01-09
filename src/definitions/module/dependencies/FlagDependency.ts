@@ -30,12 +30,17 @@ export class FlagDependency extends Dependency {
 
     reasonForInvalidity() { return null; }
 
+    associateWithDocument(document: Document) {
+        this.flagInstance.associateWithDocument(document);
+    }
+
     decommission(currentDocument?: Document) {
         this.flagInstance.decommission(currentDocument);
     }
 
-    override asElement(document: Document, config: FomodDocumentConfig = {}): Element {
+    override asElement(document: Document, config?: FomodDocumentConfig, knownOptions: Option<boolean>[] = []): Element {
         const element = this.getElementForDocument(document);
+        this.associateWithDocument(document);
 
         if (typeof this.flagKey === 'string') {
             if (typeof this.desiredValue !== 'string') throw new Error('Flag dependency `name` value is a string but `value` is a boolean! Expected string.', {cause: this});
@@ -43,7 +48,7 @@ export class FlagDependency extends Dependency {
             element.setAttribute(AttributeName.Value, this.desiredValue);
         } else {
             if (this.desiredValue !== true) throw new Error('Flag dependency `name` value is an Option but `value` is a string! Expected boolean.', {cause: this});
-            const setter = this.flagKey.getOptionFlagSetter(document);
+            const setter = this.flagKey.getOptionFlagSetter(document, config, knownOptions);
             element.setAttribute(AttributeName.Flag, setter.name);
             element.setAttribute(AttributeName.Value, setter.value);
         }

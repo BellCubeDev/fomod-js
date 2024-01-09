@@ -20,6 +20,10 @@ class MockXMLRepresentation extends XmlRepresentation<true> {
     reasonForInvalidity(...tree: Omit<Verifiable<false>, "isValid" | "reasonForInvalidity">[]): import("../../../src").InvalidityReport | null {
         throw new Error("Method not implemented.");
     }
+
+    associateWithDocument(document: Document): unknown {
+        throw new Error("Method not implemented.");
+    }
 }
 
 

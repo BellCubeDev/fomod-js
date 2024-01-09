@@ -1,4 +1,4 @@
-import { Fomod } from "../../../src";
+import { Fomod, Option } from "../../../src";
 import { FomodDocumentConfig } from "../../../src/definitions/lib/FomodDocumentConfig";
 import { parseTag } from "../../testUtils";
 
@@ -10,11 +10,27 @@ function getTestElement() {return parseTag`
             <optionalFileGroups>
                 <group name="" type="SelectAtLeastOne">
                     <plugins>
-                        <plugin name="" >
+                        <plugin name="SOME NAME" >
                             <description  />
                             <image path="" />
                             <conditionFlags>
                                 <flag name="only_flag_for_this_option">OPTION_SELECTED__CUSTOM</flag>
+                            </conditionFlags>
+                            <typeDescriptor><type name="Required" /></typeDescriptor>
+                        </plugin>
+                        <plugin name="Duplicate Option" >
+                            <description  />
+                            <image path="" />
+                            <conditionFlags>
+                                <flag name="some duplicate flag">OPTION_SELECTED__CUSTOM</flag>
+                            </conditionFlags>
+                            <typeDescriptor><type name="Required" /></typeDescriptor>
+                        </plugin>
+                        <plugin name="Duplicate Option" >
+                            <description  />
+                            <image path="" />
+                            <conditionFlags>
+                                <flag name="some duplicate flag">OPTION_SELECTED__CUSTOM</flag>
                             </conditionFlags>
                             <typeDescriptor><type name="Required" /></typeDescriptor>
                         </plugin>
@@ -65,6 +81,46 @@ function getTestElement() {return parseTag`
     </conditionalFileInstalls>
 </config>`;}
 
+function getFlagOrderTestElement() {return parseTag`
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://qconsulting.ca/fo3/ModConfig5.0.xsd">
+    <moduleName />
+    <installSteps>
+        <installStep name="" >
+            <optionalFileGroups>
+                <group name="" type="SelectAtLeastOne">
+                    <plugins>
+                        <plugin name="name here" >
+                            <description  />
+                            <image path="" />
+                            <conditionFlags>
+                                <flag name="OPTION_name_here--1">OPTION_SELECTED</flag>
+                            </conditionFlags>
+                            <typeDescriptor><type name="Required" /></typeDescriptor>
+                        </plugin>
+                        <!-- We'll insert an option here so we can test if it'll detect the later 2 and 3 flags and skip to using 4 instead -->
+                        <plugin name="name here" >
+                            <description  />
+                            <image path="" />
+                            <conditionFlags>
+                                <flag name="OPTION_name_here--2">OPTION_SELECTED</flag>
+                            </conditionFlags>
+                            <typeDescriptor><type name="Required" /></typeDescriptor>
+                        </plugin>
+                        <plugin name="name here" >
+                            <description  />
+                            <image path="" />
+                            <conditionFlags>
+                                <flag name="OPTION_name_here--3">OPTION_SELECTED</flag>
+                            </conditionFlags>
+                            <typeDescriptor><type name="Required" /></typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+            </optionalFileGroups>
+        </installStep>
+    </installSteps>
+</config>`;}
+
 
 describe('Dependency Parsing Config Options', () => {
     /** [parse] Whether to attempt to determine if a flag is an option flag to the best of our knowledge
@@ -73,19 +129,94 @@ describe('Dependency Parsing Config Options', () => {
      *
      * @default true
     */
-    describe('parseOptionFlags', () => {
+    describe('parseOptionFlags & generateNewOptionFlagNames: false', () => {
         const config: FomodDocumentConfig = {
             parseOptionFlags: true,
             optionSelectedValue: 'OPTION_SELECTED__CUSTOM',
 
             removeEmptyConditionalInstalls: false,
+            generateNewOptionFlagNames: false,
         };
 
-        const el = getTestElement();
-        const obj = Fomod.parse(el, config);
+        const existingEl = getTestElement();
+        const obj = Fomod.parse(existingEl, config);
+        obj.asElement(existingEl.ownerDocument, config);
+        const newEl = obj.asElement(parseTag`<p/>`.ownerDocument, config);
 
-        it('should have parsed the option flag', () => {
-            expect(obj.gatherOptions()[0]?._existingOptionFlagSetterByDocument.get(el.ownerDocument!)?.name).toBe('only_flag_for_this_option');
+
+        it('should generate the correct option names', () => {
+            const [onlyFlagOption, dupeOption1, dupeOption2] = obj.gatherOptions() as [Option<boolean>, Option<boolean>, Option<boolean>];
+            obj.associateWithDocument(existingEl.ownerDocument!);
+            obj.associateWithDocument(newEl.ownerDocument!);
+            const knownOptions = obj.gatherOptions();
+
+            expect(onlyFlagOption.getOptionFlagSetter(existingEl.ownerDocument!, config, knownOptions)?.name).toBe('only_flag_for_this_option');
+            expect(onlyFlagOption.getOptionFlagSetter(newEl.ownerDocument!, config, knownOptions)?.name).toBe('OPTION_SOME_NAME--1');
+
+            expect(dupeOption1.getOptionFlagSetter(existingEl.ownerDocument!, config, knownOptions)?.name).toBe('OPTION_Duplicate_Option--1');
+            expect(dupeOption1.getOptionFlagSetter(newEl.ownerDocument!, config, knownOptions)?.name).toBe('OPTION_Duplicate_Option--1');
+
+            expect(dupeOption2.getOptionFlagSetter(existingEl.ownerDocument!, config, knownOptions)?.name).toBe('OPTION_Duplicate_Option--2');
+            expect(dupeOption2.getOptionFlagSetter(newEl.ownerDocument!, config, knownOptions)?.name).toBe('OPTION_Duplicate_Option--2');
+        });
+
+        it('should have set the flag on the option in the fresh document', () => {
+            expect(existingEl.querySelector('plugin flag[name="only_flag_for_this_option"]')?.textContent).toBe('OPTION_SELECTED__CUSTOM');
+            expect(newEl.querySelector('plugin flag[name="OPTION_SOME_NAME--1"]')?.textContent).toBe('OPTION_SELECTED__CUSTOM');
+        });
+
+        const existingEl2 = getFlagOrderTestElement();
+        const obj2 = Fomod.parse(existingEl2, config);
+
+        const targetGroup = Array.from(Array.from(obj2.steps)[0]!.groups)[0]!;
+        const options = Array.from(targetGroup.options);
+        const optionsWithInsertedOption = [...options.slice(0, 1), new Option<boolean>('name here'), ...options.slice(1)];
+        targetGroup.options = new Set(optionsWithInsertedOption);
+
+        obj2.asElement(existingEl2.ownerDocument, config);
+        const newEl2 = obj2.asElement(parseTag`<p/>`.ownerDocument, config);
+
+        it('should have skipped to the next available flag', () => {
+            expect(existingEl2.querySelectorAll('plugin flag[name^="OPTION_name_here--1"]').length).toBe(1);
+            expect(newEl2.querySelectorAll('plugin flag[name^="OPTION_name_here--1"]').length).toBe(1);
+
+            expect(existingEl2.querySelectorAll('plugin flag[name^="OPTION_name_here--2"]').length).toBe(1);
+            expect(newEl2.querySelectorAll('plugin flag[name^="OPTION_name_here--2"]').length).toBe(1);
+
+            expect(existingEl2.querySelectorAll('plugin flag[name^="OPTION_name_here--3"]').length).toBe(1);
+            expect(newEl2.querySelectorAll('plugin flag[name^="OPTION_name_here--3"]').length).toBe(1);
+
+            expect(existingEl2.querySelectorAll('plugin flag[name^="OPTION_name_here--4"]').length).toBe(1);
+            expect(newEl2.querySelectorAll('plugin flag[name^="OPTION_name_here--4"]').length).toBe(1);
+        });
+    });
+
+    describe('generateNewOptionFlagNames: true', () => {
+        const config: FomodDocumentConfig = {
+            parseOptionFlags: true,
+            optionSelectedValue: 'OPTION_SELECTED__CUSTOM',
+
+            removeEmptyConditionalInstalls: false,
+            generateNewOptionFlagNames: true,
+        };
+
+        const existingEl = getTestElement();
+        const obj = Fomod.parse(existingEl, config);
+        obj.asElement(existingEl.ownerDocument, config);
+        const knownOptions = obj.gatherOptions();
+        const newEl = obj.asElement(parseTag`<p/>`.ownerDocument, config, knownOptions);
+
+        it('should generate the correct option names', () => {
+            const [onlyFlagOption, dupeOption1, dupeOption2] = obj.gatherOptions() as [Option<boolean>, Option<boolean>, Option<boolean>];
+
+            expect(onlyFlagOption.getOptionFlagSetter(existingEl.ownerDocument!, config, knownOptions)?.name).toBe('OPTION_SOME_NAME--1');
+            expect(onlyFlagOption.getOptionFlagSetter(newEl.ownerDocument!, config, knownOptions)?.name).toBe('OPTION_SOME_NAME--1');
+
+            expect(dupeOption1.getOptionFlagSetter(existingEl.ownerDocument!, config, knownOptions)?.name).toBe('OPTION_Duplicate_Option--1');
+            expect(dupeOption1.getOptionFlagSetter(newEl.ownerDocument!, config, knownOptions)?.name).toBe('OPTION_Duplicate_Option--1');
+
+            expect(dupeOption2.getOptionFlagSetter(existingEl.ownerDocument!, config, knownOptions)?.name).toBe('OPTION_Duplicate_Option--2');
+            expect(dupeOption2.getOptionFlagSetter(newEl.ownerDocument!, config, knownOptions)?.name).toBe('OPTION_Duplicate_Option--2');
         });
     });
 
@@ -157,7 +288,7 @@ describe('Dependency Parsing Config Options', () => {
      * @default true
     */
     describe('removeEmptyConditionalInstalls', () => {
-        const config = {
+        const config: FomodDocumentConfig = {
             removeEmptyConditionalInstalls: true,
         };
 
@@ -173,11 +304,10 @@ describe('Dependency Parsing Config Options', () => {
 
         it('removed the correct install', () => {
             expect(cleanEl.querySelectorAll(':scope > conditionalFileInstalls > patterns > pattern:not(:has(dependencies > *)):has(files > *)').length).toBe(1);
-            expect(cleanEl.querySelectorAll(':scope > conditionalFileInstalls > patterns > pattern:not(:has(dependencies > *)):not(:has(files > *))').length).toBe(0);
-
             expect(existingEl.querySelectorAll(':scope > conditionalFileInstalls > patterns > pattern:not(:has(dependencies > *)):has(files > *)').length).toBe(1);
+
+            expect(cleanEl.querySelectorAll(':scope > conditionalFileInstalls > patterns > pattern:not(:has(dependencies > *)):not(:has(files > *))').length).toBe(0);
             expect(existingEl.querySelectorAll(':scope > conditionalFileInstalls > patterns > pattern:not(:has(dependencies > *)):not(:has(files > *))').length).toBe(0);
         });
     });
 });
-
