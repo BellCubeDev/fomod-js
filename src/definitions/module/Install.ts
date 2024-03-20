@@ -245,7 +245,7 @@ export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict>
     }
 
     associateWithDocument(document: Document) {
-        this.attachDocument(document);
+        if (!this.documents.has(document)) this.attachDocument(document);
     }
 
     decommission(currentDocument?: Document) {

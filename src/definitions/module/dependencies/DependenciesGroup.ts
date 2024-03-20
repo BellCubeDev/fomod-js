@@ -38,7 +38,7 @@ export class DependenciesGroup<TTagName extends DependencyTagName, TStrict exten
     }
 
     associateWithDocument(document: Document) {
-        this.dependencies.forEach(d => d.associateWithDocument(document));
+        this.dependencies.forEach(d => d.associateWithDocument?.(document));
     }
 
     override asElement(document: Document, config: FomodDocumentConfig = {}, knownOptions: Option<boolean>[] = []): Element {

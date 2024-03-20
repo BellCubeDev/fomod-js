@@ -2,7 +2,7 @@
   "type": "module",
   "name": "fomod",
   "description": "A library for creating, parsing, editing, and validating XML-based Fomod installers, widely popularized in the Bethesda modding scene",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "main": "dist/index.js",
   "repository": "https://github.com/BellCubeDev/fomod-js/",
   "bugs": {

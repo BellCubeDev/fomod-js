@@ -17,12 +17,11 @@
 
 		// Output Options
 		"alwaysStrict": true,
-		"removeComments": true,
+		//"removeComments": true, -- removed JSDoc comments
 		"importsNotUsedAsValues": "remove",
 
 		"declarationMap": true,
 		"sourceMap": true,
-		"sourceRoot": "https://raw.githubusercontent.com/BellCubeDev/fomod-js/main/",
 
 		// Type Checking: Maximum Carnage
 		"strict": true,

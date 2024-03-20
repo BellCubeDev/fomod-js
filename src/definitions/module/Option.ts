@@ -129,7 +129,9 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
             const name = baseName + `--${suffix}`;
 
             if (!existingFlagNames.has(name)) {
-                return new FlagSetter(new FlagInstance(name, config.optionSelectedValue ?? DefaultFomodDocumentConfig.optionSelectedValue, true));
+                const setter = new FlagSetter(new FlagInstance(name, config.optionSelectedValue ?? DefaultFomodDocumentConfig.optionSelectedValue, true));
+                setter.associateWithDocument(document);
+                return setter;
             }
 
             return tryNextName(suffix + 1n);
