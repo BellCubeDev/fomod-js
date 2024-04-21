@@ -19,10 +19,14 @@ jobs:
           SECONDARY_TAG: ${{ github.event.release.prerelease == true && startsWith(github.event.release.tag_name, '0.') && '--tag latest' }}
         steps:
               - name: Checkout
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
+
+
+              - name: Set package.json Version Field
+                uses: BellCubeDev/update-package-version-by-release-tag@v2
 
               - name: Setup Node.js
-                uses: actions/setup-node@v3
+                uses: actions/setup-node@v4
                 with:
                     node-version: latest
 
@@ -58,7 +62,7 @@ jobs:
 
 
 
-              - uses: jossef/action-set-json-field@v2
+              - uses: jossef/action-set-json-field@v2.1
                 name: "Change Package Name for GitHub"
                 with:
                     file: package.json
@@ -73,5 +77,3 @@ jobs:
                   fi
                 env:
                     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
