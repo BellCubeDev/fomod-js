@@ -23,7 +23,7 @@ export interface FomodInfoData {
 
 }
 
-export const DefaultInfoSchema = 'https://fomod.bellcube.dev/schemas/info.xsd';
+export const DefaultInfoSchema = 'https://fomod.bellcube.dev/schemas/Info.xsd';
 
 /** Information stored in the Info.xml file of any given FOMOD
  *
