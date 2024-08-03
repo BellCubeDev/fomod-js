@@ -4,7 +4,7 @@ import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "./lib/FomodDocu
 import { ElementObjectMap, XmlRepresentation } from "./lib/XmlRepresentation";
 
 export interface FomodInfoData {
-    [key: string]: string|undefined;
+    [key: string]: string|string[]|undefined;
 
     /** MO2 reads and displays this field in the installer dialog. Vortex reads but does not use it. */
     Name?: string;
@@ -20,6 +20,9 @@ export interface FomodInfoData {
 
     /** MO2 reads, displays, and potentially stores this field. There are no restrictions on its value.  */
     Version?: string;
+
+    /** An array of strings (categories) */
+    Groups?: string[];
 
 }
 
@@ -54,7 +57,17 @@ export class FomodInfo extends XmlRepresentation<boolean> {
             if (value === undefined) continue;
 
             const child = document.createElement(key);
-            child.textContent = value;
+
+            if (Array.isArray(value)) {
+                for (const subChildValue of value) {
+                    // Append "element" tag to child, with the value
+                    const subChild = document.createElement('element');
+                    subChild.textContent = subChildValue;
+                    child.appendChild(subChild);
+                }
+            } else {
+                child.textContent = value;
+            }
 
             element.appendChild(child);
         }
@@ -80,7 +93,20 @@ export class FomodInfo extends XmlRepresentation<boolean> {
 
         for (const child of element.children) {
             if (child.textContent === null) continue;
-            data[child.tagName] = child.textContent;
+
+            if (child.children.length > 0) {
+                const filteredChildren: string[] = [];
+
+                for (const subchild of child.children) {
+                    if (typeof subchild.textContent === 'string') {
+                        filteredChildren.push(subchild.textContent);
+                    }
+                }
+
+                data[child.tagName] = filteredChildren;
+            } else {
+                data[child.tagName] = child.textContent;
+            }
         }
 
         const obj = new FomodInfo(data);
