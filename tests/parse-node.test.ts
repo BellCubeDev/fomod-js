@@ -162,6 +162,10 @@ describe('Info.xml Got Parsed', () => {
         <Id>1</Id>
         <Website>https://example.com</Website>
         <Version>1.0.0</Version>
+        <Groups>
+            <element>category 1</element>
+            <element>testGroup2</element>
+        </Groups> 
     </fomod>`, {contentType: 'text/xml'}).window.document;
 
     const infoObj = parseInfoDoc(infoDoc);
@@ -187,6 +191,10 @@ describe('Info.xml Got Parsed', () => {
 
     test('Version Is Correct', () => {
         expect(infoObj.data.Version).toBe('1.0.0');
+    });
+
+    test('Groups Is Correct', () => {
+        expect(infoObj.data.Groups).toStrictEqual(['category 1', 'testGroup2']);
     });
 
     describe('Converted Back Into Element Properly', () => {
