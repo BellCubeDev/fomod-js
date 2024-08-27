@@ -24,7 +24,7 @@ test('Will include schema by default', () => {
     const doc = parseTag`<p/>`.ownerDocument;
 
     const asElement = info.asElement(doc);
-    console.log(asElement.outerHTML);
+    //console.log(asElement.outerHTML);
     expect(asElement.getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation')).toBe(DefaultInfoSchema);
 });
 
@@ -33,7 +33,7 @@ test('Will include schema if asked', () => {
     const doc = parseTag`<p/>`.ownerDocument;
 
     const asElement = info.asElement(doc, {includeInfoSchema: true});
-    console.log(asElement.outerHTML);
+    //console.log(asElement.outerHTML);
     expect(asElement.getAttributeNS(XmlNamespaces.XSI, 'noNamespaceSchemaLocation')).toBe(DefaultInfoSchema);
 });
 

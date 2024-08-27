@@ -41,7 +41,7 @@ function getEnumValues<TEnum extends typeof enums[keyof typeof enums]>(theEnum: 
     return values;
 }
 
-moduleConfigXSDs.then(xsds => console.log('XSD elements', xsds.map(xsd => Array.from(xsd.querySelectorAll('element')).map(el => el.outerHTML))));
+//moduleConfigXSDs.then(xsds => console.log('XSD elements', xsds.map(xsd => Array.from(xsd.querySelectorAll('element')).map(el => el.outerHTML))));
 
 const valuesByEnum: Record<keyof typeof enums, {
     fromXml: Set<string>,
@@ -181,7 +181,7 @@ const valuesByEnum: Record<keyof typeof enums, {
     },
 };
 
-console.log(valuesByEnum);
+//console.log(valuesByEnum);
 
 describe('All Values From XML Are Present', () => {
     for (const [key, value] of Object.entries(valuesByEnum)) {

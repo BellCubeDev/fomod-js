@@ -42,4 +42,4 @@ fomod.steps.add(step);
 test('Fomod Is Valid', () => testValidity(fomod));
 
 
-console.log(fomod.asElement(parseTag`<p>`.ownerDocument).outerHTML);
+//console.log(fomod.asElement(parseTag`<p>`.ownerDocument).outerHTML);

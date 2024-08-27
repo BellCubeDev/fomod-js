@@ -11,39 +11,39 @@ describe('All XmlRepresentation classes with `parse()` should add that element t
     for (const [name, value_] of exports) {
         const value = value_ as typeof index[keyof typeof index];
 
-        console.debug(`Testing ${name}`);
+        //console.debug(`Discovered exported value ${name}...`);
 
         if (   !(typeof value === 'object' || typeof value === 'function')   ){
-            console.debug(`Skipping ${name} because it is not an object`);
+            //console.debug(`Skipping element parse check for value ${name} because it is not an object`);
             continue;
         }
 
         if (   !(isPrototypeOf(index.XmlRepresentation, value))   ) {
-            console.debug(`Skipping ${name} because it is not an XmlRepresentation`);
+            //console.debug(`Skipping element parse check for class ${name} because it is not an XmlRepresentation`);
             continue;
         }
 
         if (   !('parse' in value && typeof value.parse === 'function')   ) {
-            console.debug(`Skipping ${name} because it has no parse() function`);
+            //console.debug(`Skipping element parse check for XmlRepresentation class ${name} because it has no parse() function`);
             continue;
         }
 
         if (   !('tagName' in value && (typeof value.tagName === 'string' || Array.isArray(value.tagName)))   ) {
-            console.debug(`Skipping ${name} because it has no tag name attribute`);
+            //console.debug(`Skipping element parse check for XmlRepresentation class ${name} because it has no tag name attribute`);
             continue;
         }
 
         const tagNameOrNames = value.tagName as string|string[];
         const tagNames = Array.isArray(tagNameOrNames) ? tagNameOrNames : [tagNameOrNames];
         if (!tagNames[0]) {
-            console.warn(`Skipping ${name} because it has tag names in its tag name value!`);
+            console.warn(`Skipping element parse check for XmlRepresentation class ${name} because it has no tag names liste!`);
             continue;
         }
 
-        console.log(`Testing ${name} with ${tagNameOrNames}`);
+        //console.log(`Testing ${name} with ${tagNameOrNames}`);
 
         test(`${name} (${tagNames.join(' | ')})`, () => {
-            console.log(`Testing ${name} with ${tagNameOrNames}`);
+            //console.log(`Testing ${name} with ${tagNameOrNames}`);
 
             const element = parseTag`<${tagNames[0]!} name="some old name idk man" />`;
             const result = (value.parse as (el: Element) => index.XmlRepresentation<boolean> | null)(element);

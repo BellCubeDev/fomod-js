@@ -22,7 +22,7 @@ describe("Basic Parse", () => {
                 const xml = await getXml(fomod, 'Info.xml');
                 const document = new DOMParser().parseFromString(xml, 'text/xml');
                 const parsed = parseInfoDoc(document);
-                console.log({xml, document, parsed});
+                //console.log({xml, document, parsed});
                 expect(parsed).not.toBeNull();
                 expect(parsed).toMatchSnapshot();
             });

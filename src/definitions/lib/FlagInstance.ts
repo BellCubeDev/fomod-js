@@ -75,7 +75,7 @@ export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption e
 
     /** Attaches this flag instance to a document */
     attachDocument(document: Document) {
-        console.log('Attaching flag isntance to document', this, document);
+        //console.log('Attaching flag instance to document', this, document);
         this.documents.add(document);
 
         let instancesForDoc = FlagInstancesByDocument.get(document);
