@@ -239,5 +239,7 @@ moduleConfig.decommission(thatOneDocument);
 
 ### Real-World E2E Test Authors
 
+* **Czasior** - Co-author and Fomod writer for [JK's Interiors Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/35910)
+* [Legacy of the Dragonborn Patches (Official)](https://www.nexusmods.com/skyrimspecialedition/mods/30980) team
 * **GGUNIT** - Author of [Lux](https://www.nexusmods.com/skyrimspecialedition/mods/43158) and [Lux Patch Hub](https://www.nexusmods.com/skyrimspecialedition/mods/113002)
 * **AllstaRawR** - Author of [T.I.T.S. U.P. - The Biggest FOMOD Ever](https://www.nexusmods.com/skyrimspecialedition/mods/115020)
