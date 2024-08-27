@@ -1,4 +1,4 @@
-import { Dependency } from ".";
+import { Dependency } from "./Dependency";
 import { AttributeName, FileDependencyState, TagName } from "../../Enums";
 import { ElementObjectMap, InvalidityReason, InvalidityReport, Verifiable } from "../../lib";
 import { FomodDocumentConfig } from "../../lib/FomodDocumentConfig";
@@ -9,7 +9,7 @@ export class FileDependency<TStrict extends boolean> extends Dependency<TStrict>
     static override readonly tagName = TagName.FileDependency;
     readonly tagName = TagName.FileDependency;
 
-    constructor(public filePath: string = '', public desiredState: TStrict extends true ? FileDependencyState : string = FileDependencyState.Active) {
+    constructor(public filePath: string = '', public desiredState: MaybeStrictString<FileDependencyState, TStrict> = FileDependencyState.Active) {
         super();
     }
 

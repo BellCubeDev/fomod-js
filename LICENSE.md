@@ -1,3 +1,5 @@
+The copyrights of the real-world end-to-end test XMLs (found in src/tests/real-fomods) are not modified by the below license. The owners of these tests' XML files retain their copyrights. Used with permission.
+
 # GNU LESSER GENERAL PUBLIC LICENSE
 
 Version 3, 29 June 2007

@@ -230,3 +230,14 @@ moduleConfig.decommission(thatOneDocument);
 ```
 
 </details>
+
+# Credits
+
+### Contributors
+
+* **BellCube** - Lead developer
+
+### Real-World E2E Test Authors
+
+* **GGUNIT** - Author of [Lux](https://www.nexusmods.com/skyrimspecialedition/mods/43158) and [Lux Patch Hub](https://www.nexusmods.com/skyrimspecialedition/mods/113002)
+* **AllstaRawR** - Author of [T.I.T.S. U.P. - The Biggest FOMOD Ever](https://www.nexusmods.com/skyrimspecialedition/mods/115020)

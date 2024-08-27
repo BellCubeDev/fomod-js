@@ -39,7 +39,7 @@ export class FomodInfo extends XmlRepresentation<boolean> {
         super();
     }
 
-    isValid() { return true; }
+    isValid(): this is FomodInfo { return true; }
     override reasonForInvalidity() { return null; }
     associateWithDocument(document: Document) { return; }
 

@@ -1,4 +1,4 @@
-import { Dependency } from ".";
+import { Dependency } from "./Dependency";
 import { AttributeName, BooleanString, TagName } from "../../Enums";
 import { ElementObjectMap, FlagInstance } from "../../lib";
 import { FomodDocumentConfig } from "../../lib/FomodDocumentConfig";
@@ -26,7 +26,7 @@ export class FlagDependency extends Dependency {
         this.flagInstance = new FlagInstance(flagName as any, desiredValue as any, false);
     }
 
-    isValid() { return true; }
+    isValid(): this is FlagDependency { return true; }
 
     reasonForInvalidity() { return null; }
 

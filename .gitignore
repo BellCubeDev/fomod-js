@@ -1,5 +1,7 @@
-ModuleConfig.xml
+/ModuleConfig.xml
 .immer
+cache
+*.serialized.xml
 
 # Jest
 tmp

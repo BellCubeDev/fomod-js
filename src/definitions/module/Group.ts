@@ -14,8 +14,8 @@ export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
 
     constructor(
         public name: string = '',
-        public behaviorType: TStrict extends true ? GroupBehaviorType : string = GroupBehaviorType.SelectExactlyOne,
-        public sortingOrder: TStrict extends true ? SortingOrder : string = SortingOrder.Ascending,
+        public behaviorType: MaybeStrictString<GroupBehaviorType, TStrict> = GroupBehaviorType.SelectExactlyOne,
+        public sortingOrder: MaybeStrictString<SortingOrder, TStrict> = SortingOrder.Ascending,
         public options: Set<Option<TStrict>> = new Set(),
     ) {
         super();
@@ -24,7 +24,7 @@ export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     asElement(document: Document, config: FomodDocumentConfig = {}, knownOptions: Option<boolean>[] = this.gatherOptions()): Element {
         const element = this.getElementForDocument(document);
         this.associateWithDocument(document);
-        
+
         if (config.generateNewOptionFlagNames ?? DefaultFomodDocumentConfig.generateNewOptionFlagNames) {
             for (const option of knownOptions) {
                 option.existingOptionFlagSetterByDocument.get(document)?.decommission();

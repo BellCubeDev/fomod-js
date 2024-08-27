@@ -11,13 +11,13 @@ import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "../lib/FomodDoc
 import { parseOptionFlags } from "../lib/ParseOptionFlags";
 
 export interface ModuleImageMetadata<TStrict extends boolean> {
-    showFade?: TStrict extends true ? `${boolean}` : string;
-    showImage?: TStrict extends true ? `${boolean}` : string;
-    height?: TStrict extends true ? `${bigint}` | '' : string;
+    showFade?: MaybeStrictBoolString<TStrict>;
+    showImage?: MaybeStrictBoolString<TStrict>;
+    height?: MaybeStrictIntString<TStrict>;
 }
 
 export interface ModuleNameMetadata<TStrict extends boolean> {
-    position?: TStrict extends true ? ModuleNamePosition : string;
+    position?: MaybeStrictString<ModuleNamePosition, TStrict>;
 
     /** Must be an XML-valid hex string. XML-valid hex strings accept the standard `1234567890ABCDEF` range and the length must be even
      *
@@ -55,7 +55,7 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
          */
         public installs: Set<Install<TStrict> | InstallPattern<TStrict>> = new Set(),
 
-        public sortingOrder: TStrict extends true ? SortingOrder : string = SortingOrder.Ascending,
+        public sortingOrder: MaybeStrictString<SortingOrder, TStrict> = SortingOrder.Ascending,
 
         public steps: Set<Step<TStrict>> = new Set(),
 
@@ -178,7 +178,6 @@ export class Fomod<TStrict extends boolean> extends XmlRepresentation<TStrict> {
                 requiredInstallContainer.appendChild(installOrPattern.asElement(document, config));
                 continue;
             }
-
 
             const el = installOrPattern.asElement(document, config, knownOptions);
 

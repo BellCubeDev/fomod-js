@@ -228,7 +228,7 @@ export class FlagSetter extends XmlRepresentation<true> {
         return element;
     }
 
-    isValid() { return true; }
+    isValid(): this is FlagSetter { return true; }
 
     reasonForInvalidity(): null {
         return null;
@@ -406,7 +406,7 @@ export class TypeDescriptorPattern<TStrict extends boolean> extends XmlRepresent
         return typeDescriptorPattern;
     }
 
-    isValid(): this is Option<true> {
+    isValid(): this is TypeDescriptorPattern<true> {
         return this.typeNameDescriptor.isValid() && this.dependencies.isValid();
     }
 
@@ -446,7 +446,7 @@ export class TypeNameDescriptor<TTagName extends TypeDescriptorTagName, TStrict 
 
     constructor(
         private _tagName: TTagNameIsReadOnly extends true ? TTagName : TypeDescriptorTagName,
-        public targetType: TStrict extends true ? OptionType : string = OptionType.Optional,
+        public targetType: MaybeStrictString<OptionType, TStrict> = OptionType.Optional,
         public tagNameIsReadonly: TTagNameIsReadOnly
     ) {
         super();

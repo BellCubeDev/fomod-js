@@ -1,4 +1,4 @@
-import { Dependency } from ".";
+import { Dependency } from "./Dependency";
 import { AttributeName, TagName } from "../../Enums";
 import { ElementObjectMap } from "../../lib";
 import { FomodDocumentConfig } from "../../lib/FomodDocumentConfig";
@@ -19,7 +19,7 @@ export abstract class VersionDependency extends Dependency {
         super();
     }
 
-    isValid() { return true; }
+    isValid(): this is VersionDependency { return true; }
 
     override asElement(document: Document): Element {
         const element = this.getElementForDocument(document);

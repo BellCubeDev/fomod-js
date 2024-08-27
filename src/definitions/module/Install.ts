@@ -104,7 +104,7 @@ export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict>
          *
          * Defaults to `0`. If the value is `0`, the value will not be written to the element.
         */
-       public priority: TStrict extends true ? `${bigint}` | '' : string = '',
+       public priority: MaybeStrictIntString<TStrict> = '0',
 
         document?: Document,
 
@@ -112,13 +112,13 @@ export class Install<TStrict extends boolean> extends XmlRepresentation<TStrict>
          *
          * @deprecated Has inconsistent behavior between mod managers. Instead, you might consider duplicating the `dependencies` object to specify when a file should be installed. Included for completeness.
          */
-        public installIfUsable: TStrict extends true ? BooleanString : string = BooleanString.false,
+        public installIfUsable: MaybeStrictBoolString<TStrict> = BooleanString.false,
 
         /** Whether to always install the file, even if the user has not selected it.
          *
          * @deprecated Has inconsistent behavior between mod managers. Instead, you might consider removing the `dependencies` object instead. Included for completeness.
          */
-        public alwaysInstall: TStrict extends true ? BooleanString : string = BooleanString.false,
+        public alwaysInstall: MaybeStrictBoolString<TStrict> = BooleanString.false,
     ) {
         super();
 

@@ -4,10 +4,10 @@
 		"module": "ESNext",
 
 		// Module Resolution
-		"moduleResolution": "node",
+		"moduleResolution": "Bundler",
 		"esModuleInterop": true,
 		"resolveJsonModule": true,
-		"allowArbitraryExtensions": false,
+		"allowArbitraryExtensions": true,
 
 		// Paths
 		"rootDir": "src",
@@ -30,6 +30,7 @@
 		"noImplicitThis": true,
 		"noUncheckedIndexedAccess": true,
 		"useUnknownInCatchVariables": true,
+		"strictFunctionTypes": false,
 
 		"pretty": true,
 		"noErrorTruncation": true,
@@ -53,5 +54,10 @@
 
 	"include": [
 		"src/**/*"
+	],
+
+	"exclude": [
+		"src/**/*.test.ts",
+		"src/tests/**/*"
 	]
 }

@@ -16,7 +16,7 @@ export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
 
     constructor(
         public name: string = '',
-        public sortingOrder: TStrict extends true ? SortingOrder : string = SortingOrder.Ascending,
+        public sortingOrder: MaybeStrictString<typeof SortingOrder[keyof typeof SortingOrder], TStrict> = SortingOrder.Ascending,
         public groups: Set<Group<TStrict>> = new Set(),
         public visibilityDeps: DependenciesGroup<TagName.Visible, TStrict> = new DependenciesGroup(TagName.Visible),
     ) {
@@ -37,14 +37,16 @@ export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
 
         element.setAttribute(AttributeName.Name, this.name);
 
-        const dependenciesContainer = getOrCreateElementByTagNameSafe(element, TagName.Visible);
-        if (this.visibilityDeps.dependencies.size > 0) dependenciesContainer.appendChild(this.visibilityDeps.asElement(document, config));
+
+        const dependenciesContainer = this.visibilityDeps.getElementForDocument(document) || getOrCreateElementByTagNameSafe(element, TagName.Visible);
+        if (this.visibilityDeps.dependencies.size > 0) element.appendChild(this.visibilityDeps.asElement(document, config));
         else dependenciesContainer.remove();
 
-        const groupsContainer = getOrCreateElementByTagNameSafe(element, TagName.OptionalFileGroups);
 
+        const groupsContainer = getOrCreateElementByTagNameSafe(element, TagName.OptionalFileGroups);
         groupsContainer.setAttribute(AttributeName.Order, this.sortingOrder);
         for (const group of this.groups)  groupsContainer.appendChild(group.asElement(document, config));
+        element.appendChild(groupsContainer);
 
         return element;
     }

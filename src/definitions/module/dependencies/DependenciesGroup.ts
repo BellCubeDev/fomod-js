@@ -1,19 +1,20 @@
-import { Dependency } from ".";
+import { type ValidDependency } from ".";
+import { Dependency } from "./Dependency";
 import { AttributeName, DependencyGroupOperator, TagName } from "../../Enums";
 import { ElementObjectMap, InvalidityReason, InvalidityReport, Verifiable } from "../../lib";
 import { FomodDocumentConfig } from "../../lib/FomodDocumentConfig";
 import type { Option } from "../Option";
 
 
-type DependencyTagName = TagName.Dependencies|TagName.ModuleDependencies|TagName.Visible;
+export type DependencyTagName = TagName.Dependencies|TagName.ModuleDependencies|TagName.Visible;
 
 export class DependenciesGroup<TTagName extends DependencyTagName, TStrict extends boolean> extends Dependency {
     static override readonly tagName = [TagName.Dependencies, TagName.ModuleDependencies, TagName.Visible] as [TagName.Dependencies, TagName.ModuleDependencies, TagName.Visible];
 
     constructor(
         public readonly tagName: TTagName,
-        public operator: TStrict extends true ? DependencyGroupOperator : string = DependencyGroupOperator.And,
-        public dependencies: Set<Dependency<TStrict>> = new Set()
+        public operator: MaybeStrictString<DependencyGroupOperator, TStrict> = DependencyGroupOperator.And,
+        public dependencies: Set<ValidDependency<TStrict>> = new Set()
     ) {
         super();
     }
@@ -59,7 +60,7 @@ export class DependenciesGroup<TTagName extends DependencyTagName, TStrict exten
 
         const tagName = element.tagName as TTagName;
         const operator = element.getAttribute(AttributeName.Operator) ?? DependencyGroupOperator.And;
-        const dependencies = Array.from(element.children).map(e => Dependency.parse(e, config)).filter((d): d is Dependency<false> => d !== null);
+        const dependencies = Array.from(element.children).map(e => Dependency.parse(e, config)).filter((d): d is ValidDependency<false> => d !== null);
 
         const obj = new DependenciesGroup<TTagName, false>(tagName, operator, new Set(dependencies));
         obj.assignElement(element);

@@ -18,23 +18,40 @@ jobs:
           LATEST_TAG: ${{ github.event.release.prerelease == true && '--tag pre-release' || '--tag latest' }}
           SECONDARY_TAG: ${{ github.event.release.prerelease == true && startsWith(github.event.release.tag_name, '0.') && '--tag latest' }}
         steps:
-              - name: Checkout
+
+              # ============================
+              #        Project Setup
+              # ============================
+
+              - name: Clone Repo
                 uses: actions/checkout@v4
+                with:
+                  submodules: 'recursive'
+
+
+              - name: Set Up PNPM
+                uses: pnpm/action-setup@v4
+                with:
+                    version: 9
+
+
+              - name: Set Up Node.js
+                uses: actions/setup-node@v4
+                with:
+                  node-version: latest
+                  cache: 'pnpm'
+
+
+              - name: Install dependencies
+                run: pnpm install --frozen-lockfile
+
+              # =============================
+              #    Workflow-Specific Stuff
+              # =============================
 
 
               - name: Set package.json Version Field
                 uses: BellCubeDev/update-package-version-by-release-tag@v2
-
-              - name: Setup Node.js
-                uses: actions/setup-node@v4
-                with:
-                    node-version: latest
-
-              - name: Install Dependencies
-                run: npm install
-
-              - name: Build
-                run: npm run build
 
               - id: package_json
                 name: Read package.json
