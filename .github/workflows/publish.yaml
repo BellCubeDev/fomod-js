@@ -62,6 +62,11 @@ jobs:
                   content="${content//$'\r'/'%0D'}"
                   echo "::set-output name=packageJson::$content"
 
+
+              - name: Build Package
+                run: pnpm run build
+
+
               - name: Login to NPM
                 run: |
                   npm set //registry.npmjs.org/:_authToken=${{ secrets.NPM_ACCESS_TOKEN }}
