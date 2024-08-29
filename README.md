@@ -26,7 +26,7 @@ A JavaScript/TypeScript library for working with FOMOD installers both in the br
 </details>
 
 <details>
-    <summary><span><h2>What Is a FOMOD</h2></span></summary>
+    <summary><h2>What Is a FOMOD</h2></summary>
 
 FOMOD, which originally stood for `F`all`O`ut `MOD`, is a confusingly-named file installer format pioneered by Fallout Mod Manager (FOMM). The goal of the format is to present users with options to be taken into account when installing the mod. It's primarily used in the Bethesda modding scene, though it's typically supported for use with any game a given mod manager supports. While FOMM, Nexus Mod Manager, and Vortex all supported writing a .NET installer (called a "scripted installer"), it's very rarely observed in use in the wild. With that and the security threat that comes with arbitrary code execution, most mod managers forego its support.
 
@@ -35,7 +35,7 @@ FOMOD installers are therefore nearly always written in the alternative, a [sche
 </details>
 
 <details>
-    <summary><span><span><h3>Quick terminology breakdown</h3></span> (I chose better names)</span></summary>
+    <summary><h3>Quick terminology breakdown</h3> (I chose better names)</summary>
 
 |     Term Used     |          Canonical Name            | What It Refers To |
 |        :-:        |                :-:                 |        :--        |
