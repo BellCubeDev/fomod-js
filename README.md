@@ -37,14 +37,14 @@ FOMOD installers are therefore nearly always written in the alternative, a [sche
 <details>
     <summary><h3>Quick terminology breakdown</h3> (I chose better names)</summary>
 
-|     Term Used     |          Canonical Name            | What It Refers To |
-|        :-:        |                :-:                 |        :--        |
-|      Install      |            File/Folder             | Files and folders that might be installed by the FOMOD |
-|       Step        |           Install Step             | A bundle of Groups presented as a single page |
-|       Group       |               Group                | A bundle of checkboxes or radio buttons presented as a section with a header |
-|       Option      |               Plugin               | A single checkbox or radio button |
-|  FOMM Dependency  |   Mod Manager Version Dependency   | A dependency on a specific version of a mod manager |
-|  FOSE Dependency  | Script Extender Version Dependency | A dependency on a specific version of a script extender |
+|               Term Used              |   Canonical Name  | What It Refers To |
+|                  :-:                 |        :-:        |        :--        |
+|                Install               |    File/Folder    | Files and folders that might be installed by the FOMOD |
+|                 Step                 |    Install Step   | A bundle of Groups presented as a single page |
+|                 Group                |      Group        | A bundle of checkboxes or radio buttons presented as a section with a header |
+|                Option                |      Plugin       | A single checkbox or radio button |
+|    Mod Manager Version Dependency    |  FOMM Dependency  | A dependency on a specific version of a mod manager |
+|  Script Extender Version Dependency  |  FOSE Dependency  | A dependency on a specific version of a script extender |
 
 </details>
 
