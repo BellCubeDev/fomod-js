@@ -64,18 +64,27 @@ FOMOD installers are therefore nearly always written in the alternative, a [sche
     * Defacto Deprecation
 * Create New Installers & Components
 * Parse Existing Installers & Components
-* In-place editing of existing documents, be they from the native browser or jsdom.
-    * You can force a fresh start by passing an empty `Document` object
-      > [!IMPORTANT]
-      > Documents will need to be explicitly decommissioned to prevent memory leaks when using large numbers of documents or allowing users to arbitrarily create them
 * Dependencies on Options (via flags)
     * Options can be used as dependency within the codebase and are converted to a flag dependency when an XML document is produced
+* In-place editing of existing documents, be they from the native browser or jsdom.
+    * You can force a fresh start by passing an empty `Document` object
+    * ⚠️ Documents will need to be explicitly decommissioned to prevent memory leaks when using large numbers of documents *or* allowing users to arbitrarily create them
 
 <br>
 
 ## Why This Library Exists
 
-Despite its age, the FOMOD format is incredibly popular and serves most everyone's needs. I wasn't a particular fan of the tooling, however—I found the existing solutions rather janky and unintuitive—and set out to create tooling of my own. I first attempted to write it in pure JavaScript, but I learned over time how foolish of an idea that was. I've since learned the error of my ways and written this here library. I intent to [write a static Next.js site](https://github.com/BellCubeDev/fomod-builder) to host [a revised FOMOD Builder](https://fomod.bellcube.dev) using this very library.
+Despite its age, the FOMOD format is incredibly popular and serves most everyone's needs. I wasn't a particular fan of the tooling, however—I found the existing solutions rather janky and unintuitive—and set out to create tooling of my own. I first attempted to write it in pure JavaScript, but I learned over time how foolish of an idea that was. I've since learned the error of my ways and written this here library. I intend to [write a static Next.js site](https://github.com/BellCubeDev/fomod-builder) to host [a revised FOMOD Builder](https://fomod.bellcube.dev) using this very library.
+
+<br>
+
+## Philosophy
+
+The `fomod` library should endeavour to match and document the implementations of common mod managers. Undocumented features, inconsistencies, and unsupported features should be—at the very least—documented in JSDoc comments. The goal is to provide a consistent experience for creating/editing FOMOD installers for use in an existing mod manager.
+
+The library should make minimal assumptions and exert minimal control. Its output should mirror its input + its changes as closely as possible, without making changes a human would likely not make. This may not always be achievable automatically, but it should be prioritized.
+
+If, in the future, additional features to support primarily the _reading_ of installers are added, these features should be clearly marked as such.
 
 <br>
 
