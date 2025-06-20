@@ -4,6 +4,7 @@ import { AttributeName, DependencyGroupOperator, TagName } from "../../Enums";
 import { ElementObjectMap, InvalidityReason, InvalidityReport, Verifiable } from "../../lib";
 import { FomodDocumentConfig } from "../../lib/FomodDocumentConfig";
 import type { Option } from "../Option";
+import type { MaybeStrictString } from "../../../TypeUtils";
 
 
 export type DependencyTagName = TagName.Dependencies|TagName.ModuleDependencies|TagName.Visible;

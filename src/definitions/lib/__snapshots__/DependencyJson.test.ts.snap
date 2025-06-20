@@ -1,0 +1,771 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`File Dependency 1`] = `
+[
+  FileDependency {
+    "decommission": undefined,
+    "desiredState": "Active",
+    "documentMap": WeakMap {},
+    "filePath": "file.txt",
+    "tagName": "fileDependency",
+  },
+]
+`;
+
+exports[`File Dependency 2`] = `
+[
+  FileDependency {
+    "decommission": undefined,
+    "desiredState": "Active",
+    "documentMap": WeakMap {},
+    "filePath": "file.txt",
+    "tagName": "fileDependency",
+  },
+]
+`;
+
+exports[`File Dependency 3`] = `
+[
+  {
+    "path": "file.txt",
+    "state": "Active",
+    "type": "file",
+  },
+]
+`;
+
+exports[`File Dependency 4`] = `
+[
+  {
+    "path": "file.txt",
+    "state": "Active",
+    "type": "file",
+  },
+]
+`;
+
+exports[`File Dependency 5`] = `
+[
+  {
+    "path": "file.txt",
+    "state": "Active",
+    "type": "file",
+  },
+]
+`;
+
+exports[`File Dependency 6`] = `
+[
+  {
+    "path": "file.txt",
+    "state": "Active",
+    "type": "file",
+  },
+]
+`;
+
+exports[`Flag Dependency (Not Option) 1`] = `
+[
+  FlagDependency {
+    "documentMap": WeakMap {},
+    "flagInstance": FlagInstance {
+      "_name": "some-flag-name",
+      "documents": Set {},
+      "optionFlagOptionByDocument": WeakMap {},
+      "usedValue": "some-value",
+      "write": false,
+    },
+    "tagName": "flagDependency",
+  },
+]
+`;
+
+exports[`Flag Dependency (Not Option) 2`] = `
+[
+  FlagDependency {
+    "documentMap": WeakMap {},
+    "flagInstance": FlagInstance {
+      "_name": "some-flag-name",
+      "documents": Set {},
+      "optionFlagOptionByDocument": WeakMap {},
+      "usedValue": "some-value",
+      "write": false,
+    },
+    "tagName": "flagDependency",
+  },
+]
+`;
+
+exports[`Flag Dependency (Not Option) 3`] = `
+[
+  {
+    "flag": "some-flag-name",
+    "isOptionFlag": false,
+    "type": "flag",
+    "value": "some-value",
+  },
+]
+`;
+
+exports[`Flag Dependency (Not Option) 4`] = `
+[
+  {
+    "flag": "some-flag-name",
+    "isOptionFlag": false,
+    "type": "flag",
+    "value": "some-value",
+  },
+]
+`;
+
+exports[`Flag Dependency (Not Option) 5`] = `
+[
+  {
+    "flag": "some-flag-name",
+    "isOptionFlag": false,
+    "type": "flag",
+    "value": "some-value",
+  },
+]
+`;
+
+exports[`Flag Dependency (Not Option) 6`] = `
+[
+  {
+    "flag": "some-flag-name",
+    "isOptionFlag": false,
+    "type": "flag",
+    "value": "some-value",
+  },
+]
+`;
+
+exports[`Flag Dependency (Option, No Existing Option) 1`] = `
+[
+  FlagDependency {
+    "documentMap": WeakMap {},
+    "flagInstance": FlagInstance {
+      "_name": "some-flag-name",
+      "documents": Set {},
+      "optionFlagOptionByDocument": WeakMap {},
+      "usedValue": "some-value",
+      "write": false,
+    },
+    "tagName": "flagDependency",
+  },
+]
+`;
+
+exports[`Flag Dependency (Option, No Existing Option) 2`] = `
+[
+  FlagDependency {
+    "documentMap": WeakMap {},
+    "flagInstance": FlagInstance {
+      "_name": "some-flag-name",
+      "documents": Set {},
+      "optionFlagOptionByDocument": WeakMap {},
+      "usedValue": "some-value",
+      "write": false,
+    },
+    "tagName": "flagDependency",
+  },
+]
+`;
+
+exports[`Flag Dependency (Option, No Existing Option) 3`] = `
+[
+  {
+    "flag": "some-flag-name",
+    "isOptionFlag": false,
+    "type": "flag",
+    "value": "some-value",
+  },
+]
+`;
+
+exports[`Flag Dependency (Option, No Existing Option) 4`] = `
+[
+  {
+    "flag": "some-flag-name",
+    "isOptionFlag": false,
+    "type": "flag",
+    "value": "some-value",
+  },
+]
+`;
+
+exports[`Flag Dependency (Option, No Existing Option) 5`] = `
+[
+  {
+    "flag": "some-flag-name",
+    "isOptionFlag": false,
+    "type": "flag",
+    "value": "some-value",
+  },
+]
+`;
+
+exports[`Flag Dependency (Option, No Existing Option) 6`] = `
+[
+  {
+    "flag": "some-flag-name",
+    "isOptionFlag": false,
+    "type": "flag",
+    "value": "some-value",
+  },
+]
+`;
+
+exports[`Flag Dependency (Option, Yes Existing Option) 1`] = `
+[
+  FlagDependency {
+    "documentMap": WeakMap {},
+    "flagInstance": FlagInstance {
+      "_name": Option {
+        "description": "",
+        "documentMap": WeakMap {},
+        "existingOptionFlagSetterByDocument": WeakMap {},
+        "flagsToSet": Set {},
+        "image": null,
+        "installsToSet": InstallPattern {
+          "dependencies": DependenciesGroup {
+            "dependencies": Set {
+              FlagDependency {
+                "documentMap": WeakMap {},
+                "flagInstance": FlagInstance {
+                  "_name": [Circular],
+                  "documents": Set {},
+                  "optionFlagOptionByDocument": WeakMap {},
+                  "usedValue": true,
+                  "write": false,
+                },
+                "tagName": "flagDependency",
+              },
+            },
+            "documentMap": WeakMap {},
+            "operator": "And",
+            "tagName": "dependencies",
+          },
+          "documentMap": WeakMap {},
+          "filesWrapper": InstallPatternFilesWrapper {
+            "documentMap": WeakMap {},
+            "installs": Set {},
+            "tagName": "files",
+          },
+          "tagName": "pattern",
+        },
+        "name": "Test Option",
+        "tagName": "plugin",
+        "typeDescriptor": TypeDescriptor {
+          "defaultTypeNameDescriptor": TypeNameDescriptor {
+            "_tagName": "type",
+            "documentMap": WeakMap {},
+            "tagNameIsReadonly": undefined,
+            "targetType": "Optional",
+          },
+          "documentMap": WeakMap {},
+          "patterns": [],
+          "tagName": "typeDescriptor",
+        },
+      },
+      "documents": Set {},
+      "optionFlagOptionByDocument": WeakMap {},
+      "usedValue": true,
+      "write": false,
+    },
+    "tagName": "flagDependency",
+  },
+]
+`;
+
+exports[`Flag Dependency (Option, Yes Existing Option) 2`] = `
+[
+  FlagDependency {
+    "documentMap": WeakMap {},
+    "flagInstance": FlagInstance {
+      "_name": "some-flag-name",
+      "documents": Set {},
+      "optionFlagOptionByDocument": WeakMap {},
+      "usedValue": "OPTION_SELECTED",
+      "write": false,
+    },
+    "tagName": "flagDependency",
+  },
+]
+`;
+
+exports[`Flag Dependency (Option, Yes Existing Option) 3`] = `
+[
+  {
+    "flag": "some-flag-name",
+    "isOptionFlag": true,
+    "type": "flag",
+    "value": "OPTION_SELECTED",
+  },
+]
+`;
+
+exports[`Flag Dependency (Option, Yes Existing Option) 4`] = `
+[
+  {
+    "flag": "some-flag-name",
+    "isOptionFlag": true,
+    "type": "flag",
+    "value": "OPTION_SELECTED",
+  },
+]
+`;
+
+exports[`Flag Dependency (Option, Yes Existing Option) 5`] = `
+[
+  {
+    "flag": Option {
+      "description": "",
+      "documentMap": WeakMap {},
+      "existingOptionFlagSetterByDocument": WeakMap {},
+      "flagsToSet": Set {},
+      "image": null,
+      "installsToSet": InstallPattern {
+        "dependencies": DependenciesGroup {
+          "dependencies": Set {
+            FlagDependency {
+              "documentMap": WeakMap {},
+              "flagInstance": FlagInstance {
+                "_name": [Circular],
+                "documents": Set {},
+                "optionFlagOptionByDocument": WeakMap {},
+                "usedValue": true,
+                "write": false,
+              },
+              "tagName": "flagDependency",
+            },
+          },
+          "documentMap": WeakMap {},
+          "operator": "And",
+          "tagName": "dependencies",
+        },
+        "documentMap": WeakMap {},
+        "filesWrapper": InstallPatternFilesWrapper {
+          "documentMap": WeakMap {},
+          "installs": Set {},
+          "tagName": "files",
+        },
+        "tagName": "pattern",
+      },
+      "name": "Test Option",
+      "tagName": "plugin",
+      "typeDescriptor": TypeDescriptor {
+        "defaultTypeNameDescriptor": TypeNameDescriptor {
+          "_tagName": "type",
+          "documentMap": WeakMap {},
+          "tagNameIsReadonly": undefined,
+          "targetType": "Optional",
+        },
+        "documentMap": WeakMap {},
+        "patterns": [],
+        "tagName": "typeDescriptor",
+      },
+    },
+    "isOptionFlag": true,
+    "type": "flag",
+    "value": true,
+  },
+]
+`;
+
+exports[`Flag Dependency (Option, Yes Existing Option) 6`] = `
+[
+  {
+    "flag": Option {
+      "description": "",
+      "documentMap": WeakMap {},
+      "existingOptionFlagSetterByDocument": WeakMap {},
+      "flagsToSet": Set {},
+      "image": null,
+      "installsToSet": InstallPattern {
+        "dependencies": DependenciesGroup {
+          "dependencies": Set {
+            FlagDependency {
+              "documentMap": WeakMap {},
+              "flagInstance": FlagInstance {
+                "_name": [Circular],
+                "documents": Set {},
+                "optionFlagOptionByDocument": WeakMap {},
+                "usedValue": true,
+                "write": false,
+              },
+              "tagName": "flagDependency",
+            },
+          },
+          "documentMap": WeakMap {},
+          "operator": "And",
+          "tagName": "dependencies",
+        },
+        "documentMap": WeakMap {},
+        "filesWrapper": InstallPatternFilesWrapper {
+          "documentMap": WeakMap {},
+          "installs": Set {},
+          "tagName": "files",
+        },
+        "tagName": "pattern",
+      },
+      "name": "Test Option",
+      "tagName": "plugin",
+      "typeDescriptor": TypeDescriptor {
+        "defaultTypeNameDescriptor": TypeNameDescriptor {
+          "_tagName": "type",
+          "documentMap": WeakMap {},
+          "tagNameIsReadonly": undefined,
+          "targetType": "Optional",
+        },
+        "documentMap": WeakMap {},
+        "patterns": [],
+        "tagName": "typeDescriptor",
+      },
+    },
+    "isOptionFlag": true,
+    "type": "flag",
+    "value": true,
+  },
+]
+`;
+
+exports[`Game Version Dependency 1`] = `
+[
+  GameVersionDependency {
+    "decommission": undefined,
+    "desiredVersion": "1.2.3",
+    "documentMap": WeakMap {},
+    "tagName": "gameDependency",
+  },
+]
+`;
+
+exports[`Game Version Dependency 2`] = `
+[
+  GameVersionDependency {
+    "decommission": undefined,
+    "desiredVersion": "1.2.3",
+    "documentMap": WeakMap {},
+    "tagName": "gameDependency",
+  },
+]
+`;
+
+exports[`Game Version Dependency 3`] = `
+[
+  {
+    "type": "game",
+    "version": "1.2.3",
+  },
+]
+`;
+
+exports[`Game Version Dependency 4`] = `
+[
+  {
+    "type": "game",
+    "version": "1.2.3",
+  },
+]
+`;
+
+exports[`Game Version Dependency 5`] = `
+[
+  {
+    "type": "game",
+    "version": "1.2.3",
+  },
+]
+`;
+
+exports[`Game Version Dependency 6`] = `
+[
+  {
+    "type": "game",
+    "version": "1.2.3",
+  },
+]
+`;
+
+exports[`Group of Dependencies (No Children) 1`] = `
+[
+  DependenciesGroup {
+    "dependencies": Set {},
+    "documentMap": WeakMap {},
+    "operator": "And",
+    "tagName": "dependencies",
+  },
+]
+`;
+
+exports[`Group of Dependencies (No Children) 2`] = `
+[
+  DependenciesGroup {
+    "dependencies": Set {},
+    "documentMap": WeakMap {},
+    "operator": "And",
+    "tagName": "dependencies",
+  },
+]
+`;
+
+exports[`Group of Dependencies (No Children) 3`] = `
+[
+  {
+    "dependencies": [],
+    "operator": "And",
+    "tagName": "dependencies",
+    "type": "group",
+  },
+]
+`;
+
+exports[`Group of Dependencies (No Children) 4`] = `
+[
+  {
+    "dependencies": [],
+    "operator": "And",
+    "tagName": "dependencies",
+    "type": "group",
+  },
+]
+`;
+
+exports[`Group of Dependencies (No Children) 5`] = `
+[
+  {
+    "dependencies": [],
+    "operator": "And",
+    "tagName": "dependencies",
+    "type": "group",
+  },
+]
+`;
+
+exports[`Group of Dependencies (No Children) 6`] = `
+[
+  {
+    "dependencies": [],
+    "operator": "And",
+    "tagName": "dependencies",
+    "type": "group",
+  },
+]
+`;
+
+exports[`Group of Dependencies (With Children) 1`] = `
+[
+  DependenciesGroup {
+    "dependencies": Set {
+      GameVersionDependency {
+        "decommission": undefined,
+        "desiredVersion": "1.2.3",
+        "documentMap": WeakMap {},
+        "tagName": "gameDependency",
+      },
+    },
+    "documentMap": WeakMap {},
+    "operator": "And",
+    "tagName": "dependencies",
+  },
+]
+`;
+
+exports[`Group of Dependencies (With Children) 2`] = `
+[
+  DependenciesGroup {
+    "dependencies": Set {
+      GameVersionDependency {
+        "decommission": undefined,
+        "desiredVersion": "1.2.3",
+        "documentMap": WeakMap {},
+        "tagName": "gameDependency",
+      },
+    },
+    "documentMap": WeakMap {},
+    "operator": "And",
+    "tagName": "dependencies",
+  },
+]
+`;
+
+exports[`Group of Dependencies (With Children) 3`] = `
+[
+  {
+    "dependencies": [
+      {
+        "type": "game",
+        "version": "1.2.3",
+      },
+    ],
+    "operator": "And",
+    "tagName": "dependencies",
+    "type": "group",
+  },
+]
+`;
+
+exports[`Group of Dependencies (With Children) 4`] = `
+[
+  {
+    "dependencies": [
+      {
+        "type": "game",
+        "version": "1.2.3",
+      },
+    ],
+    "operator": "And",
+    "tagName": "dependencies",
+    "type": "group",
+  },
+]
+`;
+
+exports[`Group of Dependencies (With Children) 5`] = `
+[
+  {
+    "dependencies": [
+      {
+        "type": "game",
+        "version": "1.2.3",
+      },
+    ],
+    "operator": "And",
+    "tagName": "dependencies",
+    "type": "group",
+  },
+]
+`;
+
+exports[`Group of Dependencies (With Children) 6`] = `
+[
+  {
+    "dependencies": [
+      {
+        "type": "game",
+        "version": "1.2.3",
+      },
+    ],
+    "operator": "And",
+    "tagName": "dependencies",
+    "type": "group",
+  },
+]
+`;
+
+exports[`Mod Manager Version Dependency 1`] = `
+[
+  ModManagerVersionDependency {
+    "decommission": undefined,
+    "desiredVersion": "1.2.3",
+    "documentMap": WeakMap {},
+    "tagName": "fommDependency",
+  },
+]
+`;
+
+exports[`Mod Manager Version Dependency 2`] = `
+[
+  ModManagerVersionDependency {
+    "decommission": undefined,
+    "desiredVersion": "1.2.3",
+    "documentMap": WeakMap {},
+    "tagName": "fommDependency",
+  },
+]
+`;
+
+exports[`Mod Manager Version Dependency 3`] = `
+[
+  {
+    "type": "fomm",
+    "version": "1.2.3",
+  },
+]
+`;
+
+exports[`Mod Manager Version Dependency 4`] = `
+[
+  {
+    "type": "fomm",
+    "version": "1.2.3",
+  },
+]
+`;
+
+exports[`Mod Manager Version Dependency 5`] = `
+[
+  {
+    "type": "fomm",
+    "version": "1.2.3",
+  },
+]
+`;
+
+exports[`Mod Manager Version Dependency 6`] = `
+[
+  {
+    "type": "fomm",
+    "version": "1.2.3",
+  },
+]
+`;
+
+exports[`Script Extender Version Dependency 1`] = `
+[
+  ScriptExtenderVersionDependency {
+    "decommission": undefined,
+    "desiredVersion": "1.2.3",
+    "documentMap": WeakMap {},
+    "tagName": "foseDependency",
+  },
+]
+`;
+
+exports[`Script Extender Version Dependency 2`] = `
+[
+  ScriptExtenderVersionDependency {
+    "decommission": undefined,
+    "desiredVersion": "1.2.3",
+    "documentMap": WeakMap {},
+    "tagName": "foseDependency",
+  },
+]
+`;
+
+exports[`Script Extender Version Dependency 3`] = `
+[
+  {
+    "type": "fose",
+    "version": "1.2.3",
+  },
+]
+`;
+
+exports[`Script Extender Version Dependency 4`] = `
+[
+  {
+    "type": "fose",
+    "version": "1.2.3",
+  },
+]
+`;
+
+exports[`Script Extender Version Dependency 5`] = `
+[
+  {
+    "type": "fose",
+    "version": "1.2.3",
+  },
+]
+`;
+
+exports[`Script Extender Version Dependency 6`] = `
+[
+  {
+    "type": "fose",
+    "version": "1.2.3",
+  },
+]
+`;

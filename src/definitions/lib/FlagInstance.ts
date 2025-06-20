@@ -9,9 +9,17 @@ export interface FlagInstances {
  *
  * This map allows for quick access to all flag instances within a document as well as all flag instances with a given name.
  */
-export const FlagInstancesByDocument = new WeakMap<Document, FlagInstances>();
+export const FlagInstanceStoresByDocument = new WeakMap<Document, FlagInstances>();
 
 export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption extends true ? false : boolean)> {
+
+    static isOptionFlagGetter(flag: FlagInstance<boolean, boolean>): flag is FlagInstance<true, false> {
+        return flag.usedValue === true;
+    }
+
+    static isRegularFlagOrOptionFlagSetter(flag: FlagInstance<boolean, boolean>): flag is FlagInstance<false, boolean> {
+        return flag.usedValue !== true;
+    }
 
     get name() { return this._name; }
     set name(value: TIsOption extends true ? Option<boolean> : string) {
@@ -21,7 +29,7 @@ export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption e
         }
 
         this.documents.forEach(document => {
-            const instances = FlagInstancesByDocument.get(document);
+            const instances = FlagInstanceStoresByDocument.get(document);
             if (!instances) return;
 
             instances.byName.get(this.name)?.delete(this);
@@ -40,6 +48,11 @@ export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption e
 
     /** A list of documents this flag is a part of */
     documents: Set<Document> = new Set();
+
+    /** If this flag instance is the setter for an option flag (not the getter, which would make TIsOption = true),
+     * this is a map of documents to the option instance that this flag represents.
+     */
+    optionFlagOptionByDocument: WeakMap<Document, Option<boolean>> = new WeakMap();
 
     constructor(_name: TIsOption extends true ? never : string, usedValue: string, write: TWrite, document?: Document)
     constructor(_name: TIsOption extends true ? Option<boolean> : never, usedValue: true, write: TWrite, document?: Document)
@@ -78,13 +91,13 @@ export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption e
         //console.log('Attaching flag instance to document', this, document);
         this.documents.add(document);
 
-        let instancesForDoc = FlagInstancesByDocument.get(document);
+        let instancesForDoc = FlagInstanceStoresByDocument.get(document);
         if (!instancesForDoc) {
             instancesForDoc = {
                 all: new Set(),
                 byName: new Map(),
             };
-            FlagInstancesByDocument.set(document, instancesForDoc);
+            FlagInstanceStoresByDocument.set(document, instancesForDoc);
         }
 
         instancesForDoc.all.add(this);
@@ -100,7 +113,7 @@ export class FlagInstance<TIsOption extends boolean, TWrite extends (TIsOption e
 
     /** Removes this flag instance from a document */
     removeFromDocument(document: Document) {
-        const instancesForDoc = FlagInstancesByDocument.get(document);
+        const instancesForDoc = FlagInstanceStoresByDocument.get(document);
         if (!instancesForDoc) {
             this.documents.delete(document);
             return;

@@ -3,6 +3,7 @@ import { AttributeName, FileDependencyState, TagName } from "../../Enums";
 import { ElementObjectMap, InvalidityReason, InvalidityReport, Verifiable } from "../../lib";
 import { FomodDocumentConfig } from "../../lib/FomodDocumentConfig";
 import type { Option } from "../Option";
+import type { MaybeStrictString } from "../../../TypeUtils";
 
 
 export class FileDependency<TStrict extends boolean> extends Dependency<TStrict> {

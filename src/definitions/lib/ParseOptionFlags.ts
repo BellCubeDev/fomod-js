@@ -1,24 +1,29 @@
 import { FlagDependency, FlagSetter, Install, InstallPattern, Option } from "../module";
 import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "./FomodDocumentConfig";
 
+/** Parse all of the option flags in the given options array, setting the flags on the options and resolving any dependencies.
+ *
+ * This should be called immediately after parsing all of the options in a Fomod document, and should not
+ * be called more than once per document.
+ */
 export function parseOptionFlags(options: Option<boolean>[], document: Document, config: FomodDocumentConfig = {}, dependencies: FlagDependency[] = []) {
-    const uniqueFlags = new Map<string, [setter: FlagSetter, option: Option<boolean>, deps: FlagDependency[]]>();
-    const flagsFound = new Set<string>();
+    const uniqueFlagSetters = new Map<string, [setter: FlagSetter, option: Option<boolean>, deps: FlagDependency[]]>();
+    const setFlagsFound = new Set<string>();
 
     const loose = (config.parseOptionFlags ?? DefaultFomodDocumentConfig.parseOptionFlags) === 'loose';
     const strictValue = config.optionSelectedValue ?? DefaultFomodDocumentConfig.optionSelectedValue;
 
     for (const option of options) {
         for (const flag of option.flagsToSet) {
-            const uniqueFlag = uniqueFlags.get(flag.name);
+            const uniqueFlag = uniqueFlagSetters.get(flag.name);
             if (uniqueFlag && uniqueFlag[1] !== option) {
-                uniqueFlags.delete(flag.name);
+                uniqueFlagSetters.delete(flag.name);
                 continue;
             }
 
-            if (!flagsFound.has(flag.name)) {
-                if (loose || flag.value === strictValue) uniqueFlags.set(flag.name, [flag, option, []]);
-                flagsFound.add(flag.name);
+            if (!setFlagsFound.has(flag.name)) {
+                if (loose || flag.value === strictValue) uniqueFlagSetters.set(flag.name, [flag, option, []]);
+                setFlagsFound.add(flag.name);
             }
         }
     }
@@ -26,17 +31,18 @@ export function parseOptionFlags(options: Option<boolean>[], document: Document,
     for (const dep of dependencies) {
         if (dep.flagKey instanceof Option) continue;
 
-        const mapped = uniqueFlags.get(dep.flagKey);
+        const mapped = uniqueFlagSetters.get(dep.flagKey);
         if (!mapped) continue;
         const [setter, option, deps] = mapped;
 
         if (setter.value === dep.desiredValue) deps.push(dep);
-        else uniqueFlags.delete(dep.flagKey);
+        else uniqueFlagSetters.delete(dep.flagKey);
     }
 
-    for (const [flagName, [setter, option, deps]] of uniqueFlags) {
+    for (const [flagName, [setter, option, deps]] of uniqueFlagSetters) {
         option.flagsToSet.delete(setter);
         option.existingOptionFlagSetterByDocument.set(document, setter);
+        setter.flagInstance.optionFlagOptionByDocument.set(document, option);
 
         for (const dep of deps) {
             dep.flagKey = option;

@@ -8,6 +8,7 @@ import { Option } from "./Option";
 import { parseOptionFlags } from "../lib/ParseOptionFlags";
 import { gatherFlagDependencies } from "../lib/utils";
 import { DependenciesGroup } from "./dependencies/DependenciesGroup";
+import type { MaybeStrictString } from "../../TypeUtils";
 
 export class Step<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override readonly tagName = TagName.InstallStep;

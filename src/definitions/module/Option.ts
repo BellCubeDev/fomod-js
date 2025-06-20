@@ -1,12 +1,13 @@
 import { ensureXmlDoctype, getOrCreateElementByTagNameSafe } from "../../DomUtils";
 import { FlagDependency } from './dependencies/FlagDependency';
 import { DependenciesGroup, } from './dependencies/DependenciesGroup';
-import { FlagInstance, FlagInstances, FlagInstancesByDocument } from "../lib/FlagInstance";
+import { FlagInstance, FlagInstances, FlagInstanceStoresByDocument } from "../lib/FlagInstance";
 import { Install, InstallPattern } from "./Install";
 import { InvalidityReason, InvalidityReport } from "../lib/InvalidityReporting";
 import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepresentation";
 import { AttributeName, OptionType, TagName } from "../Enums";
 import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
+import type { MaybeStrictString } from "../../TypeUtils";
 
 /***
  *     $$$$$$\              $$\     $$\                           $$$$$$$\                  $$\
@@ -104,11 +105,11 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
 
     existingOptionFlagSetterByDocument = new WeakMap<Document, FlagSetter>();
 
-    getOptionFlagSetter(document: Document, config: FomodDocumentConfig = {}, knownOptions: Option<boolean>[] = []): FlagSetter {
+    getOptionFlagSetter(this: Option<boolean>, document: Document, config: FomodDocumentConfig = {}, knownOptions: Option<boolean>[] = []): FlagSetter {
         const existing = this.existingOptionFlagSetterByDocument.get(document);
         if (existing) return existing;
 
-        const flagInstances = FlagInstancesByDocument.get(document) ?? {all: new Set(), byName: new Map()} as FlagInstances;
+        const flagInstances = FlagInstanceStoresByDocument.get(document) ?? {all: new Set(), byName: new Map()} as FlagInstances;
 
         const baseName = 'OPTION_' + this.name.replace(/[^a-zA-Z0-9]/g, '_');
         let thisIndex: number | undefined = undefined;
@@ -122,6 +123,8 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
             nameOrOption.getOptionFlagSetter(document, config, knownOptions).name;
         }));
 
+        const option = this;
+
         // Declared as const largely so TypeScript accepts the narrowed types
         // Yes, I understand that, because functions are hoisted, we couldn't ensure the narrowed state (i.e. TS's behavior is correct), but I don't write code like that.
         // I also can't be bothered to explain that to TypeScript so here we are. Const declaration it is.
@@ -129,9 +132,9 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
             const name = baseName + `--${suffix}`;
 
             if (!existingFlagNames.has(name)) {
-                const setter = new FlagSetter(new FlagInstance(name, config.optionSelectedValue ?? DefaultFomodDocumentConfig.optionSelectedValue, true));
-                setter.associateWithDocument(document);
-                return setter;
+                const flagInstance = new FlagInstance(name, config.optionSelectedValue ?? DefaultFomodDocumentConfig.optionSelectedValue, true, document);
+                flagInstance.optionFlagOptionByDocument.set(document, option);
+                return new FlagSetter(flagInstance);
             }
 
             return tryNextName(suffix + 1n);
@@ -152,17 +155,23 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
         const description = element.getElementsByTagName(TagName.Description)[0]?.textContent ?? '';
         const image = element.getElementsByTagName(TagName.Image)[0]?.getAttribute(AttributeName.Path) ?? null;
 
+        const typeDescriptorElement = element.getElementsByTagName(TagName.TypeDescriptor)[0];
+        const typeDescriptor = typeDescriptorElement ? TypeDescriptor.parse(typeDescriptorElement, config) : undefined;
+
+        const option = new Option<false>(name, description, image, typeDescriptor);
+        option.assignElement(element);
+
+        const dependencyOnThis = new FlagDependency(option, true);
+
         const flagsToSet = new Set<FlagSetter>();
-        const conditionFlags = element.getElementsByTagName(TagName.ConditionFlags)[0];
-        if (conditionFlags) {
-            for (const flagElement of conditionFlags.getElementsByTagName(TagName.Flag)) {
+        const conditionFlagElements = element.getElementsByTagName(TagName.ConditionFlags)[0];
+        if (conditionFlagElements) {
+            for (const flagElement of conditionFlagElements.getElementsByTagName(TagName.Flag)) {
                 const flag = FlagSetter.parse(flagElement, config);
                 if (flag) flagsToSet.add(flag);
             }
         }
-
-        const typeDescriptorElement = element.getElementsByTagName(TagName.TypeDescriptor)[0];
-        const typeDescriptor = typeDescriptorElement ? TypeDescriptor.parse(typeDescriptorElement, config) : undefined;
+        option.flagsToSet = flagsToSet;
 
         const installsToSet = new InstallPattern();
         const filesElement = element.getElementsByTagName(TagName.Files)[0];
@@ -177,14 +186,8 @@ export class Option<TStrict extends boolean> extends XmlRepresentation<TStrict> 
                 if (install) installsToSet.filesWrapper.installs.add(install);
             }
         }
-
-        const option = new Option<false>(name, description, image, typeDescriptor);
-        option.assignElement(element);
-        option.flagsToSet = flagsToSet;
-        option.installsToSet = installsToSet;
-
-        const dependencyOnThis = new FlagDependency(option, true);
         installsToSet.dependencies?.dependencies.add(dependencyOnThis);
+        option.installsToSet = installsToSet;
 
         return option;
     }
@@ -241,7 +244,7 @@ export class FlagSetter extends XmlRepresentation<true> {
         const flagName = element.getAttribute(AttributeName.Name);
         if (flagName === null) return null;
 
-        const obj = new FlagSetter(new FlagInstance(flagName, element.textContent ?? '', true));
+        const obj = new FlagSetter(new FlagInstance(flagName, element.textContent ?? '', true, element.ownerDocument));
         obj.assignElement(element);
         return obj;
     }

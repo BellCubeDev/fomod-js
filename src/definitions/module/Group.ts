@@ -6,6 +6,7 @@ import { AttributeName, GroupBehaviorType, SortingOrder, TagName } from "../Enum
 import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
 import { parseOptionFlags } from "../lib/ParseOptionFlags";
 import { gatherFlagDependencies } from "../lib/utils";
+import type { MaybeStrictString } from "../../TypeUtils";
 
 export class Group<TStrict extends boolean> extends XmlRepresentation<TStrict> {
     static override readonly tagName = TagName.Group;

@@ -5,6 +5,7 @@ import { ElementObjectMap, Verifiable, XmlRepresentation } from "../lib/XmlRepre
 import { AttributeName, BooleanString, TagName } from "../Enums";
 import { FomodDocumentConfig } from "../lib/FomodDocumentConfig";
 import type { Option } from "./Option";
+import type { MaybeStrictBoolString, MaybeStrictIntString } from "../../TypeUtils";
 
 
 

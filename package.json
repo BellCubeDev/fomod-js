@@ -2,7 +2,7 @@
   "type": "module",
   "name": "fomod",
   "description": "A library for creating, parsing, editing, and validating XML-based Fomod installers, widely popularized in the Bethesda modding scene",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "main": "dist/index.js",
   "repository": "https://github.com/BellCubeDev/fomod-js/",
   "bugs": {
@@ -14,10 +14,10 @@
   },
   "license": "LGPL-3.0-or-later",
   "scripts": {
-    "build": "tsc",
+    "build": "tsup src/index.ts",
     "test": "vitest --run",
     "test-ci": "vitest --run",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "files": [
     "dist",
@@ -49,6 +49,7 @@
     "jsdom": "^23.2.0",
     "rollup": "*",
     "ts-node": "^10.9.2",
+    "tsup": "^8.5.0",
     "typescript": "^5.5.4",
     "vitest": "^2.0.5"
   },
@@ -63,5 +64,10 @@
     "mod installer",
     "fomod installer",
     "fomod xml"
-  ]
+  ],
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
 }

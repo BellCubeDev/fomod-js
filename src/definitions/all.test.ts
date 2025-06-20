@@ -36,7 +36,7 @@ describe('All XmlRepresentation classes with `parse()` should add that element t
         const tagNameOrNames = value.tagName as string|string[];
         const tagNames = Array.isArray(tagNameOrNames) ? tagNameOrNames : [tagNameOrNames];
         if (!tagNames[0]) {
-            console.warn(`Skipping element parse check for XmlRepresentation class ${name} because it has no tag names liste!`);
+            console.warn(`Skipping element parse check for XmlRepresentation class ${name} because it has no tag names listed!`);
             continue;
         }
 

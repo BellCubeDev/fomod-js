@@ -5,9 +5,9 @@
 // Shouldn't be used in too many spots since we're pretty enum-heavy over here but it may come in handy in particular cases.
 //
 // eslint-disable-next-line @typescript-eslint/ban-types
-type SuggestedString<T extends string> = string & {} | T;
+export type SuggestedString<T extends string> = string & {} | T;
 
-type MaybeStrictString<T extends string, TStrict extends boolean> = TStrict extends true ? T : SuggestedString<T>;
+export type MaybeStrictString<T extends string, TStrict extends boolean> = TStrict extends true ? T : SuggestedString<T>;
 
-type MaybeStrictBoolString<TStrict extends boolean> = MaybeStrictString<import("./definitions").BooleanString, TStrict>;
-type MaybeStrictIntString<TStrict extends boolean> = MaybeStrictString<`${bigint}`, TStrict>;
+export type MaybeStrictBoolString<TStrict extends boolean> = MaybeStrictString<import("./definitions").BooleanString, TStrict>;
+export type MaybeStrictIntString<TStrict extends boolean> = MaybeStrictString<`${bigint}`, TStrict>;

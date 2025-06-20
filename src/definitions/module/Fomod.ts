@@ -9,6 +9,7 @@ import { Option } from "./Option";
 import { countDependencyConditions, gatherDependedUponOptions, gatherFlagDependencies } from "../lib/utils";
 import { DefaultFomodDocumentConfig, FomodDocumentConfig } from "../lib/FomodDocumentConfig";
 import { parseOptionFlags } from "../lib/ParseOptionFlags";
+import type { MaybeStrictBoolString, MaybeStrictIntString, MaybeStrictString } from "../../TypeUtils";
 
 export interface ModuleImageMetadata<TStrict extends boolean> {
     showFade?: MaybeStrictBoolString<TStrict>;

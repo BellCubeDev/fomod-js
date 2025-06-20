@@ -5,8 +5,8 @@ import { FileDependency } from './FileDependency';
 import { GameVersionDependency, ModManagerVersionDependency, ScriptExtenderVersionDependency, VersionDependency } from './VersionDependency';
 import { Dependency } from './Dependency';
 
-export * from './Dependency';
 export * from "./DependenciesGroup";
+export * from './Dependency';
 export * from "./FileDependency";
 export * from "./FlagDependency";
 export * from "./VersionDependency";
