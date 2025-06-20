@@ -1,7 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { parseInfoDoc, parseModuleDoc } from "../../parseDoc";
 import { BlankInfoDoc, BlankModuleConfig } from "../../DomUtils";
-import { fomods, getXml } from "./getXml";
+import { fomods, getSnapshotFileName, getXml } from "./getXml";
+import xmlFormat from 'xml-formatter';
 
 // NOTE
 // If getting nulls on parse, check that the XML files are encoded in UTF-16 LE
@@ -15,7 +16,7 @@ describe("Basic Parse", () => {
                 const document = new DOMParser().parseFromString(xml, 'text/xml');
                 const parsed = parseModuleDoc(document);
                 expect(parsed).not.toBeNull();
-                expect(parsed).toMatchSnapshot();
+                expect(parsed).toMatchFileSnapshot(getSnapshotFileName(fomod, 'ModuleConfig.xml', 'basic-parse', null));
             });
 
             test('Info.xml', async () => {
@@ -24,7 +25,7 @@ describe("Basic Parse", () => {
                 const parsed = parseInfoDoc(document);
                 //console.log({xml, document, parsed});
                 expect(parsed).not.toBeNull();
-                expect(parsed).toMatchSnapshot();
+                expect(parsed).toMatchFileSnapshot(getSnapshotFileName(fomod, 'Info.xml', 'basic-parse', null));
             });
         });
     }
@@ -41,8 +42,8 @@ describe("Serialize (In-Place)", () => {
                 expect(parsed).not.toBeNull();
                 if (!parsed) return;
 
-                const serialized = parsed.asElement(document).outerHTML;
-                expect(serialized).toMatchSnapshot();
+                const serialized = xmlFormat(parsed.asElement(document).outerHTML);
+                expect(serialized).toMatchFileSnapshot(getSnapshotFileName(fomod, 'ModuleConfig.xml', 'serialize-in-place', '.xml'));
             });
 
             test('Info.xml', async () => {
@@ -53,9 +54,9 @@ describe("Serialize (In-Place)", () => {
                 expect(parsed).not.toBeNull();
                 if (!parsed) return;
 
-                const serialized = parsed.asElement(document).outerHTML;
+                const serialized = xmlFormat(parsed.asElement(document).outerHTML);
 
-                expect(serialized).toMatchSnapshot();
+                expect(serialized).toMatchFileSnapshot(getSnapshotFileName(fomod, 'Info.xml', 'serialize-in-place', '.xml'));
             });
         });
     }
@@ -74,9 +75,9 @@ describe("Serialize (New Document)", () => {
 
                 const newDocument = new DOMParser().parseFromString(BlankModuleConfig, 'text/xml');
                 newDocument.replaceChild(parsed.asElement(newDocument), newDocument.documentElement);
-                const serialized = new XMLSerializer().serializeToString(newDocument);
+                const serialized = xmlFormat(new XMLSerializer().serializeToString(newDocument));
 
-                expect(serialized).toMatchSnapshot();
+                expect(serialized).toMatchFileSnapshot(getSnapshotFileName(fomod, 'ModuleConfig.xml', 'serialize-new-document', '.xml'));
             });
 
             test('Info.xml', async () => {
@@ -89,9 +90,9 @@ describe("Serialize (New Document)", () => {
 
                 const newDocument = new DOMParser().parseFromString(BlankInfoDoc, 'text/xml');
                 newDocument.replaceChild(parsed.asElement(newDocument), newDocument.documentElement);
-                const serialized = new XMLSerializer().serializeToString(newDocument);
+                const serialized = xmlFormat(new XMLSerializer().serializeToString(newDocument));
 
-                expect(serialized).toMatchSnapshot();
+                expect(serialized).toMatchFileSnapshot(getSnapshotFileName(fomod, 'Info.xml', 'serialize-new-document', '.xml'));
             });
         });
     }
@@ -110,12 +111,12 @@ describe("Serialize (New Document, Then In-Place)", () => {
 
                 const newDocument = new DOMParser().parseFromString(BlankModuleConfig, 'text/xml');
                 newDocument.replaceChild(parsed.asElement(newDocument), newDocument.documentElement);
-                const serialized = new XMLSerializer().serializeToString(newDocument);
+                const serialized = xmlFormat(new XMLSerializer().serializeToString(newDocument));
 
-                expect(serialized).toMatchSnapshot();
+                expect(serialized).toMatchFileSnapshot(getSnapshotFileName(fomod, 'ModuleConfig.xml', 'serialize-new-document-then-in-place', '.xml'));
 
                 newDocument.replaceChild(parsed.asElement(newDocument), newDocument.documentElement);
-                const serialized2 = new XMLSerializer().serializeToString(newDocument);
+                const serialized2 = xmlFormat(new XMLSerializer().serializeToString(newDocument));
                 expect(serialized2).toBe(serialized);
             });
 
@@ -129,12 +130,12 @@ describe("Serialize (New Document, Then In-Place)", () => {
 
                 const newDocument = new DOMParser().parseFromString(BlankInfoDoc, 'text/xml');
                 newDocument.replaceChild(parsed.asElement(newDocument), newDocument.documentElement);
-                const serialized = new XMLSerializer().serializeToString(newDocument);
+                const serialized = xmlFormat(new XMLSerializer().serializeToString(newDocument));
 
-                expect(serialized).toMatchSnapshot();
+                expect(serialized).toMatchFileSnapshot(getSnapshotFileName(fomod, 'Info.xml', 'serialize-new-document-then-in-place', '.xml'));
 
                 newDocument.replaceChild(parsed.asElement(newDocument), newDocument.documentElement);
-                const serialized2 = new XMLSerializer().serializeToString(newDocument);
+                const serialized2 = xmlFormat(new XMLSerializer().serializeToString(newDocument));
                 expect(serialized2).toBe(serialized);
             });
         });

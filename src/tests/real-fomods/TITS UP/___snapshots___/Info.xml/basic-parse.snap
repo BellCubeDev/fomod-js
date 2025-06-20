@@ -1,0 +1,12 @@
+FomodInfo {
+  "data": {
+    "Author": "AllstaRawR",
+    "Description": "These are patches I've made for my personal modlist via "The Method" and can be used by others.",
+    "Name": "T.I.T.S. U.P. - The Biggest FOMOD Ever",
+    "Version": "1.2.3",
+    "Website": "https://www.nexusmods.com/users/3106994?tab=user+files",
+  },
+  "decommission": undefined,
+  "documentMap": WeakMap {},
+  "tagName": "fomod",
+}

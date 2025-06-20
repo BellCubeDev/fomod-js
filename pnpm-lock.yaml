@@ -53,6 +53,9 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@20.16.1)(jsdom@23.2.0)
+      xml-formatter:
+        specifier: ^3.6.6
+        version: 3.6.6
 
 packages:
 
@@ -2696,9 +2699,17 @@ packages:
       utf-8-validate:
         optional: true
 
+  xml-formatter@3.6.6:
+    resolution: {integrity: sha512-yfofQht42x2sN1YThT6Er6GFXiQinfDAsMTNvMPi2uZw5/Vtc2PYHfvALR8U+b2oN2ekBxLd2tGWV06rAM8nQA==}
+    engines: {node: '>= 16'}
+
   xml-name-validator@5.0.0:
     resolution: {integrity: sha512-EvGK8EJ3DhaHfbRlETOWAS5pO9MZITeauHKJyb8wyajUfQUenkIg2MvLDTZ4T/TgIcm3HU0TFBgWWboAZ30UHg==}
     engines: {node: '>=18'}
+
+  xml-parser-xo@4.1.4:
+    resolution: {integrity: sha512-wo+yWDNeMwd1ctzH4CsiGXaAappDsxuR+VnmPewOzHk/zvefksT2ZlcWpAePl11THOWgnIZM4GjvumevurNWZw==}
+    engines: {node: '>= 16'}
 
   xmlchars@2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
@@ -5475,7 +5486,13 @@ snapshots:
 
   ws@8.18.0: {}
 
+  xml-formatter@3.6.6:
+    dependencies:
+      xml-parser-xo: 4.1.4
+
   xml-name-validator@5.0.0: {}
+
+  xml-parser-xo@4.1.4: {}
 
   xmlchars@2.2.0: {}
 

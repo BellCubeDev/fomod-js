@@ -1,0 +1,2791 @@
+Fomod {
+  "documentMap": WeakMap {},
+  "installs": Set {
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "Perspective",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "Strings/",
+            "fileSource": "translations\first-person/",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "folder",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "Perspective",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "2",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "Strings/",
+            "fileSource": "translations\second-person/",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "folder",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "Small_NoTitle",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "ClockworkTitleRemover.esp",
+            "fileSource": "Modules\Normal\ClockworkTitleRemover.esp",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "WoodWhimMount",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "",
+            "fileSource": "Modules\Normal\WoodworkersWhim\Mount/",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "folder",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "WoodWhimScriptLevel",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "",
+            "fileSource": "Modules\Normal\WoodworkersWhim\WorkRoomOnly/",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "folder",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "WoodWhimScriptLevel",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "2",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "",
+            "fileSource": "Modules\Normal\WoodworkersWhim\Global/",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "folder",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "__install_wwPatches_campfire",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "",
+            "fileSource": "Modules\IntegrationPatchesNConsistency\WoodworkersWhim\Campfire/",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "folder",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "IPC_HPP_Merged",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "meshes\clockwork\clutter\common\smeltercoal01.nif",
+            "fileSource": "Modules\IntegrationPatchesNConsistency\HighPolyProject\meshes\clockwork\clutter\common\smeltercoal01.nif",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "ClockworkHPPMergedFixes.esp",
+            "fileSource": "Modules\IntegrationPatchesNConsistency\HighPolyProject\ClockworkHPPMergedFixes.esp",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "IPC_HPP_Coals",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "ClockworkHPPCoalsFix.esp",
+            "fileSource": "Modules\IntegrationPatchesNConsistency\HighPolyProject\ClockworkHPPCoalsFix.esp",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "meshes\clockwork\clutter\common\smeltercoal01.nif",
+            "fileSource": "Modules\IntegrationPatchesNConsistency\HighPolyProject\meshes\clockwork\clutter\common\smeltercoal01.nif",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "IPC_HPP_Hay",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "ClockworkHPPHayFix.esp",
+            "fileSource": "Modules\IntegrationPatchesNConsistency\HighPolyProject\ClockworkHPPHayFix.esp",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "BugFixes",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "",
+            "fileSource": "Modules\Normal\BugFixes/",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "folder",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "BugFixes",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "Upgrading",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "",
+            "fileSource": "Modules\BackCompat\CourierCounterspell/",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "folder",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "ShadowmarksTravelRoom",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "ClockworkShadowmarksTravelRoom.esp",
+            "fileSource": "Modules\Normal\Shadowmarks\ClockworkShadowmarksTravelRoom.esp",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "ShadowmarksTermini",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "ClockworkShadowmarksTermini.esp",
+            "fileSource": "Modules\Normal\Shadowmarks\ClockworkShadowmarksTermini.esp",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "ShadowmarksCastleExt",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "ClockworkShadowmarksCastleExt.esp",
+            "fileSource": "Modules\Normal\Shadowmarks\ClockworkShadowmarksCastleExt.esp",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "ShadowmarksMerged",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "ClockworkShadowmarksMerged.esp",
+            "fileSource": "Modules\Normal\Shadowmarks\ClockworkShadowmarksMerged.esp",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "Shadowmarks",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "",
+            "fileSource": "Modules\Normal\Shadowmarks\ScriptStuffs/",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "folder",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "Sorting_Ing_ccCurios",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "ClockworkSorting_Ing_CCCurios.esp",
+            "fileSource": "Modules\Sorting\Vanilla\Ingredients\ClockworkSorting_Ing_CCCurios.esp",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "Sorting_Ing_CACO",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "ClockworkSorting_Ing_CACO.esp",
+            "fileSource": "Modules\Sorting\Vanilla\Ingredients\ClockworkSorting_Ing_CACO.esp",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "Sorting_Ing_ccCuriosCACO",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "ClockworkSorting_Ing_CCCurios_CACO.esp",
+            "fileSource": "Modules\Sorting\Vanilla\Ingredients\ClockworkSorting_Ing_CCCurios_CACO.esp",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "Sorting_Food_CACO",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "ClockworkSorting_Food_CACO.esp",
+            "fileSource": "Modules\Sorting\Vanilla\Food\ClockworkSorting_Food_CACO.esp",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "file",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "SKSE_SuperiorSorting",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "",
+            "fileSource": "Modules\SKSE\SuperiorSorting/",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "folder",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+    InstallPattern {
+      "dependencies": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "InterestingInhabitants_Merged",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "dependencies",
+      },
+      "documentMap": WeakMap {},
+      "filesWrapper": InstallPatternFilesWrapper {
+        "documentMap": WeakMap {},
+        "installs": Set {
+          Install {
+            "alwaysInstall": "false",
+            "documentMap": WeakMap {},
+            "documents": Set {},
+            "fileDestination": "",
+            "fileSource": "Modules\Normal\InterestingInhabitants/",
+            "installIfUsable": "false",
+            "priority": "0",
+            "tagName": "folder",
+          },
+        },
+        "tagName": "files",
+      },
+      "tagName": "pattern",
+    },
+  },
+  "moduleDependencies": DependenciesGroup {
+    "dependencies": Set {},
+    "documentMap": WeakMap {},
+    "operator": "And",
+    "tagName": "moduleDependencies",
+  },
+  "moduleImage": "fomod\images\AdditionalClockwork.png",
+  "moduleImageMetadata": {
+    "height": "-1",
+    "path": "",
+    "showFade": "true",
+    "showImage": "true",
+  },
+  "moduleName": "Additional Clockwork",
+  "moduleNameMetadata": {
+    "colour": "000000",
+    "position": "Left",
+  },
+  "sortingOrder": "Ascending",
+  "steps": Set {
+    Step {
+      "documentMap": WeakMap {},
+      "groups": Set {
+        Group {
+          "behaviorType": "SelectAll",
+          "documentMap": WeakMap {},
+          "name": "Description",
+          "options": Set {
+            Option {
+              "description": "Additional Clockwork is a modular suite of ESL-ESPs made by BellCube Dev to improve Clockwork beyond its already near-perfection.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "SKSE_SuperiorSorting",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "0",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\AdditionalClockwork.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Description",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "type",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Required",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Ascending",
+          "tagName": "group",
+        },
+        Group {
+          "behaviorType": "SelectAny",
+          "documentMap": WeakMap {},
+          "name": "SKSE",
+          "options": Set {
+            Option {
+              "description": "Check this box to enable SKSE modules.
+SKSE modules require both SKSE **AND** powerofthree's Papyrus Extender!!",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "Enable_SKSE",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod/images/SKSE.jpg",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Enable SKSE Modules",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "type",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Explicit",
+          "tagName": "group",
+        },
+        Group {
+          "behaviorType": "SelectAny",
+          "documentMap": WeakMap {},
+          "name": "Reccomendations",
+          "options": Set {
+            Option {
+              "description": "Applies BellCube's recommendations to the installer. You still have to go through each step, but my personal preferences are already selected.
+(Does NOT include Sorting or Integration, Patches, & Consistency modules)",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "RecAuthor",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\CubicBell-256.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Author's Reccomendations",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "type",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Explicit",
+          "tagName": "group",
+        },
+      },
+      "name": "Additional Clockwork",
+      "sortingOrder": "Explicit",
+      "tagName": "installStep",
+      "visibilityDeps": DependenciesGroup {
+        "dependencies": Set {},
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "visible",
+      },
+    },
+    Step {
+      "documentMap": WeakMap {},
+      "groups": Set {
+        Group {
+          "behaviorType": "SelectAny",
+          "documentMap": WeakMap {},
+          "name": "Bug Fixes",
+          "options": Set {
+            Option {
+              "description": "Fixes a ton of mostly-small, mostly-unnoticeable bugs. Here are just a few of the ones this module fixes:
+• Courier at the Castle
+• Lahar contributes to your Stealth Meter
+• NIF issues (thanks, DarthVitrial!)
+• A plethora of positioning fixes",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "BugFixes",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\BugFixes.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Bug Fixes",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Explicit",
+          "tagName": "group",
+        },
+        Group {
+          "behaviorType": "SelectAny",
+          "documentMap": WeakMap {},
+          "name": "Marked Shadows",
+          "options": Set {
+            Option {
+              "description": "Adds a shadowmark easily visible in each of the terminus locations.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "ShadowmarksTermini",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "Shadowmarks",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\ShadowmarksRiftenTerminus.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Termini",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+            Option {
+              "description": "Adds a shadowmark inside the Travel Room beside the stairs (door to the Main Hall).",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "ShadowmarksTravelRoom",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "Shadowmarks",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\ShadowmarksTravelRoom.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Travel Room",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+            Option {
+              "description": "Adds a Guild Member shadowmark beside Clockwork Castle's front door.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "ShadowmarksCastleExt",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "Shadowmarks",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\ShadowmarksCastleExt.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Castle Exterior",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+            Option {
+              "description": "Merges all three options into one plugin.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "ShadowmarksMerged",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "Shadowmarks",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\ShadowmarksMerged.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Merged",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Explicit",
+          "tagName": "group",
+        },
+        Group {
+          "behaviorType": "SelectAny",
+          "documentMap": WeakMap {},
+          "name": "Woodworker's Whim",
+          "options": Set {
+            Option {
+              "description": "Adds an Axe Mount to Clockwork Castle's Work Room, just above the Wood Chopping Block.
+
+As of 3.0.0, this module now automatically injects the axe that Clockwork spawns directly into the axe mount.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "WoodWhimMount",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\WoodworkersWhimMount.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Work Room Axe Mount",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+            Option {
+              "description": "Woodworker's Whim lets you grab a nearby axe capable of chopping wood as you actiavte a Wood Chopping Block. This was the first module I released, and I'm proud to announce that, as of 3.0.0, it's been rewritten from the ground up to eliminate the plethora of minor bugs that plagued the module. You can even get the Global version and its patches on its own seperate mod page, if you so wish!",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "___unused",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": null,
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "What's Woodworker's Whim?",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "type",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "NotUsable",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+            Option {
+              "description": "IMPORTANT: This module requires the Unofficial Skyrim Special Edition Patch to be installed!
+
+This option is an install of Woodworker's Whim in full, as distributed on its dedicated mod page. Included in this installer for backwards-compatibility and convenience. This module applies the script to EVERY instance of the vanilla Wood Chopping Block (even ones added by mods). It also applies its magic to Ore Veins, Clay Deposits, and the like.
+
+This option will disable itself if WoodworkersWhim.esp is already detected in your load order.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "WoodWhimScriptLevel",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "2",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\WoodworkersWhimScript.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Script - Enabled Globally",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+            Option {
+              "description": "Woodworker's Whim lets you grab a nearby axe capable of chopping wood as you actiavte a Wood Chopping Block. This was the first module I released, and I'm proud to announce that, as of 3.0.0, it's been rewritten from the ground up to eliminate the plethora of minor bugs that plagued the module.
+
+This option is a much more specialized version of Woodworker's Whim, restricted only to the chopping block in Clockwork Castle's Work Room, as well as the Clay Deposit and Stone Quarry on the castle grounds.
+
+This option will disable itself if WoodworkersWhim.esp is already detected in your load order.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "WoodWhimScriptLevel",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\WoodworkersWhimScript.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Script - Work Room Only",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Explicit",
+          "tagName": "group",
+        },
+        Group {
+          "behaviorType": "SelectAny",
+          "documentMap": WeakMap {},
+          "name": "Minor Fixes and Changes",
+          "options": Set {
+            Option {
+              "description": "Thanks to Foamimi for the idea!
+
+Removes the floating Clockwork text above Clockwork Castle when you first enter the valley.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "Small_NoTitle",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\ClockworkTitleRemover.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Clockwork Title Remover",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "type",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Ascending",
+          "tagName": "group",
+        },
+      },
+      "name": "Core Modules",
+      "sortingOrder": "Explicit",
+      "tagName": "installStep",
+      "visibilityDeps": DependenciesGroup {
+        "dependencies": Set {},
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "visible",
+      },
+    },
+    Step {
+      "documentMap": WeakMap {},
+      "groups": Set {
+        Group {
+          "behaviorType": "SelectAny",
+          "documentMap": WeakMap {},
+          "name": "Superior Sorting",
+          "options": Set {
+            Option {
+              "description": "The very reason I created this project!
+Superior Sorting does what it sounds like: It enhances the Clockwork sorting experience. No longer will you install mods like Apocalypse and question why your spell tomes aren't being sorted! No longer will you have the issue of having to manually add potions to your cabinet, and no longer will you have the frustration of mixing your potions with your poisons!
+With this module isntalled, checks are run on each relevant object to determine where they go—even common books! All properly-designed modded items are sorted too! Doesn't matter what mod, they're sorted!",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "SKSE_SuperiorSorting",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\SuperiorSorting.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Superior Sorting",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Ascending",
+          "tagName": "group",
+        },
+      },
+      "name": "SKSE Modules",
+      "sortingOrder": "Explicit",
+      "tagName": "installStep",
+      "visibilityDeps": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "Enable_SKSE",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "1",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "visible",
+      },
+    },
+    Step {
+      "documentMap": WeakMap {},
+      "groups": Set {
+        Group {
+          "behaviorType": "SelectAny",
+          "documentMap": WeakMap {},
+          "name": "High Poly Project",
+          "options": Set {
+            Option {
+              "description": "Uses High Poly Project's mesh for the Work Room's extra smelter coals. Because this mesh is used elsewhere (e.g. in Nurndural), the plugin also makes changes there.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "IPC_HPP_Coals",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\HPP_CoalsFix.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Extra Coals Mesh Fix",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+            Option {
+              "description": "Fixes z-fighting that occurs in various points around the castle and in some Terminus locations by either raising or lowering each hay pile mesh.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "IPC_HPP_Hay",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\HPP_HayFix.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Hay Z-Fighting Fix",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+            Option {
+              "description": "Merges all of the High Poly Project options into one plugin.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "IPC_HPP_Merged",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\HighPolyProject.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Merged",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "type",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Explicit",
+          "tagName": "group",
+        },
+      },
+      "name": "Integration, Patches, & Consistency",
+      "sortingOrder": "Explicit",
+      "tagName": "installStep",
+      "visibilityDeps": DependenciesGroup {
+        "dependencies": Set {},
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "visible",
+      },
+    },
+    Step {
+      "documentMap": WeakMap {},
+      "groups": Set {
+        Group {
+          "behaviorType": "SelectAny",
+          "documentMap": WeakMap {},
+          "name": "Woodworker's Whim Patches",
+          "options": Set {
+            Option {
+              "description": "A patch fixing conflicting overwrites between Woodworker's Whim and Chesko's "Campfire" mod.
+
+https://www.nexusmods.com/skyrimspecialedition/mods/667",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "__install_wwPatches_campfire",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": null,
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Campfire - Complete Camping System",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Ascending",
+          "tagName": "group",
+        },
+      },
+      "name": "Woodworker's Whim Patches",
+      "sortingOrder": "Explicit",
+      "tagName": "installStep",
+      "visibilityDeps": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "WoodWhimScriptLevel",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "2",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "visible",
+      },
+    },
+    Step {
+      "documentMap": WeakMap {},
+      "groups": Set {
+        Group {
+          "behaviorType": "SelectAny",
+          "documentMap": WeakMap {},
+          "name": "Ingredients",
+          "options": Set {
+            Option {
+              "description": "Adds CACO's items to Clockwork's alchemy list.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "Sorting_Ing_CACO",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\CACO.jpg",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Complete Cooking and Alchemy Overhaul",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+            Option {
+              "description": "Adds Rare Curios' items to Clockwork's alchemy list.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "Sorting_Ing_ccCurios",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\RareCurios.jpg",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Rare Curios",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+            Option {
+              "description": "Adds CACO's AND Rare Curios' items to Clockwork's alchemy list.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "Sorting_Ing_ccCuriosCACO",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\CACO_ccCurios.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Rare Curios + CACO",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Explicit",
+          "tagName": "group",
+        },
+        Group {
+          "behaviorType": "SelectAny",
+          "documentMap": WeakMap {},
+          "name": "Food",
+          "options": Set {
+            Option {
+              "description": "Adds CACO's items to Clockwork's Kitchen lists.",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "Sorting_Food_CACO",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\CACO.jpg",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Complete Cooking and Alchemy Overhaul",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "defaultType",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Explicit",
+          "tagName": "group",
+        },
+      },
+      "name": "Sorting Patches",
+      "sortingOrder": "Explicit",
+      "tagName": "installStep",
+      "visibilityDeps": DependenciesGroup {
+        "dependencies": Set {
+          FlagDependency {
+            "documentMap": WeakMap {},
+            "flagInstance": FlagInstance {
+              "_name": "SKSE_SuperiorSorting",
+              "documents": Set {},
+              "optionFlagOptionByDocument": WeakMap {},
+              "usedValue": "0",
+              "write": false,
+            },
+            "tagName": "flagDependency",
+          },
+        },
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "visible",
+      },
+    },
+    Step {
+      "documentMap": WeakMap {},
+      "groups": Set {
+        Group {
+          "behaviorType": "SelectAll",
+          "documentMap": WeakMap {},
+          "name": "TESTING MODULES",
+          "options": Set {
+            Option {
+              "description": "Testing modules are here to allow for wide testing, and should NOT be used unless you are OK with possible spaghetti code, guarenteed bugs, and incomplete modules.
+
+That said, I include these modules as a form of open beta, so anyone can use and contribute. If you find any bugs, please do not hesitate to report them!",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "StopCpmplainingMO2",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": null,
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Description",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "type",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Required",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Ascending",
+          "tagName": "group",
+        },
+        Group {
+          "behaviorType": "SelectAny",
+          "documentMap": WeakMap {},
+          "name": "Interesting Inhabitants",
+          "options": Set {
+            Option {
+              "description": "In base-Clockwork, Lahar, Lamashtu, and the player's family all stick to the same routinue: Your children play in their rooms, sleep, and eat two meals. Your spouse stays in their room and eats two meals. Lahar is constantly stuck in a loop of about 15 actions, and Lamashtu simply stares off into the distance. Interesting Inhabitants changes things up.
+Now, Lahar has many hundreds of potential actions distributed across each room of the castle and a scheduled day, and Lamashtu can read books occasionally.
+
+https://github.com/BellCubeDev/AdditionalClockwork/projects/2",
+              "documentMap": WeakMap {},
+              "existingOptionFlagSetterByDocument": WeakMap {},
+              "flagsToSet": Set {
+                FlagSetter {
+                  "documentMap": WeakMap {},
+                  "flagInstance": FlagInstance {
+                    "_name": "InterestingInhabitants_Merged",
+                    "documents": Set {
+                      Document {
+                        "location": null,
+                      },
+                    },
+                    "optionFlagOptionByDocument": WeakMap {},
+                    "usedValue": "1",
+                    "write": true,
+                  },
+                  "tagName": "flag",
+                },
+              },
+              "image": "fomod\images\AdditionalClockwork.png",
+              "installsToSet": InstallPattern {
+                "dependencies": DependenciesGroup {
+                  "dependencies": Set {
+                    FlagDependency {
+                      "documentMap": WeakMap {},
+                      "flagInstance": FlagInstance {
+                        "_name": [Circular],
+                        "documents": Set {},
+                        "optionFlagOptionByDocument": WeakMap {},
+                        "usedValue": true,
+                        "write": false,
+                      },
+                      "tagName": "flagDependency",
+                    },
+                  },
+                  "documentMap": WeakMap {},
+                  "operator": "And",
+                  "tagName": "dependencies",
+                },
+                "documentMap": WeakMap {},
+                "filesWrapper": InstallPatternFilesWrapper {
+                  "documentMap": WeakMap {},
+                  "installs": Set {},
+                  "tagName": "files",
+                },
+                "tagName": "pattern",
+              },
+              "name": "Merged",
+              "tagName": "plugin",
+              "typeDescriptor": TypeDescriptor {
+                "defaultTypeNameDescriptor": TypeNameDescriptor {
+                  "_tagName": "type",
+                  "documentMap": WeakMap {},
+                  "tagNameIsReadonly": undefined,
+                  "targetType": "Optional",
+                },
+                "documentMap": WeakMap {},
+                "patterns": [],
+                "tagName": "typeDescriptor",
+              },
+            },
+          },
+          "sortingOrder": "Explicit",
+          "tagName": "group",
+        },
+      },
+      "name": "Testing Modules",
+      "sortingOrder": "Explicit",
+      "tagName": "installStep",
+      "visibilityDeps": DependenciesGroup {
+        "dependencies": Set {},
+        "documentMap": WeakMap {},
+        "operator": "And",
+        "tagName": "visible",
+      },
+    },
+  },
+  "tagName": "config",
+}

@@ -1,0 +1,16 @@
+FomodInfo {
+  "data": {
+    "Author": "Killing Joke",
+    "Description": "Lux is a personal project i've been working on for months now. Its main goal is to improve interior spaces lighting consistency for ENB users mostly. I've reworked vanilla features from scratch, rebuilt lights and carefully placed them by hand.
+Main objective was to bring as much consistency as possible, while trying to avoid overbright spaces (quite painful for ENB users) and way too dark spaces (personal choice here, seeing NPCs living or working in completely dark environments wasn't even an option). If there's a light source, then there's light, simple as that.",
+    "Groups": "
+		Visuals and Graphics
+	",
+    "Name": "Lux",
+    "Version": "6.7.1",
+    "Website": "https://www.nexusmods.com/skyrimspecialedition/mods/43158/",
+  },
+  "decommission": undefined,
+  "documentMap": WeakMap {},
+  "tagName": "fomod",
+}

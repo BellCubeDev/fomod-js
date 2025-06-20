@@ -1,0 +1,14 @@
+<fomod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://fomod.bellcube.dev/schemas/Info.xsd">
+    <Name>
+        Legacy of the Dragonborn Patches (Official)
+    </Name>
+    <Author>
+        SirJesto
+    </Author>
+    <Version>
+        6.3.1
+    </Version>
+    <Website>
+        https://www.nexusmods.com/skyrimspecialedition/mods/30980/?
+    </Website>
+</fomod>

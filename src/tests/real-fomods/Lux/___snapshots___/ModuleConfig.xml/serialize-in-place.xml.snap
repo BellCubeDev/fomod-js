@@ -1,0 +1,2266 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://qconsulting.ca/fo3/ModConfig5.0.xsd">
+    <moduleName>
+        Lux
+    </moduleName>
+    <moduleImage path="fomod\Screenshots\Header 01 LUX.jpg"/>
+    <requiredInstallFiles>
+        <folder source="00 Data\Lux - Main Files/" destination=""/>
+    </requiredInstallFiles>
+    <installSteps order="Ascending">
+        <installStep name="Main files">
+            <optionalFileGroups order="Explicit">
+                <group name="Lux optional effects" type="SelectAny">
+                    <plugins order="Explicit">
+                        <plugin name="Beams - PARTICLE without effect lighting">
+                            <description>
+                                Optional reworked beams, balanced emissive strength and dimmer visuals. Most meshes can be now tweaked in the PARTICLE section of your ENB but can't receive any light from surrounding light sources as a side effect. CHOOSE only one Beam option. (Author's choice)
+                            </description>
+                            <image path="fomod\Screenshots\_Beams.jpg"/>
+                            <conditionFlags>
+                                <flag name="OPTION_Beams___PARTICLE_without_effect_lighting--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Fx\Beams\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Beams - Effect lighting without PARTICLE">
+                            <description>
+                                Optional reworked beams, less opacity, beams are affected by surrounding lighting but can't be tweaked with ENB's Particle settings as a side effect. CHOOSE only one beam option.
+                            </description>
+                            <image path="fomod\Screenshots\_Beams.jpg"/>
+                            <conditionFlags>
+                                <flag name="OPTION_Beams___Effect_lighting_without_PARTICLE--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Fx\Beams (no ENB)\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Mists and fogs - PARTICLE without effect lighting">
+                            <description>
+                                Optional reworked mists and fogs, balanced emissive strength and dimmer visuals. Most meshes can be now tweaked in the PARTICLE section of your ENB but can't receive any light from surrounding light sources as a side effect. CHOOSE only one mists and fogs option.
+                            </description>
+                            <image path="fomod\Screenshots\_Mist.jpg"/>
+                            <conditionFlags>
+                                <flag name="OPTION_Mists_and_fogs___PARTICLE_without_effect_lighting--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Fx\Fogs\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Mists and fogs - Effect lighting without PARTICLE">
+                            <description>
+                                Optional reworked mists and fogs, less opacity, beams are affected by surrounding lighting but can't be tweaked with ENB's Particle settings as a side effect. CHOOSE only one mists and fogs option. (Author's choice)
+                            </description>
+                            <image path="fomod\Screenshots\_Mist.jpg"/>
+                            <conditionFlags>
+                                <flag name="OPTION_Mists_and_fogs___Effect_lighting_without_PARTICLE--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Fx\Fogs (no ENB)\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Webs">
+                            <description>
+                                Optional reworked spider webs meshes so they're dimmer overall. Not useful if using T4's mod, his version is a way better option.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Webs--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Fx\Webs\meshes/" destination="meshes/"/>
+                                <folder source="00 Data\Lux - Fx\Lux - RCI web corpses\meshes/" destination="meshes/"/>
+                                <folder source="00 Data\Lux - Fx\Lux - RCI web corpses\textures/" destination="textures/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Lux fixed Ice Cave meshes" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Fixed Vanilla meshes">
+                            <description>
+                                I removed backlighting flag and backlighting texture from all ice cave meshes rock part so rock isn't glowing from inside anymor.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Fixed_Vanilla_meshes--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Ice Cave Rock meshes\Vanilla\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Fixed Multilayer Parallax meshes">
+                            <description>
+                                I removed backlighting flag and backlighting texture from all ice cave meshes rock part so rock isn't glowing from inside anymor, choose this option if using multilayer parallax ice, not compatible with Remastered Ice Caves since that mod is replacing all rock with ice.
+                            </description>
+                            <image path="fomod\Screenshots\ICE PARALLAX.jpg"/>
+                            <conditionFlags>
+                                <flag name="OPTION_Fixed_Multilayer_Parallax_meshes--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Ice Cave Rock meshes\Multilayer Parallax\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Lux optimized rugs" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Vanilla rugs">
+                            <description>
+                                Choose that option if using vanilla rugs. Meshes are splitted so they're less likely to break because of lighting.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Vanilla_rugs--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Rugs\Vanilla\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="RUGNAROK rugs">
+                            <description>
+                                Choose that option if using RUGNAROK rugs. Meshes are splitted so they're less likely to break because of lighting.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_RUGNAROK_rugs--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Rugs\Rugnarok\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Detailed rugs">
+                            <description>
+                                Choose that option if using Detailed rugs. Meshes are splitted so they're less likely to break because of lighting.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Detailed_rugs--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Rugs\Detailed Rugs\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Lux optimized Pelts" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Vanilla pelts">
+                            <description>
+                                Choose that option if using vanilla pelts only. Meshes are split so they're less likely to break because of lighting.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Vanilla_pelts--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Pelts\Vanilla Meshes\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Vanilla pelts (parallax)">
+                            <description>
+                                Choose that option if using vanilla pelts with parallax support only. Meshes are split so they're less likely to break because of lighting.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Vanilla_pelts__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Pelts\Vanilla Meshes (parallax)\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="PELTAPALOOZA Pelts">
+                            <description>
+                                Choose that option if using PELTAPALOOZA pelts Full version, it won't work as intended with the Lite version. Meshes are split so they're less likely to break because of lighting.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_PELTAPALOOZA_Pelts--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Pelts\PELTAPALOOZA\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="PELTAPALOOZA Pelts (parallax)">
+                            <description>
+                                Choose that option if using PELTAPALOOZA pelts Full version with parallax support, it won't work as intended with the Lite version. Meshes are split so they're less likely to break because of lighting.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_PELTAPALOOZA_Pelts__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Pelts\PELTAPALOOZA (parallax)\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Lux optimized tables" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Vanilla">
+                            <description>
+                                Optimized meshes for vanilla tables.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Vanilla--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Tables\Vanilla\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="SD's Table replacer">
+                            <description>
+                                Optimized meshes for SD's Table replacer.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_SD_s_Table_replacer--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Tables\SD's Table Replacer\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Lux optimized chandeliers" type="SelectAny">
+                    <plugins order="Explicit">
+                        <plugin name="Vanilla chandeliers">
+                            <description>
+                                Modified meshes for vanilla chandeliers so that they stop casting shadows. Pick one or all options based on mods you're using. May lead to slightly transparent chandeliers in some circumstances.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Vanilla_chandeliers--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Chandeliers\Vanilla\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="SMIM chandeliers">
+                            <description>
+                                Modified meshes for SMIM chandeliers so that they stop casting shadows. Pick one or all options based on mods you're using (Do not include textures). May lead to slightly transparent chandeliers in some circumstances.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_SMIM_chandeliers--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Chandeliers\SMIM\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="RCI chandeliers">
+                            <description>
+                                Modified meshes for Ruin Clutters Improved chandeliers so that they stop casting shadows. Pick one or all options based on mods you're using (Do not include textures). May lead to slightly transparent chandeliers in some circumstances.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_RCI_chandeliers--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Chandeliers\Ruins Clutter Improved\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="SD's chandeliers">
+                            <description>
+                                Modified meshes for SD's chandeliers so that they stop casting shadows. Pick one or all options based on mods you're using (Do not include textures). May lead to slightly transparent chandeliers in some circumstances.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_SD_s_chandeliers--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Chandeliers\SD's Horn Candles\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Lux Embers XD compatibility" type="SelectAny">
+                    <plugins order="Explicit">
+                        <plugin name="BYOH fireplace">
+                            <description>
+                                Optimized Hearthfire BYOH fireplace for Embers users.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_BYOH_fireplace--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Embers\Lux - Embers XD\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <fileDependency file="embers XD.esp" state="Active"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="EmbersXD new fire effect asset">
+                            <description>
+                                Option to replace the vanilla flame effect I'm relying on (for burning dwemer lanterns mostly) with EmbersXD own flame texture, do not install that option if you're not specifically using EmbersXD nor its optional fire effects or if you're using the Inferno combo. That option needs you to have those flame textures to work or you'll get purple squares on my flames instead.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_EmbersXD_new_fire_effect_asset--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Embers Fire replacer\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Lux optional Giant Campfires" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Giant Campfires">
+                            <description>
+                                Modified Giant Campfire with shadow casting removal to prevent weird shadows. ENB light compatibe. Use EmbersXD version instead if needed, both will conflict.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Giant_Campfires--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Fire\Giant Campfire\meshes/" destination="meshes/"/>
+                                <folder source="00 Data\Fire\Giant Campfire\textures/" destination="textures/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Lux optimized meshes" type="SelectExactlyOne">
+                    <plugins order="Explicit">
+                        <plugin name="Vanilla">
+                            <description>
+                                Automatically selected vanilla meshes, optimized for lighting. Those meshes are mandatory to make the mod work as intended.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OptimizedMeshes">
+                                    On
+                                </flag>
+                                <flag name="ParallaxMeshes">
+                                    Off
+                                </flag>
+                                <flag name="OPTION_Vanilla--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Parallax">
+                            <description>
+                                Automatically selected parallax meshes, optimized for lighting. Those meshes are mandatory to make the mod work as intended.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OptimizedMeshes">
+                                    On
+                                </flag>
+                                <flag name="ParallaxMeshes">
+                                    On
+                                </flag>
+                                <flag name="OPTION_Parallax--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="None">
+                            <description>
+                                Optimized meshes installation will be skipped entirely, only use that option when updating plugins only. Merge that update in your mod organizer to keep your already installed meshes.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OptimizedMeshes">
+                                    Off
+                                </flag>
+                                <flag name="OPTION_None--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+            </optionalFileGroups>
+        </installStep>
+        <installStep name="Optimized Vanilla Meshes for Lighting">
+            <visible operator="And">
+                <dependencies operator="And">
+                    <flagDependency flag="OptimizedMeshes" value="On"/>
+                </dependencies>
+            </visible>
+            <optionalFileGroups order="Explicit">
+                <group name="Architecture Farmhouse" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Architecture Farmhouse">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Farmhouse--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Architecture Farmhouse\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Architecture Farmhouse (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Farmhouse__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Architecture Farmhouse\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Architecture High Hrothgar" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Architecture High Hrothgar">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_High_Hrothgar--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Architecture High Hrothgar\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Architecture High Hrothgar (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_High_Hrothgar__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Architecture High Hrothgar\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Architecture Riften" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Architecture Riften">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Riften--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Architecture Riften\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Architecture Riften (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Riften__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Architecture Riften\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Architecture Sky Haven" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Architecture Sky Haven">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Sky_Haven--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Architecture Sky Haven\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Architecture Sky Haven (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Sky_Haven__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Architecture Sky Haven\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Architecture Solitude" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Architecture Solitude">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Solitude--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Architecture Solitude\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Architecture Solitude (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Solitude__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Architecture Solitude\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Architecture Sovengarde" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Architecture Sovengarde">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Sovengarde--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Architecture Sovengarde\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Architecture Sovengarde (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Sovengarde__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Architecture Sovengarde\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Architecture Whiterun" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Architecture Whiterun">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Whiterun--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Architecture Whiterun\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Architecture Whiterun (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Whiterun__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Architecture Whiterun\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Architecture Windhelm" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Architecture Windhelm">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Windhelm--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Architecture Windhelm\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Architecture Windhelm (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Windhelm__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Architecture Windhelm\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Architecture Winterhold" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Architecture Winterhold">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Winterhold--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Architecture Winterhold\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Architecture Winterhold (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Winterhold__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Architecture Winterhold\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="BYOH" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="BYOH">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_BYOH--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\BYOH\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="BYOH (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_BYOH__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\BYOH\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Clutter" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Clutter">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Clutter--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Clutter\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Clutter (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Clutter__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Clutter\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="DLCs" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="DLCs">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_DLCs--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\DLCs\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="DLCs (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_DLCs__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\DLCs\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Dungeons Caves" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Dungeons Caves">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Caves--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Dungeons Caves\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Dungeons Caves (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Caves__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Dungeons Caves\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Dungeons Dwemer Ruins" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Dungeons Dwemer Ruins">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Dwemer_Ruins--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Dungeons Dwemer Ruins\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Dungeons Dwemer Ruins (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Dwemer_Ruins__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Dungeons Dwemer Ruins\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Dungeons Imperial Forts" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Dungeons Imperial Forts">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Imperial_Forts--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Dungeons Imperial Forts\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Dungeons Imperial Forts (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Imperial_Forts__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Dungeons Imperial Forts\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Dungeons Mines" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Dungeons Mines">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Mines--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Dungeons Mines\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Dungeons Mines (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Mines__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Dungeons Mines\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Dungeons Nordic Ruins" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Dungeons Nordic Ruins">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Nordic_Ruins--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Dungeons Nordic Ruins\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Dungeons Nordic Ruins (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Nordic_Ruins__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Dungeons Nordic Ruins\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Dungeons Riften Sewers" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Dungeons Riften Sewers">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Riften_Sewers--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Dungeons Riften Sewers\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Dungeons Riften Sewers (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Riften_Sewers__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Dungeons Riften Sewers\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Dungeons Ship" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Dungeons Ship">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Ship--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Dungeons Ship\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Dungeons Ship (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Ship__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Dungeons Ship\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Shacks" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Shacks">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Shacks--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Architecture Shacks\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Shacks (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_Shacks__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Architecture Shacks\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+            </optionalFileGroups>
+        </installStep>
+        <installStep name="Improved Dwemer Glass">
+            <optionalFileGroups order="Explicit">
+                <group name="Improved Dwemer Glass optional meshes" type="SelectAny">
+                    <plugins order="Explicit">
+                        <plugin name="Improved Dwemer Glass optional meshes">
+                            <description>
+                                Optional alternate optimized meshes for people using Improved Dwemer Glass mod.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Improved_Dwemer_Glass_optional_meshes--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Improved Dwemer Glass meshes\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+            </optionalFileGroups>
+        </installStep>
+        <installStep name="Optimized SMIM Meshes for Lighting">
+            <visible operator="And">
+                <dependencies operator="And">
+                    <flagDependency flag="OptimizedMeshes" value="On"/>
+                </dependencies>
+            </visible>
+            <optionalFileGroups order="Explicit">
+                <group name="SMIM Architecture Farmhouse" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Architecture Farmhouse">
+                            <description>
+                                Optimized meshes for SMIM users only, do not install when not having SMIM or you'll experience missing texture issues.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Farmhouse--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes\Architecture Farmhouse\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Architecture Farmhouse (parallax)">
+                            <description>
+                                Optimized meshes for SMIM users only, do not install when not having SMIM or you'll experience missing texture issues.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Farmhouse__parallax_--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split meshes (Parallax)\Architecture Farmhouse\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="SMIM Architecture Whiterun" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Architecture Whiterun">
+                            <description>
+                                Optimized meshes for SMIM users only, do not install when not having SMIM or you'll experience missing texture issues.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Whiterun--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split SMIM meshes\Architecture Whiterun\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Architecture Whiterun (parallax)">
+                            <description>
+                                Optimized meshes for SMIM users only, do not install when not having SMIM or you'll experience missing texture issues.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Whiterun__parallax_--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split SMIM meshes (Parallax)\Architecture Whiterun\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="SMIM Architecture Windhelm" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Architecture Windhelm">
+                            <description>
+                                Optimized meshes for SMIM users only, do not install when not having SMIM or you'll experience missing texture issues.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Windhelm--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split SMIM meshes\Architecture Windhelm\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Architecture Windhelm (parallax)">
+                            <description>
+                                Optimized meshes for SMIM users only, do not install when not having SMIM or you'll experience missing texture issues.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Architecture_Windhelm__parallax_--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split SMIM meshes (Parallax)\Architecture Windhelm\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="SMIM Dungeons Caves" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Dungeons Caves">
+                            <description>
+                                Optimized meshes for SMIM users only, do not install when not having SMIM or you'll experience missing texture issues.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Caves--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split SMIM meshes\Dungeons Caves\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Dungeons Caves (parallax)">
+                            <description>
+                                Optimized meshes for SMIM users only, do not install when not having SMIM or you'll experience missing texture issues.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Caves__parallax_--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split SMIM meshes (Parallax)\Dungeons Caves\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="SMIM Dungeons Mines" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Dungeons Mines">
+                            <description>
+                                Optimized meshes for SMIM users only, do not install when not having SMIM or you'll experience missing texture issues.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Mines--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split SMIM meshes\Dungeons Mines\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Dungeons Mines (parallax)">
+                            <description>
+                                Optimized meshes for SMIM users only, do not install when not having SMIM or you'll experience missing texture issues.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Mines__parallax_--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split SMIM meshes (Parallax)\Dungeons Mines\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="SMIM Dungeons Nordic Ruins" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Dungeons Nordic Ruins">
+                            <description>
+                                Optimized meshes for SMIM users only, do not install when not having SMIM or you'll experience missing texture issues.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Nordic_Ruins--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split SMIM meshes\Dungeons Nordic Ruins\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Dungeons Nordic Ruins (parallax)">
+                            <description>
+                                Optimized meshes for SMIM users only, do not install when not having SMIM or you'll experience missing texture issues.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_Nordic_Ruins__parallax_--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split SMIM meshes (Parallax)\Dungeons Nordic Ruins\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+            </optionalFileGroups>
+        </installStep>
+        <installStep name="Optimized Creation Club Meshes for Lighting">
+            <visible operator="And">
+                <dependencies operator="And">
+                    <flagDependency flag="OptimizedMeshes" value="On"/>
+                </dependencies>
+            </visible>
+            <optionalFileGroups order="Explicit">
+                <group name="CC Content meshes" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="CC Content meshes">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_CC_Content_meshes--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split Creation Club meshes\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="Off"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="CC Content meshes (parallax)">
+                            <description/>
+                            <conditionFlags>
+                                <flag name="OPTION_CC_Content_meshes__parallax_--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Split Creation Club meshes (Parallax)\meshes/" destination="meshes/"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <flagDependency flag="ParallaxMeshes" value="On"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+            </optionalFileGroups>
+        </installStep>
+        <installStep name="Window models">
+            <optionalFileGroups order="Explicit">
+                <group name="Main window assets" type="SelectAll">
+                    <plugins order="Explicit">
+                        <plugin name="Default vanilla models">
+                            <description>
+                                Vanilla window models and main assets to make the whole thing functional, rustic compatible out of the box.
+                            </description>
+                            <image path="fomod\Screenshots\Lux Windows.jpg"/>
+                            <conditionFlags>
+                                <flag name="OPTION_Default_vanilla_models--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Window models\Lux - Optimized flat windows\meshes/" destination="meshes/"/>
+                                <folder source="00 Data\Lux - Window models\Lux - Optimized flat windows\textures/" destination="textures/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Modded windows assets" type="SelectAny">
+                    <plugins order="Explicit">
+                        <plugin name="Mrf window models">
+                            <description>
+                                Resources for Mrf Solitude windows models, select if you're using Mrf's Solitude so that window frame shadows are consistent with the new textures.
+                            </description>
+                            <image path="fomod\Screenshots\Lux Windows.jpg"/>
+                            <conditionFlags>
+                                <flag name="OPTION_Mrf_window_models--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <folder source="00 Data\Lux - Window models\Lux - Optimized flat windows (Mrf)\textures/" destination="textures/"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+            </optionalFileGroups>
+        </installStep>
+        <installStep name="Fixes">
+            <optionalFileGroups order="Explicit">
+                <group name="Landscape fixes" type="SelectAny">
+                    <plugins order="Explicit">
+                        <plugin name="No Grass In Caves">
+                            <description>
+                                No Grass in Caves patch so that grass isn't generated in reworked worldspaces such as underground caves, has no dependency and works as a no grass in caves mod replacer fully compatible with Lux (ESPFE)
+                            </description>
+                            <image path="fomod\Screenshots\NoWeed.jpeg"/>
+                            <conditionFlags>
+                                <flag name="OPTION_No_Grass_In_Caves--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <file source="00 Data\Lux - No grass in caves patch.esp" destination="Lux - No grass in caves patch.esp"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Landscape and Water fixes">
+                            <description>
+                                Compatibility patch for Landscape and water fixes, for instance edits to Heartwood Mill (Credits to Cosmic Sloth) (ESPFE)
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Landscape_and_Water_fixes--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <file source="00 Data\Lux - SLaWF patch.esp" destination="Lux - SLaWF patch.esp"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <fileDependency file="Landscape and Water Fixes.esp" state="Active"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Others fixes" type="SelectAny">
+                    <plugins order="Explicit">
+                        <plugin name="Missing Encounter Zones Fixed">
+                            <description>
+                                Compatibility patch for Missing Encounter Zones Fixed (Full credits to Cosmic Sloth) (ESPFE)
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Missing_Encounter_Zones_Fixed--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <file source="00 Data\Lux - MEZF Vanilla Patch.esp" destination="Lux - MEZF Vanilla Patch.esp"/>
+                            </files>
+                            <typeDescriptor>
+                                <dependencyType>
+                                    <patterns>
+                                        <pattern>
+                                            <dependencies operator="And">
+                                                <fileDependency file="MissingEZsFixed.esp" state="Active"/>
+                                            </dependencies>
+                                            <type name="Recommended"/>
+                                        </pattern>
+                                    </patterns>
+                                </dependencyType>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+            </optionalFileGroups>
+        </installStep>
+        <installStep name="USSEP">
+            <optionalFileGroups order="Explicit">
+                <group name="Unofficial Skyrim Special Edition Patch" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="USSEP pre update version">
+                            <description>
+                                Compatibility patch for the Unofficial Skyrim Special Edition Patch, old version (ESPFE)
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_USSEP_pre_update_version--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <file source="00 Data\Lux - USSEP patch.esp" destination="Lux - USSEP patch.esp"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="USSEP latest version">
+                            <description>
+                                Compatibility patch for the Unofficial Skyrim Special Edition Patch, latest version with the new Bitterblade Hollow cell edits (ESPFE)
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_USSEP_latest_version--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <file source="00 Data\Lux - USSEP latest version\Lux - USSEP patch.esp" destination="Lux - USSEP patch.esp"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+            </optionalFileGroups>
+        </installStep>
+        <installStep name="Brighter Nights and Lighting Templates">
+            <optionalFileGroups order="Explicit">
+                <group name="Brighter Interior Nights" type="SelectAny">
+                    <plugins order="Explicit">
+                        <plugin name="Brighter Interior Cells Nights">
+                            <description>
+                                Optional plugin to increase interior nights, emittance colours I'm using for nights are less dark and thus lead to brighter natural lighting at night. Load right after Lux.
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Brighter_Interior_Cells_Nights--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <file source="00 Data\Lux - Brighter interior nights.esp" destination="Lux - Brighter interior nights.esp"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Bright lighting templates" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Lighting templates global replacer">
+                            <description>
+                                Light plugin with brighter lighting templates for non ENB users or people who are looking for less dark unlit areas without necessarily relying on ENB settings. (ESPFE)
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Lighting_templates_global_replacer--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <file source="00 Data\Lux - Brighter Templates.esp" destination="Lux - Brighter Templates.esp"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Houses lighting templates replacer only">
+                            <description>
+                                Light plugin with brighter Houses lighting templates only for non ENB users or people who are looking for less dark unlit areas without necessarily relying on ENB settings. (ESPFE)
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Houses_lighting_templates_replacer_only--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <file source="00 Data\Lux - Brighter Templates Houses only.esp" destination="Lux - Brighter Templates Houses only.esp"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Dungeons lighting templates replacer only">
+                            <description>
+                                Light plugin with brighter Dungeons lighting templates only for non ENB users or people who are looking for less dark unlit areas without necessarily relying on ENB settings. (ESPFE)
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_lighting_templates_replacer_only--1">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <file source="00 Data\Lux - Brighter Templates Dungeons only.esp" destination="Lux - Brighter Templates Dungeons only.esp"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+                <group name="Even Brighter lighting templates" type="SelectAtMostOne">
+                    <plugins order="Explicit">
+                        <plugin name="Lighting templates global replacer">
+                            <description>
+                                Light plugin with even brighter lighting templates for non ENB users or people who are looking for less dark unlit areas without necessarily relying on ENB settings. (ESPFE)
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Lighting_templates_global_replacer--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <file source="00 Data\Lux - Even Brighter Templates.esp" destination="Lux - Even Brighter Templates.esp"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Houses lighting templates replacer only">
+                            <description>
+                                Light plugin with even brighter Houses lighting templates only for non ENB users or people who are looking for less dark unlit areas without necessarily relying on ENB settings. (ESPFE)
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Houses_lighting_templates_replacer_only--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <file source="00 Data\Lux - Even Brighter Templates Houses only.esp" destination="Lux - Even Brighter Templates Houses only.esp"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                        <plugin name="Dungeons lighting templates replacer only">
+                            <description>
+                                Light plugin with brighter Dungeons lighting templates only for non ENB users or people who are looking for less dark unlit areas without necessarily relying on ENB settings. (ESPFE)
+                            </description>
+                            <conditionFlags>
+                                <flag name="OPTION_Dungeons_lighting_templates_replacer_only--2">
+                                    OPTION_SELECTED
+                                </flag>
+                            </conditionFlags>
+                            <files>
+                                <file source="00 Data\Lux - Even Brighter Templates Dungeons only.esp" destination="Lux - Even Brighter Templates Dungeons only.esp"/>
+                            </files>
+                            <typeDescriptor>
+                                <type name="Optional"/>
+                            </typeDescriptor>
+                        </plugin>
+                    </plugins>
+                </group>
+            </optionalFileGroups>
+        </installStep>
+    </installSteps>
+</config>

@@ -1,0 +1,21 @@
+<fomod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://fomod.bellcube.dev/schemas/Info.xsd">
+    <Name>
+        Lux (patch hub)
+    </Name>
+    <Author>
+        Killing Joke
+    </Author>
+    <Version>
+        6.7
+    </Version>
+    <Website>
+        https://www.nexusmods.com/skyrimspecialedition/mods/113002?tab=description
+    </Website>
+    <Description>
+        Lux is a personal project i've been working on for months now. Its main goal is to improve interior spaces lighting consistency for ENB users mostly. I've reworked vanilla features from scratch, rebuilt lights and carefully placed them by hand.
+Main objective was to bring as much consistency as possible, while trying to avoid overbright spaces (quite painful for ENB users) and way too dark spaces (personal choice here, seeing NPCs living or working in completely dark environments wasn't even an option). If there's a light source, then there's light, simple as that.
+    </Description>
+    <Groups>
+        Patches
+    </Groups>
+</fomod>

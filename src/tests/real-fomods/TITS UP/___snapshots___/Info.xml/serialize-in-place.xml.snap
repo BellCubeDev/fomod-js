@@ -1,0 +1,17 @@
+<fomod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://fomod.bellcube.dev/schemas/Info.xsd">
+    <Name>
+        T.I.T.S. U.P. - The Biggest FOMOD Ever
+    </Name>
+    <Author>
+        AllstaRawR
+    </Author>
+    <Version>
+        1.2.3
+    </Version>
+    <Website>
+        https://www.nexusmods.com/users/3106994?tab=user+files
+    </Website>
+    <Description>
+        These are patches I've made for my personal modlist via "The Method" and can be used by others.
+    </Description>
+</fomod>

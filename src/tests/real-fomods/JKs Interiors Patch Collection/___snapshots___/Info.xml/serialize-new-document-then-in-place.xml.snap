@@ -1,0 +1,20 @@
+<fomod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://fomod.bellcube.dev/schemas/Info.xsd">
+    <Name>
+        JK's Interiors Patch Collection
+    </Name>
+    <Author>
+        Janquel
+    </Author>
+    <Version>
+        5.20.1
+    </Version>
+    <Website>
+        https://www.nexusmods.com/skyrimspecialedition/mods/35910
+    </Website>
+    <Description>
+        Jkrojmal recently started providing some small overhauls of various interiors, and they've found their way into my load order. Thankfully, the majority of my other mods don't need any patches beyond those which are already present on the page, but I did come across a few item placements/general clean-up which I thought I'd share :) Many of these are extremely minor and honestly not always necessary, but ESLs don't take up a plugin slot, so....why not?
+    </Description>
+    <Groups>
+        Patches
+    </Groups>
+</fomod>

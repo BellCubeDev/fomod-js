@@ -17,3 +17,7 @@ export async function getXml(fomod: string, file: string): Promise<string> {
     filesCache.set(key, xml);
     return xml;
 }
+
+export function getSnapshotFileName(fomod: string, file: string, testId: Lowercase<string>, extraFileType: `.${Lowercase<string>}` | null): string {
+    return path.join(folder, fomod, '___snapshots___', file, `${testId}${extraFileType ?? ''}.snap`);
+}
